@@ -68,14 +68,11 @@ func is_match_at(grid_width, grid_height, all_pieces, column, row):
 		if(row < grid_height - 2): #we look 2 above the piece
 			if(is_piece_existing_and_same(all_pieces, column, row + 1, all_pieces[column][row]) && is_piece_existing_and_same(all_pieces, column, row + 2, all_pieces[column][row])):
 				return true;
-		if(column >= 1 && column <= grid_width - 1):
+		if(column >= 1 && column <= grid_width - 2):
 			if(is_piece_existing_and_same(all_pieces, column - 1, row, all_pieces[column][row]) && is_piece_existing_and_same(all_pieces, column + 1, row, all_pieces[column][row])):
 				return true;
-		if(row >= 1 && row <= grid_height - 1):
+		if(row >= 1 && row <= grid_height - 2):
 			if(is_piece_existing_and_same(all_pieces, column, row - 1, all_pieces[column][row]) && is_piece_existing_and_same(all_pieces, column, row + 1, all_pieces[column][row])):
-				return true;
-		if(column < grid_width - 1): #then we 2 look to the right of the piece
-			if(is_piece_existing_and_same(all_pieces, column + 1, row, all_pieces[column][row]) && is_piece_existing_and_same(all_pieces, column + 2, row, all_pieces[column][row])):
 				return true;
 	return false;
 
@@ -104,4 +101,10 @@ func unmatch(pieces):
 	for piece in pieces:
 		piece.un_dim();
 		piece.matched = false;
+	pass;
+
+func add_to_array(values, array):
+	for value in values:
+		if(!array.has(value)):
+			array.append(value);
 	pass;

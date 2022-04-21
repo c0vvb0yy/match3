@@ -89,6 +89,11 @@ texture_progress = ExtResource( 5 )
 fill_mode = 3
 script = ExtResource( 7 )
 
+[node name="Label" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Combo:"
+
 [connection signal="timeout" from="TurnTimer" to="Grid" method="_on_TurnTimer_timeout"]
 [connection signal="timeout" from="FallTimer" to="Grid" method="_on_FallTimer_timeout"]
 [connection signal="timeout" from="FillTimer" to="Grid" method="_on_FillTimer_timeout"]

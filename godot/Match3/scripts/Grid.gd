@@ -49,7 +49,7 @@ var Util
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	state = move;
-	turn_timer = get_parent().get_node("TurnTimer");
+	#turn_timer = get_parent().get_node("TurnTimer");
 	fall_timer = get_parent().get_node("FallTimer");
 	fill_timer = get_parent().get_node("FillTimer");
 	destroy_timer = get_parent().get_node("DestroyTimer");
@@ -62,6 +62,8 @@ func _ready():
 func _process(_delta):
 	if(state == move):
 		touch_input();
+		if(Input.is_action_just_pressed("ui_accept")):
+			on_space();
 	pass;
 
 func fill_grid(): #top to bottom then left to right
@@ -93,6 +95,7 @@ func find_matches():
 						var left_piece = all_pieces[i - 1][j];
 						var right_piece = all_pieces[i + 1][j];
 						match_and_dim([left_piece, current_piece, right_piece,]);
+						add_to_array([Vector2(i-1,j), Vector2(i,j), Vector2(i+1,j)], current_matches);
 						if(!at_least_one_matched):
 							at_least_one_matched = true;
 				if(j > 0 && j < height - 1): #vertical matching logic
@@ -101,6 +104,7 @@ func find_matches():
 						var upper_piece = all_pieces[i][j - 1];
 						var lower_piece = all_pieces[i][j + 1];
 						match_and_dim([lower_piece, upper_piece, current_piece]);
+						add_to_array([Vector2(i,j-1), Vector2(i,j), Vector2(i,j+1)], current_matches);
 						if(!at_least_one_matched):
 							at_least_one_matched = true;
 	return at_least_one_matched;
@@ -120,8 +124,47 @@ func destroy_matched():
 				if(current_piece.matched):
 					current_piece.queue_free();
 					all_pieces[i][j] = null;
+	print(current_matches)
 	current_matches.clear();
 
+func find_long_matches():
+	var temp_matches = current_matches;
+	for i in current_matches.size():
+		var current_column = current_matches[i].x;
+		var current_row = current_matches[i].y;
+		var current_color = all_pieces[current_column][current_row].color;
+		var matched = 0;
+		var last_column = null;
+		var last_row = null;
+		#Iterate over the current matches to check for column, row, and color
+		for j in current_matches.size():
+			var this_column = current_matches[j].x;
+			var this_row = current_matches[j].y;
+			var this_color = all_pieces[this_column][this_row].color;
+			if(current_color == this_color && this_column == current_column):
+				if(last_row != null):
+					if(this_row == last_row + 1):
+						matched += 1;
+					else:
+						break;
+				else:
+					matched += 1;
+			elif(this_row == current_row && this_color == current_color):
+				if(last_column != null):
+					if(this_column == last_column + 1):
+						matched += 1;
+					else:
+						break;
+				else:
+					matched += 1;
+			last_column = this_column;
+			last_row = this_row;
+		if(matched >= 4):
+			print("got " , matched , " of ", current_color);
+
+func look_right_of_piece(piece_col, piece_row, next_col):
+	if(all_pieces[piece_col][piece_row].color == all_pieces[next_col][piece_row]):
+		return true;
 func make_current_pieces_fall():
 	for i in width:
 		for j in height:
@@ -158,8 +201,8 @@ func touch_input():
 	var grid_coord = pixel_to_grid(start, offset, get_global_mouse_position()); ##if performace problems: check Input actions first instead of calcing this
 	if(is_in_grid(grid_coord, width, height)):
 		if(Input.is_action_just_pressed("ui_click")):
-			if(turn_timer.is_stopped()):
-				turn_timer.start();
+			#if(turn_timer.is_stopped()):
+				#turn_timer.start();
 			start_touch = grid_coord;
 			is_controlling_piece = true;
 		if(Input.is_action_just_released("ui_click")):
@@ -216,7 +259,15 @@ func _on_FallTimer_timeout():
 	refill_columns();
 	pass;
 
-func _on_DestroyTimer_timeout():
+func on_space():
+	find_long_matches();
 	destroy_matched();
 	fill_timer.start(0.5);
 	pass;
+
+
+#func _on_DestroyTimer_timeout(): #Turn is over
+#	find_long_matches();
+#	destroy_matched();
+#	fill_timer.start(0.5);
+#	pass;
