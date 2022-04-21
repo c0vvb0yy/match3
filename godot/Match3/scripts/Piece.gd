@@ -4,6 +4,8 @@ export (String) var color
 var move_tween;
 var matched = false;
 
+onready var sprite = get_node("Sprite");
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	move_tween = get_node("MoveTween");
@@ -16,10 +18,8 @@ func move(target):
 	pass;
 
 func dim():
-	var sprite = get_node("Sprite");
 	sprite.modulate = Color(1, 1, 1, 0.5);
 	pass;
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func un_dim():
+	sprite.modulate = Color(1, 1, 1, 1);

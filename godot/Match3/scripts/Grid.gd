@@ -1,4 +1,4 @@
-extends Node2D
+extends "res://scripts/Util.gd"
 
 #State Machine
 enum{
@@ -12,10 +12,13 @@ export (int) var width;
 export (int) var height;
 export (Vector2) var start;
 export (int) var offset;
-export (int) var piece_y_offset;
+export (int) var piece_y_offset; #from how many grid sapces upwards a new piece will fall into play
 
 var pressed_grid_position;
 var released_grid_position;
+
+#Obstacles
+export (PoolVector2Array) var empty_spaces;
 
 #piece variables
 var all_pieces = []; #current pieces in the scene
@@ -26,6 +29,8 @@ var possible_pieces = [
 	preload("res://scenes/SunPiece.tscn"),
 	preload("res://scenes/OrderPiece.tscn")
 ];
+var current_matches = [];
+
 
 #input variables
 var start_touch = Vector2(0, 0);
@@ -38,6 +43,9 @@ var fall_timer;
 var fill_timer;
 var destroy_timer;
 
+#Utility class
+var Util
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	state = move;
@@ -46,7 +54,7 @@ func _ready():
 	fill_timer = get_parent().get_node("FillTimer");
 	destroy_timer = get_parent().get_node("DestroyTimer");
 	randomize();
-	all_pieces = make_2d_array();
+	all_pieces = make_2d_array(width, height);
 	fill_grid();
 
 
@@ -56,82 +64,53 @@ func _process(_delta):
 		touch_input();
 	pass;
 
-func make_2d_array():
-	var array = [];
-	for i in width:
-		array.append([]);
-		for j in height:
-			array[i].append(null);
-	return array;
-
 func fill_grid(): #top to bottom then left to right
 	for i in width:
 		for j in height:
-			#choose a random number and store it
-			var rand = floor(rand_range(0, possible_pieces.size()));
-			var piece = possible_pieces[rand].instance();
-			var loops = 0;
-			while(is_match_at(i, j, piece.color) && loops < 100):
-				rand = floor(rand_range(0, possible_pieces.size()));
-				piece = possible_pieces[rand].instance();
-				loops +=1;
-			#instance piece from array
-			add_child(piece);
-			piece.position = grid_to_pixel(i, j);
-			all_pieces[i][j] = piece;
-
-func is_match_at(column, row, color):
-	if(column > 1): #then we look to the left of the piece
-		var left_piece = all_pieces[column - 1][row];
-		var left_most_piece = all_pieces[column - 2][row];
-		if (left_piece != null && left_most_piece != null): #check if there's pieces at all next to the one we look at
-			if (left_piece.color == color && left_most_piece.color == color):
-				return true;
-	if(row > 1): #then we look below the piece
-		var lower_piece = all_pieces[column][row - 1];
-		var lowest_piece = all_pieces[column][row - 2];
-		if(lower_piece != null && lowest_piece != null):
-			if(lower_piece.color == color && lowest_piece.color == color):
-				return true;
-	return false;
+			if(!is_restricted_in_placement(Vector2(i, j), empty_spaces)):
+				#choose a random number and store it
+				var rand = floor(rand_range(0, possible_pieces.size()));
+				var piece = possible_pieces[rand].instance();
+				var loops = 0;
+				while(is_match_at_short(all_pieces, i, j, piece.color) && loops < 100):
+					rand = floor(rand_range(0, possible_pieces.size()));
+					piece = possible_pieces[rand].instance();
+					loops +=1;
+				#instance piece from array
+				add_child(piece);
+				piece.position = grid_to_pixel(start, offset, i, j);
+				all_pieces[i][j] = piece;
 
 func find_matches():
 	var at_least_one_matched = false;
 	for i in width:
 		for j in height:
-			if(all_pieces[i][j] != null):
+			if(is_piece_existing(all_pieces, i, j)):
 				var current_piece = all_pieces[i][j];
 				if( i > 0 && i < width - 1): #horizontal matching logic
-					var left_piece = all_pieces[i - 1][j];
-					var right_piece = all_pieces[i + 1][j];
-					if(left_piece != null 
-					&& right_piece != null):
-						if(left_piece.color == current_piece.color 
-						&& right_piece.color == current_piece.color):
-							right_piece.matched = true;
-							right_piece.dim();
-							left_piece.matched = true;
-							left_piece.dim();
-							current_piece.matched = true;
-							current_piece.dim();
-							if(!at_least_one_matched):
-								at_least_one_matched = true;
-				if( j > 0 && j < height - 1): #vertical matching logic
-					var upper_piece = all_pieces[i][j - 1];
-					var lower_piece = all_pieces[i][j + 1];
-					if(upper_piece != null 
-					&& lower_piece != null):
-						if(upper_piece.color == current_piece.color 
-						&& lower_piece.color == current_piece.color):
-							lower_piece.matched = true;
-							lower_piece.dim();
-							upper_piece.matched = true;
-							upper_piece.dim();
-							current_piece.matched = true;
-							current_piece.dim();
-							if(!at_least_one_matched):
-								at_least_one_matched = true;
+					if(is_piece_existing_and_same(all_pieces, i - 1, j, current_piece) 
+					&& is_piece_existing_and_same(all_pieces, i + 1, j, current_piece)):
+						var left_piece = all_pieces[i - 1][j];
+						var right_piece = all_pieces[i + 1][j];
+						match_and_dim([left_piece, current_piece, right_piece,]);
+						if(!at_least_one_matched):
+							at_least_one_matched = true;
+				if(j > 0 && j < height - 1): #vertical matching logic
+					if(is_piece_existing_and_same(all_pieces, i, j - 1, current_piece) 
+					&& is_piece_existing_and_same(all_pieces, i, j + 1, current_piece)):
+						var upper_piece = all_pieces[i][j - 1];
+						var lower_piece = all_pieces[i][j + 1];
+						match_and_dim([lower_piece, upper_piece, current_piece]);
+						if(!at_least_one_matched):
+							at_least_one_matched = true;
 	return at_least_one_matched;
+
+func break_matches():
+	for i in width:
+		for j in height:
+			if(is_piece_existing(all_pieces, i, j)):
+				if(all_pieces[i][j].matched && !is_match_at(width, height, all_pieces, i, j)):
+					unmatch([all_pieces[i][j]]);
 
 func destroy_matched():
 	for i in width:
@@ -141,14 +120,15 @@ func destroy_matched():
 				if(current_piece.matched):
 					current_piece.queue_free();
 					all_pieces[i][j] = null;
+	current_matches.clear();
 
 func make_current_pieces_fall():
 	for i in width:
 		for j in height:
-			if(all_pieces[i][j] == null):
+			if(all_pieces[i][j] == null && !is_restricted_in_placement(Vector2(i, j), empty_spaces)):
 				for k in range(j - 1, -1, -1):
 					if(all_pieces[i][k] != null):
-						all_pieces[i][k].move(grid_to_pixel(i, j));
+						all_pieces[i][k].move(grid_to_pixel(start, offset, i, j));
 						all_pieces[i][j] = all_pieces[i][k];
 						all_pieces[i][k] = null;
 						make_current_pieces_fall();
@@ -157,12 +137,12 @@ func make_current_pieces_fall():
 func refill_columns():
 	for i in width:
 		for j in height:
-			if(all_pieces[i][j] == null):
+			if(all_pieces[i][j] == null && !is_restricted_in_placement(Vector2(i, j), empty_spaces)):
 				var rand = floor(rand_range(0, possible_pieces.size()));
 				var piece = possible_pieces[rand].instance();
 				add_child(piece);
-				piece.position = grid_to_pixel(i, j - piece_y_offset);
-				piece.move(grid_to_pixel(i, j));
+				piece.position = grid_to_pixel(start, offset, i, j - piece_y_offset);
+				piece.move(grid_to_pixel(start, offset, i, j));
 				all_pieces[i][j] = piece;
 	after_refill();
 	pass;
@@ -174,39 +154,9 @@ func after_refill():
 		state = move;
 	pass;
 
-func _on_TurnTimer_timeout():
-	turn_timer.stop();
-	state = wait;
-	destroy_timer.start(0.1);
-	pass;
-
-
-func _on_FillTimer_timeout():
-	make_current_pieces_fall();
-	fall_timer.start(.5);
-	pass;
-
-func _on_FallTimer_timeout():
-	refill_columns();
-	pass;
-
-func _on_DestroyTimer_timeout():
-	destroy_matched();
-	fill_timer.start(0.5);
-	pass;
-
-
-#func is_turn_timer_going():
-#	if(turn_timer.is_stopped() && fill_timer.is_stopped() && fall_timer.is_stopped()):
-#		turn_timer.start(5);
-#		return true;
-#	elif(!turn_timer.is_stopped() || !turn_timer.is_paused()):
-#		return true;
-#	return false;
-
 func touch_input():
-	var grid_coord = pixel_to_grid(get_global_mouse_position()); ##if performace problems: check Input actions first instead of calcing this
-	if(is_in_grid(grid_coord)):
+	var grid_coord = pixel_to_grid(start, offset, get_global_mouse_position()); ##if performace problems: check Input actions first instead of calcing this
+	if(is_in_grid(grid_coord, width, height)):
 		if(Input.is_action_just_pressed("ui_click")):
 			if(turn_timer.is_stopped()):
 				turn_timer.start();
@@ -214,7 +164,7 @@ func touch_input():
 			is_controlling_piece = true;
 		if(Input.is_action_just_released("ui_click")):
 			is_controlling_piece = false;
-			end_touch = pixel_to_grid(get_global_mouse_position());
+			end_touch = pixel_to_grid(start, offset, get_global_mouse_position());
 			touch_difference(start_touch, end_touch);
 	else:
 		start_touch = null;
@@ -245,23 +195,28 @@ func swap_pieces(column, row, direction):
 		all_pieces[column][row] = other_piece;
 		all_pieces[target_column][target_row] = selected_piece;
 		#change the visual representation
-		selected_piece.move(grid_to_pixel(target_column, target_row));
-		other_piece.move(grid_to_pixel(column, row));
+		selected_piece.move(grid_to_pixel(start, offset, target_column, target_row));
+		other_piece.move(grid_to_pixel(start, offset, column, row));
 		find_matches();
+		break_matches();
+
+func _on_TurnTimer_timeout():
+	turn_timer.stop();
+	state = wait;
+	destroy_timer.start(0.1);
+	pass;
 
 
-func grid_to_pixel(column, row):
-	var new_x = start.x + offset * column;
-	var new_y = start.y + offset * row;
-	return Vector2(new_x, new_y);
+func _on_FillTimer_timeout():
+	make_current_pieces_fall();
+	fall_timer.start(.5);
+	pass;
 
-func pixel_to_grid(coordinate):
-	var new_x = round((coordinate.x - start.x) / offset);
-	var new_y = round((coordinate.y - start.y) / offset);
-	return Vector2(new_x, new_y);
+func _on_FallTimer_timeout():
+	refill_columns();
+	pass;
 
-func is_in_grid(coordinate):
-	if(coordinate.x >= 0  && coordinate.x < width):
-		if(coordinate.y >= 0 && coordinate.y < height):
-			return true;
-	return false;
+func _on_DestroyTimer_timeout():
+	destroy_matched();
+	fill_timer.start(0.5);
+	pass;
