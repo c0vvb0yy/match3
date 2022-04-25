@@ -12,6 +12,14 @@ enum{
 	vertical
 }
 
+enum{
+	sun,
+	moon,
+	star,
+	order,
+	chaos
+}
+
 #Grid Variables
 export (int) var width;
 export (int) var height;
@@ -49,8 +57,13 @@ var fall_timer;
 var fill_timer;
 var destroy_timer;
 
-#Utility class
-var Util
+#scoring variables / stats
+signal update_piece_count;
+signal new_turn;
+signal update_combo;
+export (int) var piece_value;
+var combo = 0;
+var turns = 1;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -103,13 +116,28 @@ func break_matches():
 					unmatch([all_pieces[i][j]]);
 
 func destroy_matched():
-	for i in width:
-		for j in height:
-			var current_piece = all_pieces[i][j]
-			if(current_piece != null):
-				if(current_piece.matched):
+	for cool_match in cool_matches:
+		var current_piece;
+		if(cool_match[3] == vertical):
+			for i in range(cool_match[1]-cool_match[2], cool_match[1]):
+				if(is_piece_existing(all_pieces, cool_match[0], i + 1)):
+					current_piece = all_pieces[cool_match[0]][i+1];
 					current_piece.queue_free();
-					all_pieces[i][j] = null;
+					all_pieces[cool_match[0]][i+1] = null;
+		else:
+			for i in range(cool_match[0]-cool_match[2], cool_match[0]):
+				if(is_piece_existing(all_pieces, i + 1, cool_match[1])):
+					current_piece = all_pieces[i + 1][cool_match[1]];
+					current_piece.queue_free();
+					all_pieces[cool_match[i+1]][cool_match[1]] = null;
+					
+#	for tile in current_matches:
+#			var current_piece = all_pieces[tile.x][tile.y]
+#			if(current_piece != null):
+#				current_piece.queue_free();
+#				all_pieces[tile.x][tile.y] = null;
+				#NOW POINTS ARE GIVEN OUT
+	update_stats();
 	print(current_matches);
 	current_matches.clear();
 
@@ -125,10 +153,10 @@ func find_long_matches():
 			if(current_color == last_color && current_color != null):
 				matched += 1;
 			else:
-				store_match(i, j - 1, matched, vertical);
+				store_match(i, j - 1, matched, vertical, last_color);
 				matched = 1;
 			last_color = current_color;
-		store_match(i, height - 1, matched, vertical);
+		store_match(i, height - 1, matched, vertical, last_color);
 		matched = 1;
 		last_color = null;
 	for y in height:
@@ -139,19 +167,19 @@ func find_long_matches():
 			if(current_color == last_color && current_color != null):
 				matched += 1;
 			else:
-				store_match(x - 1, y, matched, horizontal);
+				store_match(x - 1, y, matched, horizontal, last_color);
 				matched = 1;
 			last_color = current_color;
-		store_match(width- 1, y, matched, horizontal);
+		store_match(width- 1, y, matched, horizontal, last_color);
 		matched = 1;
 		last_color = null;
 	if(cool_matches.size() > 0):
 		print(cool_matches);
 
-func store_match(x, y, amount : int, direction : int):
+func store_match(x, y, amount : int, direction : int, color):
 	if (amount < 3 ):
 		return;
-	cool_matches.append([x, y, amount, direction]);
+	cool_matches.append([x, y, amount, direction, color]);
 	if(direction == vertical):
 		for i in range(y-amount, y):
 			 add_to_array([Vector2(x, i + 1)], current_matches);
@@ -159,6 +187,16 @@ func store_match(x, y, amount : int, direction : int):
 		for i in range(x-amount, x):
 			add_to_array([Vector2(i + 1, y)], current_matches);
 	pass;
+
+func update_stats():
+	for cool_match in cool_matches:
+		#update individual piece count
+		var amount = cool_match[2];
+		var color = cool_match[4];
+		emit_signal("update_piece_count", amount, color);
+		#update combo
+		combo += 1;
+
 
 func make_current_pieces_fall():
 	for i in width:
@@ -190,6 +228,7 @@ func after_refill():
 		destroy_timer.start(0.5);
 	else:
 		state = move;
+		combo = 0;
 	pass;
 
 func touch_input():
@@ -198,6 +237,7 @@ func touch_input():
 		if(Input.is_action_just_pressed("ui_click")):
 			if(turn_timer.is_stopped()):
 				turn_timer.start();
+				turns += 1;
 			start_touch = grid_coord;
 			is_controlling_piece = true;
 		if(Input.is_action_just_released("ui_click")):
