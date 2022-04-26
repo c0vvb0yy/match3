@@ -25,9 +25,6 @@ func fall(target): # Movement for pieces falling inbetween turns
 	move_tween.start();
 	pass;
 
-func dim():
-	sprite.modulate = Color(1, 1, 1, 0.5);
+func dim(alpha : float):
+	sprite.modulate = Color(1, 1, 1, alpha);
 	pass;
-
-func un_dim():
-	sprite.modulate = Color(1, 1, 1, 1);

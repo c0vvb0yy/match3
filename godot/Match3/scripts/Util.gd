@@ -1,12 +1,12 @@
 extends Node2D
 
-#enum {
-#	sun,
-#	moon,
-#	star,
-#	order,
-#	chaos
-#}
+enum {
+	sun,
+	moon,
+	star,
+	order,
+	chaos
+}
 
 func make_2d_array(grid_width, grid_height):
 	var array = [];
@@ -101,12 +101,12 @@ func is_match_at_short(all_pieces, column, row, piece):
 func match_and_dim(pieces):
 	for piece in pieces:
 		piece.matched = true;
-		piece.dim();
+		piece.dim(0.5);
 	pass;
 
 func unmatch(pieces):
 	for piece in pieces:
-		piece.un_dim();
+		piece.dim(1);
 		piece.matched = false;
 	pass;
 

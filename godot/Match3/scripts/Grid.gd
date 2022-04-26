@@ -12,6 +12,14 @@ enum{
 	vertical
 }
 
+enum colors{
+	sun,
+	moon,
+	star,
+	order,
+	chaos
+}
+
 #Grid Variables
 export (int) var width;
 export (int) var height;
@@ -48,14 +56,18 @@ var turn_timer;
 var fall_timer;
 var fill_timer;
 var destroy_timer;
+var score_timer;
 
 #scoring variables / stats
 signal update_piece_count;
 signal new_turn;
 signal update_combo;
+signal score;
 export (int) var piece_value;
-var combo = 0;
+var combo = 1;
 var turns = 1;
+
+onready var combo_label = $ComboLabel;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -64,6 +76,7 @@ func _ready():
 	fall_timer = get_parent().get_node("FallTimer");
 	fill_timer = get_parent().get_node("FillTimer");
 	destroy_timer = get_parent().get_node("DestroyTimer");
+	score_timer = get_parent().get_node("ScoreTimer");
 	randomize();
 	all_pieces = make_2d_array(width, height);
 	fill_grid();
@@ -101,39 +114,6 @@ func find_matches():
 		match_and_dim([all_pieces[tile.x][tile.y]]);
 	return current_matches.size() > 0;
 
-func break_matches():
-	for i in width:
-		for j in height:
-			if(is_piece_existing(all_pieces, i, j)):
-				if(all_pieces[i][j].matched && !is_match_at(width, height, all_pieces, i, j)):
-					unmatch([all_pieces[i][j]]);
-
-func destroy_matched():
-#	for cool_match in cool_matches:
-#		var current_piece;
-#		if(cool_match[3] == vertical):
-#			for i in range(cool_match[1]-cool_match[2], cool_match[1]):
-#				if(is_piece_existing(all_pieces, cool_match[0], i + 1)):
-#					current_piece = all_pieces[cool_match[0]][i+1];
-#					current_piece.queue_free();
-#					all_pieces[cool_match[0]][i+1] = null;
-#		else:
-#			for i in range(cool_match[0]-cool_match[2], cool_match[0]):
-#				if(is_piece_existing(all_pieces, i + 1, cool_match[1])):
-#					current_piece = all_pieces[i + 1][cool_match[1]];
-#					current_piece.queue_free();
-#					all_pieces[cool_match[i+1]][cool_match[1]] = null;
-#
-	for tile in current_matches:
-			var current_piece = all_pieces[tile.x][tile.y]
-			if(current_piece != null):
-				current_piece.queue_free();
-				all_pieces[tile.x][tile.y] = null;
-				#NOW POINTS ARE GIVEN OUT
-	update_stats();
-	print(current_matches);
-	current_matches.clear();
-
 func find_long_matches():
 	var last_color = null;
 	var matched = 1;
@@ -169,6 +149,63 @@ func find_long_matches():
 	if(cool_matches.size() > 0):
 		print(cool_matches);
 
+func break_matches():
+	for i in width:
+		for j in height:
+			if(is_piece_existing(all_pieces, i, j)):
+				if(all_pieces[i][j].matched && !is_match_at(width, height, all_pieces, i, j)):
+					unmatch([all_pieces[i][j]]);
+
+func score_match():
+	for i in cool_matches.size():
+		if(cool_matches[i] != null):
+			var cool_match = cool_matches[i];
+			var amount = cool_match[2];
+			var score_amount = amount * 11;
+			score_amount += (score_amount/4) * combo;
+			if(cool_match[3] == vertical):
+				combo_label.set_position(grid_to_pixel(start, offset, cool_match[0], cool_match[1]-1));
+				for j in range(cool_match[1]-amount, cool_match[1]):
+					all_pieces[cool_match[0]][j+1].dim(0);
+			else:
+				combo_label.set_position(grid_to_pixel(start, offset, cool_match[0]-1, cool_match[1]));
+				for j in range(cool_match[0]-amount, cool_match[0]):
+					all_pieces[j+1][cool_match[1]].dim(0);
+			combo_label.text = String(combo);
+			emit_signal("score", amount, cool_match[4]);
+			combo += 1;
+			cool_matches[i] = null;
+			score_timer.start(0.5);
+			return;
+	
+	pass;
+
+func destroy_matched():
+#	for cool_match in cool_matches:
+#		var current_piece;
+#		if(cool_match[3] == vertical):
+#			for i in range(cool_match[1]-cool_match[2], cool_match[1]):
+#				if(is_piece_existing(all_pieces, cool_match[0], i + 1)):
+#					current_piece = all_pieces[cool_match[0]][i+1];
+#					current_piece.queue_free();
+#					all_pieces[cool_match[0]][i+1] = null;
+#		else:
+#			for i in range(cool_match[0]-cool_match[2], cool_match[0]):
+#				if(is_piece_existing(all_pieces, i + 1, cool_match[1])):
+#					current_piece = all_pieces[i + 1][cool_match[1]];
+#					current_piece.queue_free();
+#					all_pieces[cool_match[i+1]][cool_match[1]] = null;
+#
+	for tile in current_matches:
+			var current_piece = all_pieces[tile.x][tile.y]
+			if(current_piece != null):
+				current_piece.queue_free();
+				all_pieces[tile.x][tile.y] = null;
+				#NOW POINTS ARE GIVEN OUT
+	update_stats();
+	print(current_matches);
+	current_matches.clear();
+
 func store_match(x, y, amount : int, direction : int, color):
 	if (amount < 3 ):
 		return;
@@ -187,8 +224,6 @@ func update_stats():
 		var amount = cool_match[2];
 		var color = cool_match[4];
 		emit_signal("update_piece_count", amount, color);
-		#update combo
-		combo += 1;
 
 
 func make_current_pieces_fall():
@@ -217,11 +252,12 @@ func refill_columns():
 	pass;
 
 func after_refill():
+	var combo_counter = 0;
 	if(find_matches()):
-		destroy_timer.start(0.5);
+		score_timer.start(0.5);
 	else:
 		state = move;
-		combo = 0;
+		combo = 1;
 	pass;
 
 func touch_input():
@@ -273,7 +309,21 @@ func swap_pieces(column, row, direction):
 func _on_TurnTimer_timeout():
 	turn_timer.stop();
 	state = wait;
-	destroy_timer.start(0.1);
+	score_timer.start(0.3);
+	#destroy_timer.start(0.1);
+	pass;
+
+func _on_ScoreTimer_timeout():
+	if(cool_matches.size() >= 1 &&cool_matches[cool_matches.size()-1] != null):
+		score_match();
+	else:
+		destroy_timer.start(0.1);
+	pass # Replace with function body.
+
+func _on_DestroyTimer_timeout(): #Turn is over
+	find_long_matches();
+	destroy_matched();
+	fill_timer.start(0.5);
 	pass;
 
 
@@ -292,9 +342,3 @@ func on_space():
 	fill_timer.start(0.5);
 	pass;
 
-
-func _on_DestroyTimer_timeout(): #Turn is over
-	find_long_matches();
-	destroy_matched();
-	fill_timer.start(0.5);
-	pass;
