@@ -1,14 +1,16 @@
 extends HBoxContainer
 
 onready var labels = [
-	$bottom_slot_sun/amount,
-	$bottom_slot_moon/amount,
-	$bottom_slot_star/amount,
-	$bottom_slot_order/amount,
-	$bottom_slot_chaos/amount
+	$bottom_slot_sun/TextureRect/amount,
+	$bottom_slot_moon/TextureRect/amount,
+	$bottom_slot_star/TextureRect/amount,
+	$bottom_slot_order/TextureRect/amount,
+	$bottom_slot_chaos/TextureRect/amount
 	]
-var colors = ["sun", "moon", "star", "order", "chaos"];
-export (String) var color;
+
+
+enum COLOR {sun = 0, moon = 1, star = 2, order = 3, chaos = 4}
+
 var current_amounts = [0, 0, 0, 0, 0,];
 
 # Called when the node enters the scene tree for the first time.
@@ -22,10 +24,9 @@ func _ready():
 
 
 func _on_Grid_update_piece_count(received_amount, received_color):
-	var counter = 0;
-	for i in colors:
+	for i in COLOR.size():
 		if (i == received_color):
-			current_amounts[counter] += received_amount;
-			labels[counter].text = String(current_amounts[counter]);
-		counter += 1;
+			current_amounts[i] += received_amount;
+			labels[i].text = String(current_amounts[i]);
+			break;
 	pass;

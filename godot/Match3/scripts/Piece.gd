@@ -1,6 +1,8 @@
 extends Node2D
 
-export (String) var color
+enum COLOR {sun = 0, moon = 1, star = 2, order = 3, chaos = 4}
+
+export (COLOR) var color;
 var move_tween;
 var matched = false;
 
@@ -11,9 +13,15 @@ func _ready():
 	move_tween = get_node("MoveTween");
 	pass # Replace with function body.
 
-func move(target):
+func move(target): #Movement for player-based swapping of pieces
 	move_tween.interpolate_property(self, "position", position, target,
 	 .3, Tween.TRANS_CUBIC, Tween.EASE_OUT); 
+	move_tween.start();
+	pass;
+
+func fall(target): # Movement for pieces falling inbetween turns
+	move_tween.interpolate_property(self, "position", position, target,
+	 .3, Tween.TRANS_BOUNCE, Tween.EASE_OUT); 
 	move_tween.start();
 	pass;
 

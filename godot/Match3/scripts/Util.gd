@@ -1,5 +1,12 @@
 extends Node2D
 
+#enum {
+#	sun,
+#	moon,
+#	star,
+#	order,
+#	chaos
+#}
 
 func make_2d_array(grid_width, grid_height):
 	var array = [];
@@ -31,7 +38,7 @@ func is_piece_existing(all_pieces, coloumn, row):
 	return false;
 
 func is_piece_same(all_pieces, coloumn, row, piece):
-	if(all_pieces[coloumn][row].color == piece.color):
+	if(int(all_pieces[coloumn][row].color) == int(piece.color)):
 		return true;
 	return false;
 
@@ -76,18 +83,18 @@ func is_match_at(grid_width, grid_height, all_pieces, column, row):
 				return true;
 	return false;
 
-func is_match_at_short(all_pieces, column, row, color):
+func is_match_at_short(all_pieces, column, row, piece):
 	if(column > 1): #then we look to the left of the piece
 		var left_piece = all_pieces[column - 1][row];
 		var left_most_piece = all_pieces[column - 2][row];
 		if (left_piece != null && left_most_piece != null): #check if there's pieces at all next to the one we look at
-			if (left_piece.color == color && left_most_piece.color == color):
+			if (int(left_piece.color) == int(piece.color) && int(left_most_piece.color) == int(piece.color)):
 				return true;
 	if(row > 1): #then we look below the piece
 		var lower_piece = all_pieces[column][row - 1];
 		var lowest_piece = all_pieces[column][row - 2];
 		if(lower_piece != null && lowest_piece != null):
-			if(lower_piece.color == color && lowest_piece.color == color):
+			if(int(lower_piece.color) == int(piece.color) && int(lowest_piece.color) == int(piece.color)):
 				return true;
 	return false;
 

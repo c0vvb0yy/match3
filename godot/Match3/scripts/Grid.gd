@@ -12,14 +12,6 @@ enum{
 	vertical
 }
 
-enum{
-	sun,
-	moon,
-	star,
-	order,
-	chaos
-}
-
 #Grid Variables
 export (int) var width;
 export (int) var height;
@@ -91,13 +83,14 @@ func fill_grid(): #top to bottom then left to right
 			if(!is_restricted_in_placement(Vector2(i, j), empty_spaces)):
 				#choose a random number and store it
 				var rand = floor(rand_range(0, possible_pieces.size()));
+				#instance piece from array
 				var piece = possible_pieces[rand].instance();
 				var loops = 0;
-				while(is_match_at_short(all_pieces, i, j, piece.color) && loops < 100):
+				while(is_match_at_short(all_pieces, i, j, piece) && loops < 100):
 					rand = floor(rand_range(0, possible_pieces.size()));
 					piece = possible_pieces[rand].instance();
 					loops +=1;
-				#instance piece from array
+				#add piece to scene
 				add_child(piece);
 				piece.position = grid_to_pixel(start, offset, i, j);
 				all_pieces[i][j] = piece;
@@ -116,26 +109,26 @@ func break_matches():
 					unmatch([all_pieces[i][j]]);
 
 func destroy_matched():
-	for cool_match in cool_matches:
-		var current_piece;
-		if(cool_match[3] == vertical):
-			for i in range(cool_match[1]-cool_match[2], cool_match[1]):
-				if(is_piece_existing(all_pieces, cool_match[0], i + 1)):
-					current_piece = all_pieces[cool_match[0]][i+1];
-					current_piece.queue_free();
-					all_pieces[cool_match[0]][i+1] = null;
-		else:
-			for i in range(cool_match[0]-cool_match[2], cool_match[0]):
-				if(is_piece_existing(all_pieces, i + 1, cool_match[1])):
-					current_piece = all_pieces[i + 1][cool_match[1]];
-					current_piece.queue_free();
-					all_pieces[cool_match[i+1]][cool_match[1]] = null;
-					
-#	for tile in current_matches:
-#			var current_piece = all_pieces[tile.x][tile.y]
-#			if(current_piece != null):
-#				current_piece.queue_free();
-#				all_pieces[tile.x][tile.y] = null;
+#	for cool_match in cool_matches:
+#		var current_piece;
+#		if(cool_match[3] == vertical):
+#			for i in range(cool_match[1]-cool_match[2], cool_match[1]):
+#				if(is_piece_existing(all_pieces, cool_match[0], i + 1)):
+#					current_piece = all_pieces[cool_match[0]][i+1];
+#					current_piece.queue_free();
+#					all_pieces[cool_match[0]][i+1] = null;
+#		else:
+#			for i in range(cool_match[0]-cool_match[2], cool_match[0]):
+#				if(is_piece_existing(all_pieces, i + 1, cool_match[1])):
+#					current_piece = all_pieces[i + 1][cool_match[1]];
+#					current_piece.queue_free();
+#					all_pieces[cool_match[i+1]][cool_match[1]] = null;
+#
+	for tile in current_matches:
+			var current_piece = all_pieces[tile.x][tile.y]
+			if(current_piece != null):
+				current_piece.queue_free();
+				all_pieces[tile.x][tile.y] = null;
 				#NOW POINTS ARE GIVEN OUT
 	update_stats();
 	print(current_matches);
@@ -149,7 +142,7 @@ func find_long_matches():
 		for j in height:
 			var current_color;
 			if(is_piece_existing(all_pieces, i, j)):
-				current_color = all_pieces[i][j].color;
+				current_color = int(all_pieces[i][j].color);
 			if(current_color == last_color && current_color != null):
 				matched += 1;
 			else:
@@ -163,7 +156,7 @@ func find_long_matches():
 		for x in width:
 			var current_color;
 			if(is_piece_existing(all_pieces, x, y)):
-				current_color = all_pieces[x][y].color;
+				current_color = int(all_pieces[x][y].color);
 			if(current_color == last_color && current_color != null):
 				matched += 1;
 			else:
@@ -204,7 +197,7 @@ func make_current_pieces_fall():
 			if(all_pieces[i][j] == null && !is_restricted_in_placement(Vector2(i, j), empty_spaces)):
 				for k in range(j - 1, -1, -1):
 					if(all_pieces[i][k] != null):
-						all_pieces[i][k].move(grid_to_pixel(start, offset, i, j));
+						all_pieces[i][k].fall(grid_to_pixel(start, offset, i, j));
 						all_pieces[i][j] = all_pieces[i][k];
 						all_pieces[i][k] = null;
 						make_current_pieces_fall();
@@ -218,7 +211,7 @@ func refill_columns():
 				var piece = possible_pieces[rand].instance();
 				add_child(piece);
 				piece.position = grid_to_pixel(start, offset, i, j - piece_y_offset);
-				piece.move(grid_to_pixel(start, offset, i, j));
+				piece.fall(grid_to_pixel(start, offset, i, j));
 				all_pieces[i][j] = piece;
 	after_refill();
 	pass;
