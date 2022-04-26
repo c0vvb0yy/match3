@@ -8,6 +8,10 @@
 [node name="PortraitBorder" type="TextureRect"]
 texture = ExtResource( 3 )
 
+[node name="Character" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
 [node name="TextureProgress" type="TextureProgress" parent="."]
 margin_left = 276.0
 margin_right = 303.0

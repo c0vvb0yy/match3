@@ -65,9 +65,11 @@ signal update_combo;
 signal score;
 export (int) var piece_value;
 var combo = 1;
-var turns = 1;
+var turns = 0;
 
-onready var combo_label = $ComboLabel;
+onready var combo_label = get_parent().get_node("ComboLabel");
+onready var combo_counter = get_parent().get_node("MiddleUI/ComboCounter/Text");
+onready var turn_counter = get_parent().get_node("MiddleUI/TurnCounter/Text");
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -164,14 +166,17 @@ func score_match():
 			var score_amount = amount * 11;
 			score_amount += (score_amount/4) * combo;
 			if(cool_match[3] == vertical):
-				combo_label.set_position(grid_to_pixel(start, offset, cool_match[0], cool_match[1]-1));
+				var y_grid = cool_match[1];
+				combo_label.set_position(grid_to_pixel(start, offset, cool_match[0], y_grid-2));
 				for j in range(cool_match[1]-amount, cool_match[1]):
 					all_pieces[cool_match[0]][j+1].dim(0);
 			else:
-				combo_label.set_position(grid_to_pixel(start, offset, cool_match[0]-1, cool_match[1]));
+				var x_grid = cool_match[0];
+				combo_label.set_position(grid_to_pixel(start, offset, x_grid-2, cool_match[1]));
 				for j in range(cool_match[0]-amount, cool_match[0]):
 					all_pieces[j+1][cool_match[1]].dim(0);
-			combo_label.text = String(combo);
+			combo_label.display_combo(combo, 0.5);
+			combo_counter.text = String(combo);
 			emit_signal("score", amount, cool_match[4]);
 			combo += 1;
 			cool_matches[i] = null;
@@ -267,6 +272,7 @@ func touch_input():
 			if(turn_timer.is_stopped()):
 				turn_timer.start();
 				turns += 1;
+				turn_counter.text = String(turns);
 			start_touch = grid_coord;
 			is_controlling_piece = true;
 		if(Input.is_action_just_released("ui_click")):

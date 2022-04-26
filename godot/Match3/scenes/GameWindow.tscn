@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://art/background_0_1_solid.png" type="Texture" id=1]
 [ext_resource path="res://art/piece_sun.png" type="Texture" id=2]
@@ -11,7 +11,6 @@
 [ext_resource path="res://scenes/CharacterSlot.tscn" type="PackedScene" id=9]
 [ext_resource path="res://art/grid_bg.png" type="Texture" id=10]
 [ext_resource path="res://scenes/UISquareBox.tscn" type="PackedScene" id=11]
-[ext_resource path="res://scripts/UITurnCounter.gd" type="Script" id=12]
 [ext_resource path="res://scripts/UI.gd" type="Script" id=13]
 [ext_resource path="res://art/piece_chaos.png" type="Texture" id=14]
 [ext_resource path="res://art/piece_star.png" type="Texture" id=15]
@@ -19,13 +18,20 @@
 [ext_resource path="res://art/piece_moon.png" type="Texture" id=17]
 [ext_resource path="res://scripts/PieceCounter.gd" type="Script" id=18]
 [ext_resource path="res://scripts/Util.gd" type="Script" id=19]
-[ext_resource path="res://fonts/resources/dynamicfont_ui.tres" type="DynamicFont" id=20]
+[ext_resource path="res://fonts/ttf/Kenney Future Narrow.ttf" type="DynamicFontData" id=20]
+[ext_resource path="res://scripts/ComboLabel.gd" type="Script" id=21]
 
 [sub_resource type="Theme" id=1]
+
+[sub_resource type="Theme" id=5]
 
 [sub_resource type="Theme" id=2]
 
 [sub_resource type="Theme" id=3]
+
+[sub_resource type="DynamicFont" id=4]
+size = 41
+font_data = ExtResource( 20 )
 
 [node name="GameWindow" type="Node2D"]
 script = ExtResource( 19 )
@@ -45,7 +51,9 @@ custom_constants/separation = 13
 script = ExtResource( 13 )
 
 [node name="TurnCounter" parent="MiddleUI" instance=ExtResource( 8 )]
-script = ExtResource( 12 )
+
+[node name="Text" parent="MiddleUI/TurnCounter" index="0"]
+theme = SubResource( 5 )
 
 [node name="ComboCounter" parent="MiddleUI" instance=ExtResource( 8 )]
 margin_top = 121.0
@@ -165,15 +173,6 @@ offset = 128
 piece_y_offset = 5
 empty_spaces = PoolVector2Array( 0, 0, 5, 0, 0, 5, 5, 5 )
 
-[node name="ComboLabel" type="Label" parent="Grid"]
-margin_left = 1000.0
-margin_top = 80.0
-margin_right = 1064.0
-margin_bottom = 182.0
-theme = SubResource( 3 )
-custom_fonts/font = ExtResource( 20 )
-text = "5"
-
 [node name="TurnTimer" type="Timer" parent="."]
 wait_time = 5.0
 
@@ -206,6 +205,25 @@ texture_progress = ExtResource( 5 )
 fill_mode = 3
 script = ExtResource( 7 )
 
+[node name="ComboLabel" type="Label" parent="."]
+modulate = Color( 0.890196, 0.231373, 0.231373, 1 )
+margin_left = 1156.0
+margin_top = 690.0
+margin_right = 1504.49
+margin_bottom = 792.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+text = "5 Combo!"
+align = 1
+valign = 1
+script = ExtResource( 21 )
+
+[node name="Tween" type="Tween" parent="ComboLabel"]
+
 [connection signal="update_piece_count" from="Grid" to="BottomSlots" method="_on_Grid_update_piece_count"]
 [connection signal="timeout" from="TurnTimer" to="Grid" method="_on_TurnTimer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="Grid" method="_on_ScoreTimer_timeout"]
@@ -213,8 +231,11 @@ script = ExtResource( 7 )
 [connection signal="timeout" from="FillTimer" to="Grid" method="_on_FillTimer_timeout"]
 [connection signal="timeout" from="DestroyTimer" to="Grid" method="_on_DestroyTimer_timeout"]
 
+[editable path="MiddleUI/TurnCounter"]
+[editable path="MiddleUI/ComboCounter"]
 [editable path="BottomSlots/bottom_slot_sun"]
 [editable path="BottomSlots/bottom_slot_moon"]
 [editable path="BottomSlots/bottom_slot_star"]
 [editable path="BottomSlots/bottom_slot_order"]
 [editable path="BottomSlots/bottom_slot_chaos"]
+[editable path="CharacterContainer/Char1_PortraitBorder"]
