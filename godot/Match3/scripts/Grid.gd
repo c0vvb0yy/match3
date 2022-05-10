@@ -52,15 +52,15 @@ var end_touch = Vector2(0, 0);
 var is_controlling_piece = false;
 
 #Timer
-var turn_timer;
-var fall_timer;
-var fill_timer;
-var destroy_timer;
-var score_timer;
+onready var turn_timer = get_parent().get_node("TurnTimer");
+onready var fall_timer = get_parent().get_node("FallTimer");
+onready var fill_timer = get_parent().get_node("FillTimer");
+onready var destroy_timer = get_parent().get_node("DestroyTimer");
+onready var score_timer = get_parent().get_node("ScoreTimer");
 
 #scoring variables / stats
 signal update_piece_count;
-signal new_turn;
+signal damage_enemy;
 signal update_combo;
 signal score;
 export (int) var piece_value;
@@ -74,11 +74,7 @@ onready var turn_counter = get_parent().get_node("MiddleUI/TurnCounter/Text");
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	state = move;
-	turn_timer = get_parent().get_node("TurnTimer");
-	fall_timer = get_parent().get_node("FallTimer");
-	fill_timer = get_parent().get_node("FillTimer");
-	destroy_timer = get_parent().get_node("DestroyTimer");
-	score_timer = get_parent().get_node("ScoreTimer");
+	
 	randomize();
 	all_pieces = make_2d_array(width, height);
 	fill_grid();
@@ -157,6 +153,7 @@ func break_matches():
 			if(is_piece_existing(all_pieces, i, j)):
 				if(all_pieces[i][j].matched && !is_match_at(width, height, all_pieces, i, j)):
 					unmatch([all_pieces[i][j]]);
+					current_matches.erase(Vector2(i, j));
 
 func score_match():
 	for i in cool_matches.size():
@@ -177,7 +174,7 @@ func score_match():
 					all_pieces[j+1][cool_match[1]].dim(0);
 			combo_label.display_combo(combo, 0.5);
 			combo_counter.text = String(combo);
-			emit_signal("score", amount, cool_match[4]);
+			emit_signal("score", score_amount, cool_match[4]); #cool_match[4] == color
 			combo += 1;
 			cool_matches[i] = null;
 			score_timer.start(0.5);
@@ -258,9 +255,10 @@ func refill_columns():
 
 func after_refill():
 	var combo_counter = 0;
-	if(find_matches()):
+	if(find_matches()): #weitere matches gefunden. werden verarbeitet
 		score_timer.start(0.5);
-	else:
+	else: #keinen weiteren matches. score verarbeitung und dann next turn
+		emit_signal("damage_enemy");
 		state = move;
 		combo = 1;
 	pass;

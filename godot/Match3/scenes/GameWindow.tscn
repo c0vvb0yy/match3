@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://art/background_0_1_solid.png" type="Texture" id=1]
 [ext_resource path="res://art/piece_sun.png" type="Texture" id=2]
@@ -8,9 +8,9 @@
 [ext_resource path="res://art/timer_bar_under.png" type="Texture" id=6]
 [ext_resource path="res://scripts/TimerBarProgress.gd" type="Script" id=7]
 [ext_resource path="res://scenes/UIRectangleBox.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scenes/CharacterSlot.tscn" type="PackedScene" id=9]
 [ext_resource path="res://art/grid_bg.png" type="Texture" id=10]
 [ext_resource path="res://scenes/UISquareBox.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/Anthrazit.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scripts/UI.gd" type="Script" id=13]
 [ext_resource path="res://art/piece_chaos.png" type="Texture" id=14]
 [ext_resource path="res://art/piece_star.png" type="Texture" id=15]
@@ -20,12 +20,12 @@
 [ext_resource path="res://scripts/Util.gd" type="Script" id=19]
 [ext_resource path="res://fonts/ttf/Kenney Future Narrow.ttf" type="DynamicFontData" id=20]
 [ext_resource path="res://scripts/ComboLabel.gd" type="Script" id=21]
+[ext_resource path="res://scenes/Zaavan.tscn" type="PackedScene" id=22]
+[ext_resource path="res://scenes/Enemy.tscn" type="PackedScene" id=23]
 
 [sub_resource type="Theme" id=1]
 
 [sub_resource type="Theme" id=5]
-
-[sub_resource type="Theme" id=2]
 
 [sub_resource type="Theme" id=3]
 
@@ -116,47 +116,6 @@ margin_bottom = 137.0
 [node name="piece" parent="BottomSlots/bottom_slot_chaos/bottom_slot_0" index="0"]
 texture = ExtResource( 14 )
 
-[node name="CharacterContainer" type="GridContainer" parent="."]
-margin_left = 21.0
-margin_top = 556.549
-margin_right = 908.0
-margin_bottom = 1061.55
-theme = SubResource( 2 )
-custom_constants/vseparation = 8
-custom_constants/hseparation = 43
-columns = 3
-
-[node name="Char1_Dmg" parent="CharacterContainer" instance=ExtResource( 8 )]
-size_flags_horizontal = 2
-
-[node name="DisplayTexture2" parent="CharacterContainer" instance=ExtResource( 8 )]
-margin_left = 310.0
-margin_right = 505.0
-size_flags_horizontal = 2
-
-[node name="DisplayTexture3" parent="CharacterContainer" instance=ExtResource( 8 )]
-margin_left = 620.0
-margin_right = 815.0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-
-[node name="Char1_PortraitBorder" parent="CharacterContainer" instance=ExtResource( 9 )]
-margin_top = 116.0
-margin_right = 267.0
-margin_bottom = 505.0
-
-[node name="PortraitBorder2" parent="CharacterContainer" instance=ExtResource( 9 )]
-margin_left = 310.0
-margin_top = 116.0
-margin_right = 577.0
-margin_bottom = 505.0
-
-[node name="PortraitBorder3" parent="CharacterContainer" instance=ExtResource( 9 )]
-margin_left = 620.0
-margin_top = 116.0
-margin_right = 887.0
-margin_bottom = 505.0
-
 [node name="Gried_field" type="TextureRect" parent="."]
 margin_left = 954.0
 margin_top = 53.0
@@ -224,6 +183,41 @@ script = ExtResource( 21 )
 
 [node name="Tween" type="Tween" parent="ComboLabel"]
 
+[node name="Enemy" parent="." instance=ExtResource( 23 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 135.0
+margin_top = -19.0
+margin_right = 175.0
+margin_bottom = 21.0
+rect_scale = Vector2( 1.25, 1.25 )
+health = 500
+heroes = [ NodePath("../HBoxContainer/Character"), NodePath("../HBoxContainer/Control") ]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 79.0
+margin_top = 550.0
+margin_right = 554.0
+margin_bottom = 590.0
+custom_constants/separation = 475
+
+[node name="Character" parent="HBoxContainer" instance=ExtResource( 12 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_bottom = 40.0
+piece_counter = NodePath("../../BottomSlots")
+
+[node name="Control" parent="HBoxContainer" instance=ExtResource( 22 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 475.0
+margin_right = 475.0
+margin_bottom = 40.0
+piece_counter = NodePath("../../BottomSlots")
+
+[connection signal="damage_enemy" from="Grid" to="Enemy" method="_on_Grid_damage_enemy"]
+[connection signal="score" from="Grid" to="HBoxContainer/Character" method="_on_Grid_score"]
+[connection signal="score" from="Grid" to="HBoxContainer/Control" method="_on_Grid_score"]
 [connection signal="update_piece_count" from="Grid" to="BottomSlots" method="_on_Grid_update_piece_count"]
 [connection signal="timeout" from="TurnTimer" to="Grid" method="_on_TurnTimer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="Grid" method="_on_ScoreTimer_timeout"]
@@ -238,4 +232,3 @@ script = ExtResource( 21 )
 [editable path="BottomSlots/bottom_slot_star"]
 [editable path="BottomSlots/bottom_slot_order"]
 [editable path="BottomSlots/bottom_slot_chaos"]
-[editable path="CharacterContainer/Char1_PortraitBorder"]

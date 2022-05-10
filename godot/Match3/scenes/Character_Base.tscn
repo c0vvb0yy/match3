@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scenes/CharacterSlot.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/UIRectangleBox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://art/character_healthbar_progress.png" type="Texture" id=3]
+[ext_resource path="res://art/character_healthbar_over.png" type="Texture" id=4]
+[ext_resource path="res://art/character_healthbar_under.png" type="Texture" id=5]
+[ext_resource path="res://scripts/Character_Base.gd" type="Script" id=6]
+[ext_resource path="res://art/character_border.png" type="Texture" id=7]
+
+[node name="Character" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 6 )
+
+[node name="PortraitBorder" parent="." instance=ExtResource( 1 )]
+margin_top = 126.0
+margin_right = 267.0
+margin_bottom = 515.0
+
+[node name="ScoreDisplay" parent="." instance=ExtResource( 2 )]
+margin_left = 40.0
+margin_top = 3.0
+margin_right = 235.0
+margin_bottom = 111.0
+
+[node name="HPDisplay" type="TextureProgress" parent="."]
+margin_left = 276.0
+margin_top = 125.0
+margin_right = 303.0
+margin_bottom = 515.0
+value = 43.0
+texture_under = ExtResource( 5 )
+texture_over = ExtResource( 4 )
+texture_progress = ExtResource( 3 )
+fill_mode = 3
+
+[node name="Button" type="Button" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+anchor_bottom = 1.0
+margin_top = 124.0
+margin_right = 302.184
+margin_bottom = -440.205
+action_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="Skill" type="Node" parent="."]
+
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+
+[editable path="PortraitBorder"]

@@ -43,3 +43,6 @@ func _on_Grid_update_piece_count(received_amount, received_color):
 			has_score_updated = true;
 			break;
 	pass;
+
+func get_piece_amount(color):
+	return current_amounts[color];
