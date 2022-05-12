@@ -45,7 +45,7 @@ action_mode = 0
 icon = ExtResource( 7 )
 flat = true
 
-[node name="Skill" type="Node" parent="."]
+[node name="Skill" type="Control" parent="."]
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 

@@ -1,7 +1,7 @@
 extends "res://scripts/Util.gd"
 
 #State Machine
-enum{
+enum game_states{
 	wait,
 	move
 }
@@ -63,6 +63,7 @@ signal update_piece_count;
 signal damage_enemy;
 signal update_combo;
 signal score;
+signal new_turn;
 export (int) var piece_value;
 var combo = 1;
 var turns = 0;
@@ -73,7 +74,7 @@ onready var turn_counter = get_parent().get_node("MiddleUI/TurnCounter/Text");
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	state = move;
+	state = game_states.move;
 	
 	randomize();
 	all_pieces = make_2d_array(width, height);
@@ -82,7 +83,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if(state == move):
+	if(state == game_states.move):
 		touch_input();
 		if(Input.is_action_just_pressed("ui_accept")):
 			on_space();
@@ -259,7 +260,7 @@ func after_refill():
 		score_timer.start(0.5);
 	else: #keinen weiteren matches. score verarbeitung und dann next turn
 		emit_signal("damage_enemy");
-		state = move;
+		state = game_states.move;
 		combo = 1;
 	pass;
 
@@ -268,13 +269,9 @@ func touch_input():
 	if(is_in_grid(grid_coord, width, height)):
 		if(Input.is_action_just_pressed("ui_click")):
 			if(turn_timer.is_stopped()):
-				turn_timer.start();
-				turns += 1;
-				turn_counter.text = String(turns);
+				start_new_turn();
 			start_touch = grid_coord;
-			is_controlling_piece = true;
 		if(Input.is_action_just_released("ui_click")):
-			is_controlling_piece = false;
 			end_touch = pixel_to_grid(start, offset, get_global_mouse_position());
 			touch_difference(start_touch, end_touch);
 	else:
@@ -310,9 +307,18 @@ func swap_pieces(column, row, direction):
 		find_matches();
 		break_matches();
 
+func start_new_turn():
+	#reset last turns displayed info 
+	emit_signal("new_turn");
+	#turn related things
+	turn_timer.start();
+	turns += 1;
+	turn_counter.text = String(turns);
+	
+
 func _on_TurnTimer_timeout():
 	turn_timer.stop();
-	state = wait;
+	state = game_states.wait;
 	score_timer.start(0.3);
 	#destroy_timer.start(0.1);
 	pass;

@@ -1,9 +1,15 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/Piece.gd" type="Script" id=1]
+[ext_resource path="res://art/piece_chaos.png" type="Texture" id=2]
+[ext_resource path="res://art/piece_moon.png" type="Texture" id=3]
+[ext_resource path="res://art/piece_order.png" type="Texture" id=4]
+[ext_resource path="res://art/piece_star.png" type="Texture" id=5]
+[ext_resource path="res://art/piece_sun.png" type="Texture" id=6]
 
 [node name="Piece" type="Node2D"]
 script = ExtResource( 1 )
+sprites = [ ExtResource( 6 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 2 ) ]
 
 [node name="Sprite" type="Sprite" parent="."]
 

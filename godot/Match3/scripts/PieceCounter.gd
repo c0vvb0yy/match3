@@ -26,6 +26,9 @@ func _process(delta):
 			if(current_amounts[i] < target_amounts[i]):
 				current_amounts[i] = lerp(current_amounts[i], target_amounts[i], delta * 5);
 				labels[i].text = String(round(current_amounts[i]));
+			elif(current_amounts[i] > target_amounts[i]):
+				current_amounts[i] = target_amounts[i];
+				labels[i].text = String(round(current_amounts[i]));
 #		for i in target_amounts.size():
 #			while (current_amounts[i] != target_amounts[i]):
 #				current_amounts[i] += 1;
@@ -45,4 +48,7 @@ func _on_Grid_update_piece_count(received_amount, received_color):
 	pass;
 
 func get_piece_amount(color):
-	return current_amounts[color];
+	return target_amounts[color];
+
+func set_piece_amount(color, amount):
+	target_amounts[color] = amount;

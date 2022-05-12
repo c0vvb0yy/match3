@@ -205,7 +205,11 @@ custom_constants/separation = 475
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_bottom = 40.0
+grid = NodePath("../../Grid")
 piece_counter = NodePath("../../BottomSlots")
+
+[node name="HPDisplay" parent="HBoxContainer/Character" index="2"]
+visible = true
 
 [node name="Control" parent="HBoxContainer" instance=ExtResource( 22 )]
 anchor_right = 0.0
@@ -213,9 +217,16 @@ anchor_bottom = 0.0
 margin_left = 475.0
 margin_right = 475.0
 margin_bottom = 40.0
+grid = NodePath("../../Grid")
 piece_counter = NodePath("../../BottomSlots")
 
+[node name="HPDisplay" parent="HBoxContainer/Control" index="2"]
+visible = true
+
 [connection signal="damage_enemy" from="Grid" to="Enemy" method="_on_Grid_damage_enemy"]
+[connection signal="new_turn" from="Grid" to="Enemy" method="_on_Grid_new_turn"]
+[connection signal="new_turn" from="Grid" to="HBoxContainer/Character" method="_on_Grid_new_turn"]
+[connection signal="new_turn" from="Grid" to="HBoxContainer/Control" method="_on_Grid_new_turn"]
 [connection signal="score" from="Grid" to="HBoxContainer/Character" method="_on_Grid_score"]
 [connection signal="score" from="Grid" to="HBoxContainer/Control" method="_on_Grid_score"]
 [connection signal="update_piece_count" from="Grid" to="BottomSlots" method="_on_Grid_update_piece_count"]
@@ -232,3 +243,7 @@ piece_counter = NodePath("../../BottomSlots")
 [editable path="BottomSlots/bottom_slot_star"]
 [editable path="BottomSlots/bottom_slot_order"]
 [editable path="BottomSlots/bottom_slot_chaos"]
+[editable path="HBoxContainer/Character"]
+[editable path="HBoxContainer/Character/PortraitBorder"]
+[editable path="HBoxContainer/Control"]
+[editable path="HBoxContainer/Control/PortraitBorder"]

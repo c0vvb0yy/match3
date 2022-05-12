@@ -3,6 +3,7 @@ extends Node2D
 enum COLOR {sun = 0, moon = 1, star = 2, order = 3, chaos = 4}
 
 export (COLOR) var color;
+export (Array) var sprites;
 var move_tween;
 var matched = false;
 
@@ -27,4 +28,9 @@ func fall(target): # Movement for pieces falling inbetween turns
 
 func dim(alpha : float):
 	sprite.modulate = Color(1, 1, 1, alpha);
+	pass;
+
+func transform(wanted_color):
+	sprite.texture = sprites[wanted_color];
+	color = wanted_color;
 	pass;
