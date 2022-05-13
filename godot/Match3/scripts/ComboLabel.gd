@@ -1,6 +1,7 @@
 extends Label
 
 onready var move_tween = $Tween;
+var alpha = 1;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -8,7 +9,7 @@ func _ready():
 	pass # Replace with function body.
 
 func display_combo(amount: float, duration: float):
-	self.modulate.a = 1;
+	alpha = 1;
 	var text = String(amount);
 	self.text = text;
 	self.text += " Combo!";
@@ -16,5 +17,5 @@ func display_combo(amount: float, duration: float):
 	duration, Tween.TRANS_LINEAR, Tween.EASE_OUT);
 
 func _process(_delta):
-	var value = lerp(self.modulate.a, 0, _delta*0.7);
-	self.modulate = Color(0.9, 0.2, 0.2, value);
+	alpha = alpha-_delta;
+	self.modulate = Color(0.9, 0.2, 0.2, alpha);

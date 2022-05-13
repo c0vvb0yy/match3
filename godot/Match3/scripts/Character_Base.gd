@@ -58,6 +58,8 @@ func set_pieces_of_color_matched(color):
 
 func get_score():
 	return target_score;
+func get_alignment():
+	return allignment;
 
 func _on_Button_pressed():
 	#check if we have enough materials for skill activation

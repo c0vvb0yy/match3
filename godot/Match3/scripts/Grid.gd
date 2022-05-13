@@ -57,6 +57,7 @@ onready var fall_timer = get_parent().get_node("FallTimer");
 onready var fill_timer = get_parent().get_node("FillTimer");
 onready var destroy_timer = get_parent().get_node("DestroyTimer");
 onready var score_timer = get_parent().get_node("ScoreTimer");
+onready var enemy_timer = get_parent().get_node("EnemyTimer");
 
 #scoring variables / stats
 signal update_piece_count;
@@ -106,6 +107,12 @@ func fill_grid(): #top to bottom then left to right
 				add_child(piece);
 				piece.position = grid_to_pixel(start, offset, i, j);
 				all_pieces[i][j] = piece;
+
+func dim_grid(start_color, target_color):
+	for i in width:
+		for j in height:
+			if(is_piece_existing(all_pieces,i,j)):
+				all_pieces[i][j].appear_disabled(start_color, target_color);
 
 func find_matches():
 	find_long_matches();
@@ -260,7 +267,7 @@ func after_refill():
 		score_timer.start(0.5);
 	else: #keinen weiteren matches. score verarbeitung und dann next turn
 		emit_signal("damage_enemy");
-		state = game_states.move;
+		state = game_states.move
 		combo = 1;
 	pass;
 
@@ -347,8 +354,10 @@ func _on_FallTimer_timeout():
 	pass;
 
 func on_space():
-	find_long_matches();
-	destroy_matched();
-	fill_timer.start(0.5);
+	_on_TurnTimer_timeout();
 	pass;
 
+func _on_EnemyTimer_timeout():
+	state = game_states.move;
+	dim_grid(Color.gray, Color.white);
+	pass # Replace with function body.

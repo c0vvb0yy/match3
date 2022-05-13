@@ -150,6 +150,8 @@ one_shot = true
 wait_time = 0.5
 one_shot = true
 
+[node name="EnemyTimer" type="Timer" parent="."]
+
 [node name="Timer" type="TextureProgress" parent="."]
 margin_left = 1744.0
 margin_top = 58.0
@@ -208,9 +210,6 @@ margin_bottom = 40.0
 grid = NodePath("../../Grid")
 piece_counter = NodePath("../../BottomSlots")
 
-[node name="HPDisplay" parent="HBoxContainer/Character" index="2"]
-visible = true
-
 [node name="Control" parent="HBoxContainer" instance=ExtResource( 22 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -219,9 +218,6 @@ margin_right = 475.0
 margin_bottom = 40.0
 grid = NodePath("../../Grid")
 piece_counter = NodePath("../../BottomSlots")
-
-[node name="HPDisplay" parent="HBoxContainer/Control" index="2"]
-visible = true
 
 [connection signal="damage_enemy" from="Grid" to="Enemy" method="_on_Grid_damage_enemy"]
 [connection signal="new_turn" from="Grid" to="Enemy" method="_on_Grid_new_turn"]
@@ -235,6 +231,7 @@ visible = true
 [connection signal="timeout" from="FallTimer" to="Grid" method="_on_FallTimer_timeout"]
 [connection signal="timeout" from="FillTimer" to="Grid" method="_on_FillTimer_timeout"]
 [connection signal="timeout" from="DestroyTimer" to="Grid" method="_on_DestroyTimer_timeout"]
+[connection signal="timeout" from="EnemyTimer" to="Grid" method="_on_EnemyTimer_timeout"]
 
 [editable path="MiddleUI/TurnCounter"]
 [editable path="MiddleUI/ComboCounter"]
