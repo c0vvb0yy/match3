@@ -15,17 +15,24 @@ onready var score_display = $ScoreDisplay/Text
 
 var target_score : int
 var displayed_score : int
+var original_text_size;
+var font;
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	font = score_display.get_font("font");
+	original_text_size = font.size;
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if(displayed_score >= target_score - 15):
-		displayed_score = target_score;
 	if(displayed_score < target_score):
-		displayed_score = lerp(displayed_score, target_score, delta * 9);
-	score_display.text = String(displayed_score);
+		displayed_score += 1;
+		if(font.size < 100):
+			font.size += 1;
+		score_display.text = String(displayed_score)
+	else: 
+		if(font.size > original_text_size):
+			font.size -= 2;
 	pass
 
 func get_all_pieces_of_color(color):
@@ -83,4 +90,9 @@ func _on_Grid_new_turn():
 	target_score = 0;
 	displayed_score = 0;
 	score_display.text = "0";
+	pass # Replace with function body.
+
+func _on_ComboLabel2_apply_combo():
+	target_score = (displayed_score/4) * grid.get_combo();
+	
 	pass # Replace with function body.

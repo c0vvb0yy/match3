@@ -26,13 +26,15 @@ func fall(target): # Movement for pieces falling inbetween turns
 	tween.start();
 	pass;
 
-func dim(alpha : float):
+func dim(alpha : float): #visulaizing pieces being matched
 	sprite.modulate = Color(1, 1, 1, alpha);
 	pass;
 
-func appear_disabled(begin:Color, end:Color):
-	tween.interpolate_property(sprite, "modulate", begin, end, 
-	.1, Tween.TRANS_LINEAR);
+func appear_disabled(get_darker): #visualizing pieces being unable to be moved
+	if(get_darker):
+		sprite.modulate = Color(0.2, 0.2, 0.2, 1);
+	else:
+		sprite.modulate = Color(1, 1, 1, 1);
 
 
 func transform(wanted_color):

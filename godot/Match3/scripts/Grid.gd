@@ -66,7 +66,7 @@ signal update_combo;
 signal score;
 signal new_turn;
 export (int) var piece_value;
-var combo = 1;
+var combo = 0;
 var turns = 0;
 
 onready var combo_label = get_parent().get_node("ComboLabel");
@@ -108,11 +108,14 @@ func fill_grid(): #top to bottom then left to right
 				piece.position = grid_to_pixel(start, offset, i, j);
 				all_pieces[i][j] = piece;
 
-func dim_grid(start_color, target_color):
+func dim_grid(get_darker):
 	for i in width:
 		for j in height:
 			if(is_piece_existing(all_pieces,i,j)):
-				all_pieces[i][j].appear_disabled(start_color, target_color);
+				all_pieces[i][j].appear_disabled(get_darker);
+
+func get_combo():
+	return combo;
 
 func find_matches():
 	find_long_matches();
@@ -166,6 +169,7 @@ func break_matches():
 func score_match():
 	for i in cool_matches.size():
 		if(cool_matches[i] != null):
+			combo += 1;
 			var cool_match = cool_matches[i];
 			var amount = cool_match[2];
 			var score_amount = amount * 11;
@@ -183,7 +187,6 @@ func score_match():
 			combo_label.display_combo(combo, 0.5);
 			combo_counter.text = String(combo);
 			emit_signal("score", score_amount, cool_match[4]); #cool_match[4] == color
-			combo += 1;
 			cool_matches[i] = null;
 			score_timer.start(0.5);
 			return;
@@ -267,8 +270,7 @@ func after_refill():
 		score_timer.start(0.5);
 	else: #keinen weiteren matches. score verarbeitung und dann next turn
 		emit_signal("damage_enemy");
-		state = game_states.move
-		combo = 1;
+		dim_grid(true);
 	pass;
 
 func touch_input():
@@ -319,6 +321,7 @@ func start_new_turn():
 	emit_signal("new_turn");
 	#turn related things
 	turn_timer.start();
+	combo = 0;
 	turns += 1;
 	turn_counter.text = String(turns);
 	
@@ -357,7 +360,7 @@ func on_space():
 	_on_TurnTimer_timeout();
 	pass;
 
-func _on_EnemyTimer_timeout():
+func _on_Damage_Label_tween_all_completed():
 	state = game_states.move;
-	dim_grid(Color.gray, Color.white);
+	dim_grid(false);
 	pass # Replace with function body.

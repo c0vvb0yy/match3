@@ -33,21 +33,18 @@ func init(target_pos : Vector2, base_damage : int, damage : int, alignment, size
 	self.text = String(display_amount);
 	self.modulate = select_color(alignment);
 	if(size > 1):
-		target_size = display_size + 25;
+		target_size = display_size + 15;
 	else:
-		target_size = display_size - 25;
+		target_size = display_size - 15;
 	var start_pos = self.rect_position;
-	tween.interpolate_property(self, "rect_position", start_pos, target_pos, 1.2, 
+	tween.interpolate_property(self, "rect_position", start_pos, target_pos, 0.6, 
 	Tween.TRANS_LINEAR, Tween.EASE_OUT);
 #	tween.start();
-	tween.interpolate_property(font, "size", display_size, target_size, 1.22, 
+	tween.interpolate_property(font, "size", display_size, target_size, 0.5, 
 	Tween.TRANS_LINEAR, Tween.EASE_OUT);
 	tween.start();
 	#timer.start(2);
 	pass # Replace with function body.
-
-func _tween_rect_position(pos):
-	self.rect_position = pos;
 
 func select_color(alignment):
 	match alignment:
