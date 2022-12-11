@@ -1,6 +1,6 @@
 extends Label
 
-onready var tween = $Tween
+onready var tween = $ComboTween
 onready var vis_effect = get_parent().get_node("VisEffectCombo");
 
 onready var grid = get_parent().get_node("Grid");
@@ -18,7 +18,7 @@ func _ready():
 	target = origin;
 	target.x = 180;
 	vis_effect.modulate.a = 0;
-	
+
 func even_more_score():
 	print("more score")
 	emit_signal("apply_combo");

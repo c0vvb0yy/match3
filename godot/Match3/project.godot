@@ -24,6 +24,11 @@ config/name="Match 3"
 run/main_scene="res://scenes/GameWindow.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+TypeInfo="*res://scripts/autoload/TypeInfo.gd"
+GameManager="*res://scripts/autoload/GameManager.gd"
+
 [display]
 
 window/size/width=1920

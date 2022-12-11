@@ -1,8 +1,6 @@
 extends Node2D
 
-enum COLOR {sun = 0, moon = 1, star = 2, order = 3, chaos = 4}
-
-export (COLOR) var color;
+export (TypeInfo.COLOR) var color;
 export (Array) var sprites;
 var tween;
 var matched = false;
@@ -32,7 +30,7 @@ func dim(alpha : float): #visulaizing pieces being matched
 
 func appear_disabled(get_darker): #visualizing pieces being unable to be moved
 	if(get_darker):
-		sprite.modulate = Color(0.2, 0.2, 0.2, 1);
+		sprite.modulate = Color(0.4, 0.4, 0.4, 1);
 	else:
 		sprite.modulate = Color(1, 1, 1, 1);
 

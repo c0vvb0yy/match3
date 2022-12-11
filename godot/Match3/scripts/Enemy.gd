@@ -1,20 +1,18 @@
 extends Control
 
-enum COLOR {sun = 0, moon = 1, star = 2, order = 3, chaos = 4}
-
-export (COLOR) var alignment;
+export (TypeInfo.COLOR) var alignment;
 
 export (int) var health;
 export (int) var attack;
-export (int) var cool_down; #rounds until attack
+export (int) var rounds_to_attack; #rounds until attack
 var offset = 50; #for damage label tween
+var cool_down;
 
 export(Array, NodePath) onready var heroes;
 export(Array, NodePath) onready var damage_labels;
 
-export(Resource) var type_dict;
-
 var current_health :int;
+var is_alive = true
 
 onready var health_bar = $TextureProgress;
 onready var sprite = $TextureRect;
@@ -25,16 +23,19 @@ func _ready():
 	current_health = health;
 	health_bar.max_value = health;
 	health_bar.value = health;
+	health_bar.set_tint_progress(TypeInfo.colors[alignment])
 	health_label.text = String(current_health)+"/"+String(health);
+	cool_down = rounds_to_attack;
 	pass # Replace with function body.
 
 func update_health(damage : int):
 	current_health = current_health - damage;
 	health_bar.value = current_health;
-	health_bar.set_tint_progress(lerp(Color(0, 0.7, 0), Color(0.7, 0, 0), current_health/health));
+	#health_bar.set_tint_progress(lerp(Color(0, 0.7, 0), Color(0.7, 0, 0), current_health/health));
 	health_label.text = String(current_health)+"/"+String(health);
 	if(current_health <= 0):
 		sprite.flip_v = true;
+		is_alive = false
 		print("Enemy killed");
 
 
@@ -44,37 +45,30 @@ func calculate_new_pos(pos, offset):
 	return Vector2(new_x, pos.y);
 
 func get_alignment_effectiveness(alignemnt_of_attacker):
-	var dict = null;
-	#apply correct type, effectiveness dictionair
-	match (alignment):
-		COLOR.sun:
-			dict = type_dict.sun_dict;
-		COLOR.moon:
-			dict = type_dict.moon_dict;
-		COLOR.star:
-			dict = type_dict.star_dict;
-		COLOR.order:
-			dict = type_dict.order_dict;
-		COLOR.chaos:
-			dict = type_dict.chaos_dict;
+	#get the dictionary that lists the effectivenesses
+	var dict = TypeInfo.dictionaries[alignment];
+	#get the entry in the dictionary to find how effective the attack is
 	var mult = dict[alignemnt_of_attacker];
 	return mult;
 
 func _on_Grid_new_turn():
 	for label in damage_labels:
 		get_node(label).reset();
-	pass # Replace with function body.
+	
+	pass 
 
 
 func take_damage():
 	var damage = 0;
 	var alignment_attack = null;
+	var at_least_one_attacker = false;
 	for i in heroes.size():
 		var attacker = get_node(heroes[i]);
 		damage = attacker.get_score();
 		alignment_attack = attacker.get_alignment();
-		if(damage <= 0):
-			continue;
+		#if(damage <= 0):
+		#	continue;
+		at_least_one_attacker = true;
 		#update enemy stats
 		var mult = get_alignment_effectiveness(alignment_attack);
 		var type_damage = damage * mult;
@@ -87,8 +81,21 @@ func take_damage():
 		elif(type_damage < damage):
 			target_pos = calculate_new_pos(target_pos, -offset);
 		label.init(target_pos, damage, type_damage, alignment_attack, mult);
+	cool_down -= 1;
+	if(cool_down == 0 && is_alive):
+		attack();
 	pass # Replace with function body.
 
+func attack():
+	print("ATTACK")
+	var target_found = false
+	while !target_found:
+		var index = floor(rand_range(0, heroes.size()));
+		var target = get_node(heroes[index]);
+		if target.current_health > 0:
+			target.take_damage(attack);
+			target_found = true
+	cool_down = rounds_to_attack;
 
 func _on_ComboLabel2_damage_enemy():
 	take_damage();

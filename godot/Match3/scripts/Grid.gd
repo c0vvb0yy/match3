@@ -1,10 +1,10 @@
 extends "res://scripts/Util.gd"
 
 #State Machine
-enum game_states{
-	wait,
-	move
-}
+#enum game_states{
+#	wait,
+#	move
+#}
 var state;
 
 enum{
@@ -45,6 +45,9 @@ var possible_pieces = [
 var current_matches = [];
 var cool_matches = [];
 
+#visualizers
+var match_circle = preload("res://scenes/circle.tscn");
+var circles = [];
 
 #input variables
 var start_touch = Vector2(0, 0);
@@ -75,8 +78,7 @@ onready var turn_counter = get_parent().get_node("MiddleUI/TurnCounter/Text");
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	state = game_states.move;
-	
+	GameManager.current_state = GameManager.STATE.player_turn;
 	randomize();
 	all_pieces = make_2d_array(width, height);
 	fill_grid();
@@ -84,7 +86,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if(state == game_states.move):
+	if(GameManager.current_state == GameManager.STATE.player_turn):
 		touch_input();
 		if(Input.is_action_just_pressed("ui_accept")):
 			on_space();
@@ -108,7 +110,7 @@ func fill_grid(): #top to bottom then left to right
 				piece.position = grid_to_pixel(start, offset, i, j);
 				all_pieces[i][j] = piece;
 
-func dim_grid(get_darker):
+func dim_grid(get_darker : bool):
 	for i in width:
 		for j in height:
 			if(is_piece_existing(all_pieces,i,j)):
@@ -121,6 +123,15 @@ func find_matches():
 	find_long_matches();
 	for tile in current_matches:
 		match_and_dim([all_pieces[tile.x][tile.y]]);
+#	for cool_match in cool_matches:
+#		var circle = match_circle.instance();
+#		circle.rect_position = grid_to_pixel(start, offset, cool_match[0], cool_match[1]);
+#		if(cool_match[3] == vertical):
+#			circle.rect_size.y = 128 * cool_match[2];
+#		else:
+#			circle.rect_size.x = 128 * cool_match[2];
+#		add_child(circle);
+#		circles.append(circle);
 	return current_matches.size() > 0;
 
 func find_long_matches():
@@ -270,6 +281,7 @@ func after_refill():
 		score_timer.start(0.5);
 	else: #keinen weiteren matches. score verarbeitung und dann next turn
 		emit_signal("damage_enemy");
+		GameManager.current_state = GameManager.STATE.damage_enemy;
 		dim_grid(true);
 	pass;
 
@@ -328,7 +340,7 @@ func start_new_turn():
 
 func _on_TurnTimer_timeout():
 	turn_timer.stop();
-	state = game_states.wait;
+	GameManager.current_state = GameManager.STATE.score;
 	score_timer.start(0.3);
 	#destroy_timer.start(0.1);
 	pass;
@@ -361,6 +373,6 @@ func on_space():
 	pass;
 
 func _on_Damage_Label_tween_all_completed():
-	state = game_states.move;
+	GameManager.current_state = GameManager.STATE.player_turn;
 	dim_grid(false);
 	pass # Replace with function body.
