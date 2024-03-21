@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://0nd1u3ltq7ty"]
+
+[ext_resource type="PackedScene" uid="uid://c4mojhf1p7wdp" path="res://Entities/Grid/grid.tscn" id="1_mhfrp"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Grid" parent="." instance=ExtResource("1_mhfrp")]
+position = Vector2(-78, -165)
+empty_spaces = Array[Vector2]([Vector2(0, 0), Vector2(-1, 0), Vector2(-1, -1), Vector2(0, -1)])
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(546, 302)
+zoom = Vector2(0.475, 0.475)
