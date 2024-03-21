@@ -1,0 +1,110 @@
+2a60927148abd1d33b818b535e306557
+::res://::1681318163
+default_env.tres::Environment::-1::1670780997::0::1::::<><>::
+Grid.tscn::PackedScene::-1::1652210505::0::1::::<><>::res://scripts/Grid.gd<>res://art/grid_bg.png
+icon.png::CompressedTexture2D::4038342803547448679::1650208006::1681318164::1::::<><>::
+Particles2D.tscn::PackedScene::-1::1670780695::0::1::::<><>::res://sprite_appear_shader.tres<>res://art/characters/anthrazitpng.png
+sprite_appear_shader.gdshader::Shader::-1::1670780695::0::1::::<><>::
+sprite_appear_shader.tres::Shader::-1::1670780695::0::1::::<><>::
+TypeDictionaries.tres::Resource::-1::1670780695::0::1::::<><>::res://scripts/TypeDictionaries.gd
+::res://art/::1670780695
+background.png::CompressedTexture2D::3067842379409472955::1650278949::1681318164::1::::<><>::
+background_0_1.png::CompressedTexture2D::6264722603561185474::1650647928::1681318164::1::::<><>::
+background_0_1_solid.png::CompressedTexture2D::3234360566452950395::1650647942::1681318164::1::::<><>::
+bottom_slot.png::CompressedTexture2D::5150015079064554379::1650278973::1681318164::1::::<><>::
+character-border.png::CompressedTexture2D::4904215179105172573::1650732688::1681318164::1::::<><>::
+character_border.png::CompressedTexture2D::7172940169037842391::1650732755::1681318164::1::::<><>::
+character_healthbar.png::CompressedTexture2D::8341705730644446422::1650733328::1681318164::1::::<><>::
+character_healthbar_over.png::CompressedTexture2D::8802014861954138004::1650733422::1681318164::1::::<><>::
+character_healthbar_progress.png::CompressedTexture2D::2957749953202482634::1650733563::1681318164::1::::<><>::
+character_healthbar_under.png::CompressedTexture2D::1439269488614140291::1650733435::1681318164::1::::<><>::
+enemy_healthbar_over.png::CompressedTexture2D::5832098803820233934::1652207844::1681318164::1::::<><>::
+enemy_healthbar_progress.png::CompressedTexture2D::2542418608233638167::1652207831::1681318164::1::::<><>::
+enemy_healthbar_under.png::CompressedTexture2D::2609967365389064313::1652207857::1681318164::1::::<><>::
+grid_bg.png::CompressedTexture2D::5720675324221438588::1650734178::1681318164::1::::<><>::
+piece_chaos.png::CompressedTexture2D::3574328038151568402::1650311550::1681318164::1::::<><>::
+piece_moon.png::CompressedTexture2D::8467464294364428962::1650280914::1681318164::1::::<><>::
+piece_order.png::CompressedTexture2D::821820436901817103::1650280164::1681318164::1::::<><>::
+piece_star.png::CompressedTexture2D::4553106326580223115::1650281262::1681318164::1::::<><>::
+piece_sun.png::CompressedTexture2D::9003890330103282325::1650280498::1681318164::1::::<><>::
+rectangle_slot.png::CompressedTexture2D::2571643201504145690::1650731563::1681318164::1::::<><>::
+timer_bar_fill.png::CompressedTexture2D::826911572872827082::1650402910::1681318164::1::::<><>::
+timer_bar_over.png::CompressedTexture2D::4356393589429241157::1650403127::1681318164::1::::<><>::
+timer_bar_progress.png::CompressedTexture2D::8649363743106274350::1650405298::1681318164::1::::<><>::
+timer_bar_under.png::CompressedTexture2D::728231013085077691::1650402921::1681318164::1::::<><>::
+::res://art/characters/::1670780695
+anthrazitpng.png::CompressedTexture2D::7689848787581336314::1652205130::1681318164::1::::<><>::
+enemy.png::CompressedTexture2D::9195226535361288879::1652207732::1681318164::1::::<><>::
+zaavan.png::CompressedTexture2D::4497543789899553432::1652203997::1681318164::1::::<><>::
+::res://art/main_menu/::1670780695
+main_menu.png::CompressedTexture2D::5170202177227555689::1670780695::1681318164::1::::<><>::
+::res://art/over_world/::1670780695
+level_select.png::CompressedTexture2D::767656622099324390::1670780695::1681318164::1::::<><>::
+::res://art/shaders/::1670780695
+alpha_fun.gdshader::Shader::-1::1670780695::0::1::::<><>::
+attack.png::CompressedTexture2D::687717661985547182::1670780695::1681318164::1::::<><>::
+circle.png::CompressedTexture2D::4287070657928393293::1670780695::1681318164::1::::<><>::
+summoning_blur.png::CompressedTexture2D::4565996381491351857::1652707970::1681318164::1::::<><>::
+wave_mask.png::CompressedTexture2D::3130838471968237861::1652706438::1681318165::1::::<><>::
+::res://fonts/::1650730860
+::res://fonts/resources/::1656167330
+dynamicfont_ui.tres::FontFile::-1::1656167330::0::1::::<><>::res://fonts/ttf/Kenney Future Narrow.ttf
+::res://fonts/ttf/::1650730854
+Kenney Blocks.ttf::FontFile::7018067265562634401::1650730564::1681318164::1::::<><>::
+Kenney Future Narrow.ttf::FontFile::1665181567737528856::1650730564::1681318164::1::::<><>::
+Kenney Future.ttf::FontFile::4537021049446849167::1650730564::1681318164::1::::<><>::
+Kenney High Square.ttf::FontFile::201776266772881390::1650730564::1681318164::1::::<><>::
+Kenney High.ttf::FontFile::1964248108913541812::1650730564::1681318164::1::::<><>::
+Kenney Mini Square Mono.ttf::FontFile::6610792803983361618::1650730564::1681318164::1::::<><>::
+Kenney Mini Square.ttf::FontFile::131649169833141852::1650730564::1681318164::1::::<><>::
+Kenney Mini.ttf::FontFile::8051614839893663552::1650730564::1681318164::1::::<><>::
+Kenney Pixel Square.ttf::FontFile::1859738672645087115::1650730564::1681318164::1::::<><>::
+Kenney Pixel.ttf::FontFile::395621344547545544::1650730564::1681318164::1::::<><>::
+Kenney Rocket Square.ttf::FontFile::7864759988419199303::1650730564::1681318164::1::::<><>::
+Kenney Rocket.ttf::FontFile::2589045326264258379::1650730564::1681318164::1::::<><>::
+::res://scenes/::1670780997
+Anthrazit.tscn::PackedScene::-1::1670780997::0::1::::<><>::res://scenes/Character_Base.tscn<>res://art/piece_sun.png<>res://art/characters/anthrazitpng.png<>res://scripts/SkillAnthrazit.gd<>res://fonts/ttf/Kenney Future Narrow.ttf
+ChaosPiece.tscn::PackedScene::-1::1651004019::0::1::::<><>::res://art/piece_chaos.png<>res://scenes/Piece.tscn
+CharacterSlot.tscn::PackedScene::-1::1652209789::0::1::::<><>::res://fonts/resources/dynamicfont_ui.tres<>res://art/character_border.png
+Character_Base.tscn::PackedScene::-1::1670780695::0::1::::<><>::res://scenes/CharacterSlot.tscn<>res://scenes/UIRectangleBox.tscn<>res://art/character_healthbar_progress.png<>res://art/character_healthbar_over.png<>res://art/character_healthbar_under.png<>res://scripts/Character_Base.gd<>res://art/character_border.png
+ChooseStartingHero.tscn::PackedScene::-1::1670780997::0::1::::<><>::res://fonts/ttf/Kenney Future Narrow.ttf<>res://scripts/ChooseStartingHero.gd<>res://art/characters/zaavan.png<>res://art/characters/anthrazitpng.png
+circle.tscn::PackedScene::-1::1670780695::0::1::::<><>::res://art/shaders/circle.png
+ComboLabel2.gd::GDScript::-1::1670780695::0::1::::<>Label<>::
+DamageLabel.tscn::PackedScene::-1::1652481259::0::1::::<><>::res://fonts/ttf/Kenney Future Narrow.ttf<>res://scripts/DamageLabel.gd
+Enemy.tscn::PackedScene::-1::1670780695::0::1::::<><>::res://art/characters/enemy.png<>res://art/enemy_healthbar_progress.png<>res://art/enemy_healthbar_over.png<>res://art/enemy_healthbar_under.png<>res://scripts/Enemy.gd<>res://fonts/resources/dynamicfont_ui.tres<>res://scenes/DamageLabel.tscn<>res://art/shaders/alpha_fun.gdshader<>res://fonts/ttf/Kenney Future Narrow.ttf<>res://art/timer_bar_progress.png
+GameWindow.tscn::PackedScene::-1::1670780997::0::1::::<><>::res://art/background_0_1_solid.png<>res://art/piece_sun.png<>res://scripts/Grid.gd<>res://art/timer_bar_over.png<>res://art/timer_bar_progress.png<>res://art/timer_bar_under.png<>res://scripts/TimerBarProgress.gd<>res://scenes/UIRectangleBox.tscn<>res://scenes/ComboLabel2.gd<>res://art/grid_bg.png<>res://scenes/UISquareBox.tscn<>res://scenes/Anthrazit.tscn<>res://scripts/UI.gd<>res://art/piece_chaos.png<>res://art/piece_star.png<>res://art/piece_order.png<>res://art/piece_moon.png<>res://scripts/PieceCounter.gd<>res://scripts/Util.gd<>res://fonts/ttf/Kenney Future Narrow.ttf<>res://scripts/ComboLabel.gd<>res://scenes/Zaavan.tscn<>res://scenes/Enemy.tscn<>res://art/shaders/wave_mask.png<>res://art/shaders/summoning_blur.png<>res://scripts/VisEffectCombo.gd
+MainMenu.tscn::PackedScene::-1::1670780997::0::1::::<><>::res://fonts/ttf/Kenney Future Narrow.ttf<>res://art/main_menu/main_menu.png<>res://scripts/MainMenu.gd
+MiddleUI.tscn::PackedScene::-1::1650904272::0::1::::<><>::res://art/bottom_slot.png
+MoonPiece.tscn::PackedScene::-1::1650904272::0::1::::<><>::res://art/piece_moon.png<>res://scenes/Piece.tscn
+OrderPiece.tscn::PackedScene::-1::1653136476::0::1::::<><>::res://art/piece_order.png<>res://scenes/Piece.tscn
+Overworld.tscn::PackedScene::-1::1670780997::0::1::::<><>::res://scripts/ActiveHeroes.gd<>res://art/over_world/level_select.png
+Piece.tscn::PackedScene::-1::1653136476::0::1::::<><>::res://scripts/Piece.gd<>res://art/piece_chaos.png<>res://art/piece_moon.png<>res://art/piece_order.png<>res://art/piece_star.png<>res://art/piece_sun.png
+StarPiece.tscn::PackedScene::-1::1650900710::0::1::::<><>::res://art/piece_star.png<>res://scenes/Piece.tscn
+SunPiece.tscn::PackedScene::-1::1650282573::0::1::::<><>::res://art/piece_sun.png<>res://scenes/Piece.tscn
+UIRectangleBox.tscn::PackedScene::-1::1652712192::0::1::::<><>::res://art/rectangle_slot.png<>res://fonts/resources/dynamicfont_ui.tres
+UISquareBox.tscn::PackedScene::-1::1651004019::0::1::::<><>::res://art/bottom_slot.png<>res://fonts/ttf/Kenney Future Narrow.ttf
+Zaavan.tscn::PackedScene::-1::1670780695::0::1::::<><>::res://scenes/Character_Base.tscn<>res://art/characters/zaavan.png<>res://art/piece_star.png<>res://scripts/SkillZaavan.gd<>res://fonts/ttf/Kenney Future Narrow.ttf
+::res://scripts/::1670780935
+ActiveHeroes.gd::GDScript::-1::1670780695::0::1::::<>VBoxContainer<>::
+Character_Base.gd::GDScript::-1::1670780695::0::1::::<>Control<>::
+ChooseStartingHero.gd::GDScript::-1::1670780695::0::1::::<>Control<>::
+ComboLabel.gd::GDScript::-1::1652463251::0::1::::<>Label<>::
+DamageLabel.gd::GDScript::-1::1670780695::0::1::::<>Label<>::
+Enemy.gd::GDScript::-1::1670780695::0::1::::<>Control<>::
+Grid.gd::GDScript::-1::1670780695::0::1::::<>Node2D<>::
+MainMenu.gd::GDScript::-1::1670780935::0::1::::<>Node2D<>::
+Piece.gd::GDScript::-1::1670780695::0::1::::<>Node2D<>::
+PieceCounter.gd::GDScript::-1::1652276513::0::1::::<>HBoxContainer<>::
+SkillAnthrazit.gd::GDScript::-1::1653999873::0::1::::<>Control<>::
+SkillBase.gd::GDScript::-1::1652274497::0::1::::<>Node2D<>::
+SkillZaavan.gd::GDScript::-1::1653999877::0::1::::<>Control<>::
+TimerBarProgress.gd::GDScript::-1::1650405419::0::1::::<>TextureProgress<>::
+TypeDictionaries.gd::GDScript::-1::1670780695::0::1::::TypeDictionaries<>Resource<>::
+UI.gd::GDScript::-1::1650743836::0::1::::<>VBoxContainer<>::
+UIComboCounter.gd::GDScript::-1::1651002864::0::1::::<>TextureRect<>::
+UITurnCounter.gd::GDScript::-1::1650746204::0::1::::<>TextureRect<>::
+Util.gd::GDScript::-1::1652705877::0::1::::<>Node2D<>::
+VisEffectCombo.gd::GDScript::-1::1670780695::0::1::::<>RefCounted<>::
+::res://scripts/autoload/::1670780935
+GameManager.gd::GDScript::-1::1670780935::0::1::::<>Node<>::
+TypeInfo.gd::GDScript::-1::1670780695::0::1::::<>Node<>::

@@ -47,17 +47,7 @@ func init(target_pos : Vector2, base_damage : int, damage : int, alignment, size
 	pass # Replace with function body.
 
 func select_color(alignment):
-	match alignment:
-		COLOR.sun:
-			return Color(0.88, 0.35, 0.09, 1);
-		COLOR.moon:
-			return Color(0.92, 1, 1, 1);
-		COLOR.star:
-			return Color(0.55, 0.85, 0.96, 1);
-		COLOR.order:
-			return Color(0.98, 0.95, 0.57, 1);
-		COLOR.sun:
-			return Color(0.55, 0.41, 1, 1);
+	return TypeInfo.colors[alignment]
 
 func _process(delta):
 	self.text = set_content();

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cs1ysaehdut1f"]
+
+[ext_resource type="PackedScene" uid="uid://w17hwrdgxeyk" path="res://Entities/Pieces/piece.tscn" id="1_pyegm"]
+[ext_resource type="Texture2D" uid="uid://drqc6kl4620eh" path="res://Assets/Sprites/Pieces/piece_moon.png" id="2_mv721"]
+
+[node name="Piece" instance=ExtResource("1_pyegm")]
+color = 1
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_mv721")

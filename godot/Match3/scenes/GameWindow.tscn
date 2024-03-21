@@ -157,13 +157,6 @@ margin_bottom = 137.0
 [node name="piece" parent="BottomSlots/bottom_slot_chaos/bottom_slot_0" index="0"]
 texture = ExtResource( 14 )
 
-[node name="Gried_field" type="TextureRect" parent="."]
-margin_left = 954.0
-margin_top = 53.0
-margin_right = 1735.0
-margin_bottom = 836.0
-texture = ExtResource( 10 )
-
 [node name="Grid" type="Node2D" parent="."]
 script = ExtResource( 3 )
 width = 6
@@ -172,6 +165,13 @@ start = Vector2( 1024, 128 )
 offset = 128
 piece_y_offset = 5
 empty_spaces = PoolVector2Array( 0, 0, 5, 0, 0, 5, 5, 5 )
+
+[node name="Gried_field" type="TextureRect" parent="Grid"]
+margin_left = 954.0
+margin_top = 53.0
+margin_right = 1735.0
+margin_bottom = 836.0
+texture = ExtResource( 10 )
 
 [node name="TurnTimer" type="Timer" parent="."]
 wait_time = 5.0
@@ -234,7 +234,9 @@ margin_top = -19.0
 margin_right = 175.0
 margin_bottom = 21.0
 rect_scale = Vector2( 1.25, 1.25 )
+alignment = 0
 health = 500
+attack = 35
 heroes = [ NodePath("../HBoxContainer/Character"), NodePath("../HBoxContainer/Control") ]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -247,6 +249,8 @@ custom_constants/separation = 475
 [node name="Character" parent="HBoxContainer" instance=ExtResource( 12 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
+margin_left = 0.0
+margin_right = 0.0
 margin_bottom = 40.0
 grid = NodePath("../../Grid")
 piece_counter = NodePath("../../BottomSlots")
@@ -254,8 +258,6 @@ piece_counter = NodePath("../../BottomSlots")
 [node name="Control" parent="HBoxContainer" instance=ExtResource( 22 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 475.0
-margin_right = 475.0
 margin_bottom = 40.0
 grid = NodePath("../../Grid")
 piece_counter = NodePath("../../BottomSlots")
@@ -282,7 +284,7 @@ align = 1
 valign = 1
 script = ExtResource( 9 )
 
-[node name="Tween" type="Tween" parent="ComboLabel2"]
+[node name="ComboTween" type="Tween" parent="ComboLabel2"]
 
 [connection signal="damage_enemy" from="Grid" to="Enemy" method="_on_Grid_damage_enemy"]
 [connection signal="damage_enemy" from="Grid" to="HBoxContainer/Character" method="_on_Grid_damage_enemy"]
@@ -302,12 +304,13 @@ script = ExtResource( 9 )
 [connection signal="timeout" from="DestroyTimer" to="Grid" method="_on_DestroyTimer_timeout"]
 [connection signal="timeout" from="EnemyTimer" to="Grid" method="_on_EnemyTimer_timeout"]
 [connection signal="tween_all_completed" from="Enemy/DamageLabel/Tween" to="Grid" method="_on_Damage_Label_tween_all_completed"]
+[connection signal="tween_all_completed" from="Enemy/DamageLabel2/Tween" to="Grid" method="_on_Damage_Label_tween_all_completed"]
 [connection signal="item_rect_changed" from="VisEffectCombo" to="VisEffectCombo" method="_on_VisEffectCombo_item_rect_changed"]
 [connection signal="resized" from="VisEffectCombo" to="VisEffectCombo" method="_on_VisEffectCombo_resized"]
 [connection signal="apply_combo" from="ComboLabel2" to="HBoxContainer/Character" method="_on_ComboLabel2_apply_combo"]
 [connection signal="apply_combo" from="ComboLabel2" to="HBoxContainer/Control" method="_on_ComboLabel2_apply_combo"]
 [connection signal="damage_enemy" from="ComboLabel2" to="Enemy" method="_on_ComboLabel2_damage_enemy"]
-[connection signal="tween_all_completed" from="ComboLabel2/Tween" to="ComboLabel2" method="_on_Tween_tween_all_completed"]
+[connection signal="tween_all_completed" from="ComboLabel2/ComboTween" to="ComboLabel2" method="_on_Tween_tween_all_completed"]
 
 [editable path="MiddleUI/TurnCounter"]
 [editable path="MiddleUI/ComboCounter"]
@@ -318,6 +321,7 @@ script = ExtResource( 9 )
 [editable path="BottomSlots/bottom_slot_chaos"]
 [editable path="Enemy"]
 [editable path="Enemy/DamageLabel"]
+[editable path="Enemy/DamageLabel2"]
 [editable path="HBoxContainer/Character"]
 [editable path="HBoxContainer/Character/PortraitBorder"]
 [editable path="HBoxContainer/Character/ScoreDisplay"]

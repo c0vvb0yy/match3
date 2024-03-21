@@ -11,7 +11,9 @@ size = 70
 font_data = ExtResource( 5 )
 
 [node name="Character" instance=ExtResource( 1 )]
-health_points = 100
+margin_right = -1134.0
+margin_bottom = -557.0
+max_health = 100
 skill_cost = 3
 
 [node name="Character" parent="PortraitBorder" index="0"]
