@@ -10,4 +10,4 @@ func _on_PlayButton_pressed():
 		get_tree().change_scene("res://scenes/ChooseStartingHero.tscn")
 	else:
 		get_tree().change_scene("res://scences/Overworld.tscn")
-	pass # Replace with function body.
+	pass 

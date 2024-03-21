@@ -4,4 +4,4 @@ enum STATE {main_menu, choose_team, core_loop, enemy_dead, battle_finished, play
 
 var current_state;
 
-var heroes = [preload("res://scenes/Anthrazit.tscn")]
+var heroes = [] #[preload("res://scenes/Anthrazit.tscn")]
