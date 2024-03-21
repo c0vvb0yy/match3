@@ -1,7 +1,7 @@
 extends TextureProgressBar
 
 @onready
-var timer = $Timer
+var timer = $"../../RoundTimer"
 
 var round_time
 
