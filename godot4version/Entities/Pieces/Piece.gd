@@ -1,6 +1,5 @@
 extends Node2D
 
-#enum COLOR {Flesh, Machine, Divine, Void, Life}
 
 @export
 var color : Util.COLOR

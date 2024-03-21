@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bhgkb1hkop1w3"]
+[gd_scene load_steps=8 format=3 uid="uid://bhgkb1hkop1w3"]
 
 [ext_resource type="Texture2D" uid="uid://ckfveuxjk2ss1" path="res://Assets/Sprites/UI/Inventory/bottom_slot.png" id="1_uw6i7"]
 [ext_resource type="FontFile" uid="uid://kveprp0xebav" path="res://Assets/Fonts/Kenney Future Narrow.ttf" id="2_qaipe"]
+[ext_resource type="Script" path="res://Entities/UI/InventorySlot.gd" id="2_utu5r"]
 [ext_resource type="Texture2D" uid="uid://dn4f820abqwmp" path="res://Assets/Sprites/UI/Inventory/small_slot_heal.png" id="3_1p3f3"]
 [ext_resource type="Texture2D" uid="uid://creakieydro0v" path="res://Assets/Sprites/UI/Inventory/small_slot.png" id="4_wep42"]
 
@@ -17,6 +18,7 @@ texture_filter = 1
 offset_right = 138.0
 offset_bottom = 138.0
 texture = ExtResource("1_uw6i7")
+script = ExtResource("2_utu5r")
 
 [node name="Piece" type="TextureRect" parent="."]
 layout_mode = 1
@@ -36,7 +38,7 @@ offset_left = 8.0
 offset_top = 130.0
 offset_right = 68.0
 offset_bottom = 190.0
-texture = ExtResource("1_uw6i7")
+texture = ExtResource("4_wep42")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="Counter"]
@@ -47,6 +49,7 @@ offset_right = 63.0
 offset_bottom = 53.0
 theme = SubResource("Theme_slbt0")
 theme_override_font_sizes/font_size = 60
+text = "0"
 label_settings = SubResource("LabelSettings_aan3x")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -59,18 +62,5 @@ offset_left = 72.0
 offset_top = 130.0
 offset_right = 132.0
 offset_bottom = 190.0
-disabled = true
 texture_normal = ExtResource("3_1p3f3")
 texture_disabled = ExtResource("4_wep42")
-
-[node name="Label" type="Label" parent="Heal"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 8.0
-offset_right = 63.0
-offset_bottom = 53.0
-theme = SubResource("Theme_slbt0")
-theme_override_font_sizes/font_size = 60
-label_settings = SubResource("LabelSettings_aan3x")
-horizontal_alignment = 1
-vertical_alignment = 1

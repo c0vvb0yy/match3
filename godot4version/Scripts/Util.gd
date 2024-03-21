@@ -1,6 +1,6 @@
 class_name Util
 
-enum COLOR {Flesh , Machine , Divine , Void , Life }
+enum COLOR {Flesh , Machine , Divine , Void , Life}
 
 static func make_2d_array(width : int, height: int) -> Array:
 	var array = []

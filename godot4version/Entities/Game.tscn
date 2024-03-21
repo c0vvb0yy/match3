@@ -20,8 +20,8 @@ zoom = Vector2(0.475, 0.475)
 
 [node name="Inventory" parent="." instance=ExtResource("2_tu2i6")]
 layout_mode = 0
-offset_left = 5.0
-offset_top = 790.0
-offset_right = 775.0
-offset_bottom = 928.0
+offset_left = 6.0
+offset_top = 840.0
+offset_right = 776.0
+offset_bottom = 978.0
 theme_override_constants/separation = 20

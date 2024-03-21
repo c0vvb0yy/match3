@@ -13,14 +13,14 @@ offset_bottom = 138.0
 [node name="Flesh" parent="." instance=ExtResource("2_t7ra4")]
 layout_mode = 2
 
-[node name="Machine" parent="." instance=ExtResource("4_p34lr")]
-layout_mode = 2
-
 [node name="Divine" parent="." instance=ExtResource("1_afnu5")]
 layout_mode = 2
 
-[node name="Life" parent="." instance=ExtResource("3_nrulo")]
+[node name="Machine" parent="." instance=ExtResource("4_p34lr")]
 layout_mode = 2
 
 [node name="Void" parent="." instance=ExtResource("5_5mlp7")]
+layout_mode = 2
+
+[node name="Life" parent="." instance=ExtResource("3_nrulo")]
 layout_mode = 2

@@ -163,7 +163,6 @@ func break_matches():
 #ROUND timer
 func _on_timer_timeout():
 	round_timer.stop()
-	await get_tree().create_timer(0.2).timeout #<- coyote time
 	state = grid_states.wait
 	end_round()
 	pass # Replace with function body.
@@ -174,9 +173,10 @@ func score_round():
 			if current_match == null:
 				continue
 			combo += 1
-			var amount = current_match[3]
 			var x = current_match[0]
 			var y = current_match[1]
+			var amount = current_match[3]
+			var color = current_match[4]
 			var score_amount = amount * 11
 			score_amount += (score_amount/4) * combo
 			match current_match[2]:
@@ -187,13 +187,14 @@ func score_round():
 						#all_pieces[x][i].dim(0)
 							await all_pieces[x][i].clear()
 							all_pieces[x][i] = null
+							GameManager.emit_signal("collect_pieces", color)
 				1: #horizontal match
 					for i in range(x, x-amount, -1):
 						#all_pieces[i][y].dim(0)
 						if all_pieces[i][y] != null:
 							await all_pieces[i][y].clear()
 							all_pieces[i][y] = null
-			#TODO: score signal, 'collect' amount of same colored pieces in inventory
+							GameManager.emit_signal("collect_pieces", color)
 			current_match = null
 			await get_tree().create_timer(0.5).timeout
 	return true
