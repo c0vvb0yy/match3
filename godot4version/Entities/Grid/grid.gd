@@ -90,7 +90,7 @@ func swap_pieces(coord, direction):
 		all_pieces[coord.x][coord.y] = target_piece
 		all_pieces[target_coord.x][target_coord.y] = selected_piece
 		selected_piece.move(Util.grid_to_pixel(cell_size, target_coord))
-		target_piece.move(Util.grid_to_pixel(cell_size, coord))
+		await target_piece.move(Util.grid_to_pixel(cell_size, coord))
 		match_pieces()
 		break_matches()
 
@@ -163,6 +163,7 @@ func break_matches():
 #ROUND timer
 func _on_timer_timeout():
 	round_timer.stop()
+	await get_tree().create_timer(0.2).timeout #<- coyote time
 	state = grid_states.wait
 	end_round()
 	pass # Replace with function body.
@@ -184,13 +185,13 @@ func score_round():
 					for i in range(y, y-amount, -1):
 						if all_pieces[x][i] != null:
 						#all_pieces[x][i].dim(0)
-							all_pieces[x][i].queue_free()
+							await all_pieces[x][i].clear()
 							all_pieces[x][i] = null
 				1: #horizontal match
 					for i in range(x, x-amount, -1):
 						#all_pieces[i][y].dim(0)
 						if all_pieces[i][y] != null:
-							all_pieces[i][y].queue_free()
+							await all_pieces[i][y].clear()
 							all_pieces[i][y] = null
 			#TODO: score signal, 'collect' amount of same colored pieces in inventory
 			current_match = null
@@ -229,11 +230,12 @@ func refill_columns():
 				piece.position = Util.grid_to_pixel(cell_size, Vector2(x, y - piece_y_offset))
 				piece.fall(Util.grid_to_pixel(cell_size, Vector2(x, y)))
 				all_pieces[x][y] = piece
+	await get_tree().create_timer(0.3).timeout
 	after_refill()
 
 func after_refill():
 	if (match_pieces()):
-		await get_tree().create_timer(0.3).timeout
+		await get_tree().create_timer(0.4).timeout
 		end_round()
 	else:
 		#TODO: score verarbeitung/Enemy damage

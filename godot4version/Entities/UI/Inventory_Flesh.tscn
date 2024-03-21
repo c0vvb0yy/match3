@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdmdt3wdfksoo"]
+
+[ext_resource type="PackedScene" uid="uid://bhgkb1hkop1w3" path="res://Entities/UI/Inventory_BaseSlot.tscn" id="1_jbfck"]
+[ext_resource type="Texture2D" uid="uid://bi05ul5idsvbh" path="res://Assets/Sprites/Pieces/piece_sun.png" id="2_ra7sc"]
+
+[node name="Inventory" instance=ExtResource("1_jbfck")]
+
+[node name="Piece" parent="TextureRect" index="0"]
+texture = ExtResource("2_ra7sc")

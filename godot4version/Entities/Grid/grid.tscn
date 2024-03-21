@@ -13,23 +13,26 @@ script = ExtResource("1_0hbya")
 dimension = Vector2(6, 6)
 empty_spaces = Array[Vector2]([Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)])
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-offset_right = 945.0
-offset_bottom = 890.0
+[node name="RoundTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="Grid" type="HBoxContainer" parent="."]
+offset_right = 825.0
+offset_bottom = 770.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("3_arrg1")
 
-[node name="Background" type="TextureRect" parent="HBoxContainer"]
+[node name="Background" type="TextureRect" parent="Grid"]
 modulate = Color(0.105882, 0.105882, 0.105882, 1)
 layout_mode = 2
 texture = ExtResource("2_oinp2")
 expand_mode = 2
 stretch_mode = 1
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="HBoxContainer"]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Grid"]
+texture_filter = 1
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_stretch_ratio = 20.0
 step = 0.2
 value = 100.0
@@ -40,8 +43,5 @@ texture_under = ExtResource("4_st4ie")
 texture_over = ExtResource("5_iv7r3")
 texture_progress = ExtResource("6_vkkmx")
 script = ExtResource("7_hlyqq")
-
-[node name="RoundTimer" type="Timer" parent="."]
-wait_time = 5.0
 
 [connection signal="timeout" from="RoundTimer" to="." method="_on_timer_timeout"]

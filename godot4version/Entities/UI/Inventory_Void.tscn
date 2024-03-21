@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cv4va7acnnoy5"]
+
+[ext_resource type="PackedScene" uid="uid://bhgkb1hkop1w3" path="res://Entities/UI/Inventory_BaseSlot.tscn" id="1_xibet"]
+[ext_resource type="Texture2D" uid="uid://blwfognn2hwa4" path="res://Assets/Sprites/Pieces/piece_chaos.png" id="2_dmo0s"]
+
+[node name="Inventory" instance=ExtResource("1_xibet")]
+
+[node name="Piece" parent="TextureRect" index="0"]
+texture = ExtResource("2_dmo0s")
