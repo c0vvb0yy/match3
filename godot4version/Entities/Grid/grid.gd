@@ -61,6 +61,8 @@ func instance_random_piece() -> Node:
 func _process(_delta):
 	if(GameManager.grid_state != GameManager.GRID_STATES.wait):
 		check_for_input()
+		if Input.is_action_just_pressed("ui_accept"):
+			_on_timer_timeout()
 	pass
 
 func start_new_turn():
@@ -171,7 +173,6 @@ func _on_timer_timeout():
 func score_round():
 	if(GameManager.matches.size() > 0 and GameManager.matches[GameManager.matches.size()-1] != null):
 		for current_match in GameManager.matches:
-			print(current_match)
 			if current_match == null:
 				continue
 			combo += 1
@@ -181,8 +182,6 @@ func score_round():
 			var color = current_match[4]
 			var score_amount = amount * 11
 			score_amount += (score_amount/4) * combo
-			print(combo)
-			print(score_amount)
 			match current_match[2]:
 				#TODO: combo label creation + position setting
 				direction.vertical: 
@@ -202,6 +201,7 @@ func manual_refill():
 	make_current_pieces_fall()
 	await get_tree().create_timer(0.5).timeout
 	refill_columns()
+	GameManager.grid_state = GameManager.GRID_STATES.ready
 
 func end_round():
 	await get_tree().create_timer(0.3).timeout
@@ -210,6 +210,7 @@ func end_round():
 	make_current_pieces_fall()
 	await get_tree().create_timer(0.5).timeout
 	refill_columns()
+	after_refill()
 
 func make_current_pieces_fall():
 	for x in dimension.x:
@@ -236,7 +237,7 @@ func refill_columns():
 				piece.fall(Util.grid_to_pixel(cell_size, Vector2(x, y)))
 				GameManager.all_pieces[x][y] = piece
 	await get_tree().create_timer(0.3).timeout
-	after_refill()
+	
 
 func after_refill():
 	if (match_pieces()):
@@ -244,5 +245,5 @@ func after_refill():
 		end_round()
 	else:
 		#TODO: score verarbeitung/Enemy damage
-		GameManager.grid_state = GameManager.GRID_STATES.move
+		GameManager.grid_state = GameManager.GRID_STATES.ready
 		combo = 0
