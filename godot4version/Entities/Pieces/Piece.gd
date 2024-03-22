@@ -3,6 +3,9 @@ extends Node2D
 
 @export
 var color : Util.COLOR
+@export
+var sprites : Array
+
 var matched = false
 
 @onready
@@ -29,3 +32,7 @@ func clear():
 	tween.parallel().tween_property(sprite, "scale", Vector2.ZERO, .1).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_LINEAR)
 	#await tween.finished
 	queue_free()
+
+func transform(color):
+	sprite.texture = sprites[color]
+	self.color = color

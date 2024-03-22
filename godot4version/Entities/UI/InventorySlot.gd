@@ -11,7 +11,7 @@ var label = $Counter/Label
 @onready
 var heal_button = $Heal
 func _ready():
-	GameManager.collect_pieces.connect(set_piece_amount)
+	GameManager.collect_pieces.connect(update_piece_count)
 
 func _process(delta):
 	if current_amount != target_amount:
@@ -26,6 +26,7 @@ func get_piece_amount(color):
 	if color == own_color:
 		return target_amount
 
-func set_piece_amount(color):
+func update_piece_count(color, amount):
 	if color == own_color:
-		target_amount += 1
+		target_amount += amount
+		GameManager.update_current_pieces(color, target_amount)

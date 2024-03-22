@@ -1,11 +1,5 @@
 extends Node2D
 
-enum grid_states {
-	wait,
-	move
-}
-var state
-
 enum direction {
 	vertical,
 	horizontal
@@ -28,7 +22,6 @@ var possible_pieces = [
 	preload("res://Entities/Pieces/Life_piece.tscn"),
 	preload("res://Entities/Pieces/Void_piece.tscn"),
 ]
-var matches : Array
 #input control variables
 var start_piece_move := Vector2.ZERO
 var end_piece_move := Vector2.ZERO
@@ -40,7 +33,8 @@ var combo : int = 0
 var round_timer = $RoundTimer
 
 func _ready():
-	state = grid_states.move
+	GameManager.score.connect(end_round)
+	GameManager.grid_state = GameManager.GRID_STATES.move
 	@warning_ignore("narrowing_conversion")
 	GameManager.all_pieces = Util.make_2d_array(dimension.x, dimension.y)
 	empty_spaces = Util.wrap_coordinates_around_grid(empty_spaces, dimension)
@@ -64,7 +58,7 @@ func instance_random_piece() -> Node:
 	return possible_pieces[rand].instantiate()
 
 func _process(_delta):
-	if(state == grid_states.move):
+	if(GameManager.grid_state == GameManager.GRID_STATES.move):
 		check_for_input()
 	pass
 
@@ -75,10 +69,10 @@ func check_for_input():
 	var grid_coord = Util.pixel_to_grid(self.position, cell_size, get_global_mouse_position())
 	if Util.is_in_grid(grid_coord, dimension.x, dimension.y):
 		if(Input.is_action_just_pressed("mouse_click")):
-			if(round_timer.is_stopped()):
-				start_new_turn()
 			start_piece_move = grid_coord
 		if(Input.is_action_just_released("mouse_click")):
+			if(round_timer.is_stopped()):
+				start_new_turn()
 			end_piece_move = Util.pixel_to_grid(self.position, cell_size, get_global_mouse_position())
 			var move_direction = Util.calc_move_direction(start_piece_move, end_piece_move)
 			swap_pieces(start_piece_move, move_direction)
@@ -97,7 +91,7 @@ func swap_pieces(coord:Vector2, dir:Vector2):
 
 func match_pieces():
 	find_matches()
-	for current_match in matches:
+	for current_match in GameManager.matches:
 		var amount = current_match[3]
 		var x = current_match[0]
 		var y = current_match[1]
@@ -108,12 +102,12 @@ func match_pieces():
 			direction.horizontal:
 				for i in range(x, x-amount, -1):
 					GameManager.match_and_dim(GameManager.all_pieces[i][y])
-	return matches.size() > 0
+	return GameManager.matches.size() > 0
 
 func find_matches():
 	var last_color = null
 	var matched = 1
-	matches.clear()
+	GameManager.matches.clear()
 	for x in dimension.x:
 		for y in dimension.y:
 			var current_color = null
@@ -151,8 +145,7 @@ func find_matches():
 func store_match(x,y, amount:int, dir:direction, color):
 	if amount < 3:
 		return
-	matches.append([x,y, dir, amount, color])
-	print(matches)
+	GameManager.matches.append([x,y, dir, amount, color])
 
 func break_matches():
 	for x in dimension.x:
@@ -163,12 +156,13 @@ func break_matches():
 
 func _on_timer_timeout():
 	round_timer.stop()
-	state = grid_states.wait
+	GameManager.grid_state = GameManager.GRID_STATES.wait
 	end_round()
 
 func score_round():
-	if(matches.size() > 0 and matches[matches.size()-1] != null):
-		for current_match in matches:
+	if(GameManager.matches.size() > 0 and GameManager.matches[GameManager.matches.size()-1] != null):
+		for current_match in GameManager.matches:
+			print(current_match)
 			if current_match == null:
 				continue
 			combo += 1
@@ -188,14 +182,14 @@ func score_round():
 							continue
 						await GameManager.all_pieces[x][i].clear()
 						GameManager.all_pieces[x][i] = null
-						GameManager.emit_signal("collect_pieces", color)
+						GameManager.emit_signal("collect_pieces", color, 1)
 				direction.horizontal: 
 					for i in range(x, x-amount, -1):
 						if GameManager.all_pieces[i][y] == null:
 							continue
 						await GameManager.all_pieces[i][y].clear()
 						GameManager.all_pieces[i][y] = null
-						GameManager.emit_signal("collect_pieces", color)
+						GameManager.emit_signal("collect_pieces", color, 1)
 			current_match = null
 			await get_tree().create_timer(0.5).timeout
 	return true
@@ -241,5 +235,5 @@ func after_refill():
 		end_round()
 	else:
 		#TODO: score verarbeitung/Enemy damage
-		state = grid_states.move
+		GameManager.grid_state = GameManager.GRID_STATES.move
 		combo = 0

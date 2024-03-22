@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://0nd1u3ltq7ty"]
+[gd_scene load_steps=6 format=3 uid="uid://0nd1u3ltq7ty"]
 
 [ext_resource type="PackedScene" uid="uid://c4mojhf1p7wdp" path="res://Entities/Grid/grid.tscn" id="1_mhfrp"]
 [ext_resource type="Texture2D" uid="uid://cwj82sxjw81t5" path="res://Assets/Sprites/background_03.png" id="1_sr8ds"]
 [ext_resource type="PackedScene" uid="uid://bi0ee7k2g8abh" path="res://Entities/UI/Inventory.tscn" id="2_tu2i6"]
+[ext_resource type="Texture2D" uid="uid://cgjnidh4ivrtj" path="res://icon.svg" id="4_8xvhx"]
+[ext_resource type="Script" path="res://Entities/Characters/SkillDEBUG.gd" id="5_hi4e6"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -34,3 +36,15 @@ offset_top = 789.0
 offset_right = 768.0
 offset_bottom = 927.0
 theme_override_constants/separation = 20
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = -609.0
+offset_top = 320.0
+offset_right = -601.0
+offset_bottom = 328.0
+text = "Skill"
+icon = ExtResource("4_8xvhx")
+script = ExtResource("5_hi4e6")
+
+[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]

@@ -1,8 +1,18 @@
 extends Node
 
 signal collect_pieces
+signal score
 
-var all_pieces
+enum GRID_STATES {
+	wait,
+	move
+}
+var grid_state
+
+var all_pieces : Array #of arrays [][]
+var matches : Array #schema => [x,y, direction(V||H), amount, color]
+
+var current_pieces = [0,0,0,0,0]
 
 func is_piece_existing(column, row):
 	if all_pieces[column][row] == null:
@@ -72,3 +82,12 @@ func is_match_at_short(column, row, piece):
 			if right_piece.color == piece.color && right_most_piece.color == piece.color:
 				return true;
 	return false
+
+func try_get_piece(column, row):
+	if is_piece_existing(column, row):
+		return all_pieces[column][row]
+	else:
+		return null
+
+func update_current_pieces(color: Util.COLOR, new_amount):
+	current_pieces[color] = new_amount
