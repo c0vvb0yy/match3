@@ -6,7 +6,7 @@ var color : Util.COLOR
 var matched = false
 
 @onready
-var sprite = $Sprite2D
+var sprite = $TextureRect
 
 func move(target_cell:Vector2):
 	var tween = create_tween()
@@ -24,5 +24,8 @@ func fall(target_cell:Vector2):
 	await tween.finished
 
 func clear():
-	await dim(0)
+	#await dim(0)
+	var tween = create_tween()
+	tween.parallel().tween_property(sprite, "scale", Vector2.ZERO, .1).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_LINEAR)
+	#await tween.finished
 	queue_free()

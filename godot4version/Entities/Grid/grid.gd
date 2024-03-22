@@ -20,7 +20,7 @@ var cell_size := 128
 @export
 var piece_y_offset := 5
 
-var all_pieces : Array
+
 var possible_pieces = [
 	preload("res://Entities/Pieces/Divine_piece.tscn"),
 	preload("res://Entities/Pieces/Flesh_piece.tscn"),
@@ -41,7 +41,8 @@ var round_timer = $RoundTimer
 
 func _ready():
 	state = grid_states.move
-	all_pieces = Util.make_2d_array(dimension.x, dimension.y)
+	@warning_ignore("narrowing_conversion")
+	GameManager.all_pieces = Util.make_2d_array(dimension.x, dimension.y)
 	empty_spaces = Util.wrap_coordinates_around_grid(empty_spaces, dimension)
 	fill_grid()
 
@@ -51,12 +52,12 @@ func fill_grid():
 			if !Util.is_restricted_in_placement(Vector2(x,y), empty_spaces):
 				var piece = instance_random_piece()
 				var loops = 0
-				while(Util.is_match_at_short(all_pieces, x, y, piece) and loops < 100):
+				while(GameManager.is_match_at_short(x, y, piece) and loops < 100):
 					piece = instance_random_piece()
 					loops += 1
 				add_child(piece)
 				piece.position = Util.grid_to_pixel(cell_size, Vector2(x,y))
-				all_pieces[x][y] = piece
+				GameManager.all_pieces[x][y] = piece
 
 func instance_random_piece() -> Node:
 	var rand = randi_range(0, possible_pieces.size()-1)
@@ -82,13 +83,13 @@ func check_for_input():
 			var move_direction = Util.calc_move_direction(start_piece_move, end_piece_move)
 			swap_pieces(start_piece_move, move_direction)
 
-func swap_pieces(coord, direction):
-	var target_coord = Vector2(coord.x + direction.x, coord.y + direction.y)
-	var selected_piece = all_pieces[coord.x][coord.y]
-	var target_piece = all_pieces[target_coord.x][target_coord.y]
+func swap_pieces(coord:Vector2, dir:Vector2):
+	var target_coord = Vector2(coord.x + dir.x, coord.y + dir.y)
+	var selected_piece = GameManager.all_pieces[coord.x][coord.y]
+	var target_piece = GameManager.all_pieces[target_coord.x][target_coord.y]
 	if selected_piece != null and target_piece != null:
-		all_pieces[coord.x][coord.y] = target_piece
-		all_pieces[target_coord.x][target_coord.y] = selected_piece
+		GameManager.all_pieces[coord.x][coord.y] = target_piece
+		GameManager.all_pieces[target_coord.x][target_coord.y] = selected_piece
 		selected_piece.move(Util.grid_to_pixel(cell_size, target_coord))
 		await target_piece.move(Util.grid_to_pixel(cell_size, coord))
 		match_pieces()
@@ -101,12 +102,12 @@ func match_pieces():
 		var x = current_match[0]
 		var y = current_match[1]
 		match current_match[2]:
-			0: #vertical match
+			direction.vertical:
 				for i in range(y, y-amount, -1):
-					Util.match_and_dim(all_pieces[x][i])
-			1: #horizontal match
+					GameManager.match_and_dim(GameManager.all_pieces[x][i])
+			direction.horizontal:
 				for i in range(x, x-amount, -1):
-					Util.match_and_dim(all_pieces[i][y])
+					GameManager.match_and_dim(GameManager.all_pieces[i][y])
 	return matches.size() > 0
 
 func find_matches():
@@ -116,8 +117,8 @@ func find_matches():
 	for x in dimension.x:
 		for y in dimension.y:
 			var current_color = null
-			if(Util.is_piece_existing(all_pieces, x, y)):
-				current_color = all_pieces[x][y].color
+			if(GameManager.is_piece_existing(x, y)):
+				current_color = GameManager.all_pieces[x][y].color
 			if current_color == last_color and current_color != null:
 				matched += 1
 			else:
@@ -125,22 +126,22 @@ func find_matches():
 				matched = 1
 			last_color = current_color
 			
-		if Util.is_piece_existing(all_pieces, x, dimension.y-1):
+		if GameManager.is_piece_existing(x, dimension.y-1):
 			store_match(x, dimension.y-1, matched, direction.vertical, last_color)
 		matched = 1
 		last_color = null
 	for y in dimension.y:
 		for x in dimension.x:
 			var current_color = null
-			if(Util.is_piece_existing(all_pieces, x, y)):
-				current_color = all_pieces[x][y].color
+			if(GameManager.is_piece_existing(x, y)):
+				current_color = GameManager.all_pieces[x][y].color
 			if current_color == last_color and current_color != null:
 				matched += 1
 			else:
 				store_match(x-1, y, matched, direction.horizontal, last_color)
 				matched = 1
 			last_color = current_color
-		if Util.is_piece_existing(all_pieces, dimension.x-1, y):
+		if GameManager.is_piece_existing(dimension.x-1, y):
 			store_match(dimension.x-1, y, matched, direction.horizontal, last_color)
 		matched = 1
 		last_color = null
@@ -156,16 +157,14 @@ func store_match(x,y, amount:int, dir:direction, color):
 func break_matches():
 	for x in dimension.x:
 		for y in dimension.y:
-			if Util.is_piece_existing(all_pieces, x, y):
-				if(all_pieces[x][y].matched and !Util.is_match_at(dimension, all_pieces, x,y)):
-					Util.unmatch(all_pieces[x][y])
+			if GameManager.is_piece_existing(x, y):
+				if(GameManager.all_pieces[x][y].matched and !GameManager.is_match_at(dimension, x,y)):
+					GameManager.unmatch(GameManager.all_pieces[x][y])
 
-#ROUND timer
 func _on_timer_timeout():
 	round_timer.stop()
 	state = grid_states.wait
 	end_round()
-	pass # Replace with function body.
 
 func score_round():
 	if(matches.size() > 0 and matches[matches.size()-1] != null):
@@ -179,22 +178,24 @@ func score_round():
 			var color = current_match[4]
 			var score_amount = amount * 11
 			score_amount += (score_amount/4) * combo
+			print(combo)
+			print(score_amount)
 			match current_match[2]:
 				#TODO: combo label creation + position setting
-				0: #vertical match
+				direction.vertical: 
 					for i in range(y, y-amount, -1):
-						if all_pieces[x][i] != null:
-						#all_pieces[x][i].dim(0)
-							await all_pieces[x][i].clear()
-							all_pieces[x][i] = null
-							GameManager.emit_signal("collect_pieces", color)
-				1: #horizontal match
+						if GameManager.all_pieces[x][i] == null:
+							continue
+						await GameManager.all_pieces[x][i].clear()
+						GameManager.all_pieces[x][i] = null
+						GameManager.emit_signal("collect_pieces", color)
+				direction.horizontal: 
 					for i in range(x, x-amount, -1):
-						#all_pieces[i][y].dim(0)
-						if all_pieces[i][y] != null:
-							await all_pieces[i][y].clear()
-							all_pieces[i][y] = null
-							GameManager.emit_signal("collect_pieces", color)
+						if GameManager.all_pieces[i][y] == null:
+							continue
+						await GameManager.all_pieces[i][y].clear()
+						GameManager.all_pieces[i][y] = null
+						GameManager.emit_signal("collect_pieces", color)
 			current_match = null
 			await get_tree().create_timer(0.5).timeout
 	return true
@@ -210,27 +211,27 @@ func end_round():
 func make_current_pieces_fall():
 	for x in dimension.x:
 		for y in dimension.y:
-			if(all_pieces[x][y] == null 
+			if(GameManager.all_pieces[x][y] == null 
 			and !Util.is_restricted_in_placement(Vector2(x,y), empty_spaces)):
 				for i in range(y - 1, -1, -1):
-					if all_pieces[x][i] == null:
+					if GameManager.all_pieces[x][i] == null:
 						break
-					all_pieces[x][i].fall(Util.grid_to_pixel(cell_size,Vector2(x,y)))
-					all_pieces[x][y] = all_pieces[x][i]
-					all_pieces[x][i] = null
+					GameManager.all_pieces[x][i].fall(Util.grid_to_pixel(cell_size,Vector2(x,y)))
+					GameManager.all_pieces[x][y] = GameManager.all_pieces[x][i]
+					GameManager.all_pieces[x][i] = null
 					make_current_pieces_fall()
 					break
 
 func refill_columns():
 	for x in dimension.x:
 		for y in dimension.y:
-			if(all_pieces[x][y] == null 
+			if(GameManager.all_pieces[x][y] == null 
 			and !Util.is_restricted_in_placement(Vector2(x,y), empty_spaces)):
 				var piece = instance_random_piece()
 				add_child(piece)
 				piece.position = Util.grid_to_pixel(cell_size, Vector2(x, y - piece_y_offset))
 				piece.fall(Util.grid_to_pixel(cell_size, Vector2(x, y)))
-				all_pieces[x][y] = piece
+				GameManager.all_pieces[x][y] = piece
 	await get_tree().create_timer(0.3).timeout
 	after_refill()
 
@@ -241,4 +242,4 @@ func after_refill():
 	else:
 		#TODO: score verarbeitung/Enemy damage
 		state = grid_states.move
-		
+		combo = 0

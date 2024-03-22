@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://0nd1u3ltq7ty"]
+[gd_scene load_steps=4 format=3 uid="uid://0nd1u3ltq7ty"]
 
 [ext_resource type="PackedScene" uid="uid://c4mojhf1p7wdp" path="res://Entities/Grid/grid.tscn" id="1_mhfrp"]
+[ext_resource type="Texture2D" uid="uid://cwj82sxjw81t5" path="res://Assets/Sprites/background_03.png" id="1_sr8ds"]
 [ext_resource type="PackedScene" uid="uid://bi0ee7k2g8abh" path="res://Entities/UI/Inventory.tscn" id="2_tu2i6"]
 
 [node name="Game" type="Control"]
@@ -11,17 +12,25 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Grid" parent="." instance=ExtResource("1_mhfrp")]
-empty_spaces = Array[Vector2]([Vector2(0, 0), Vector2(-1, 0), Vector2(-1, -1), Vector2(0, -1)])
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -1058.0
+offset_top = -80.0
+offset_right = 862.0
+offset_bottom = 1000.0
+texture = ExtResource("1_sr8ds")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(410, 352)
-zoom = Vector2(0.475, 0.475)
+position = Vector2(-94, 463)
 
-[node name="Inventory" parent="." instance=ExtResource("2_tu2i6")]
-layout_mode = 0
-offset_left = 6.0
-offset_top = 840.0
-offset_right = 776.0
-offset_bottom = 978.0
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Grid" parent="Node2D" instance=ExtResource("1_mhfrp")]
+empty_spaces = Array[Vector2]([Vector2(0, 0), Vector2(-1, 0), Vector2(-1, -1), Vector2(0, -1)])
+
+[node name="Inventory" parent="Node2D" instance=ExtResource("2_tu2i6")]
+offset_left = -2.0
+offset_top = 789.0
+offset_right = 768.0
+offset_bottom = 927.0
 theme_override_constants/separation = 20
