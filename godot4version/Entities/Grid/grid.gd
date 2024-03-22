@@ -23,9 +23,9 @@ var possible_pieces = [
 	preload("res://Entities/Pieces/Void_piece.tscn"),
 ]
 #input control variables
-var start_piece_move := Vector2.ZERO
-var end_piece_move := Vector2.ZERO
-var is_controlling_piece
+var start_piece_pos := Vector2.ZERO
+var end_piece_pos := Vector2.ZERO
+var is_controlling_piece := false
 
 var combo : int = 0
 
@@ -71,14 +71,16 @@ func check_for_input():
 	var grid_coord = Util.pixel_to_grid(self.position, cell_size, get_global_mouse_position())
 	if Util.is_in_grid(grid_coord, dimension.x, dimension.y):
 		if(Input.is_action_just_pressed("mouse_click")):
-			GameManager.all_pieces[grid_coord.x][grid_coord.y].appear_selected(1.1)
-			start_piece_move = grid_coord
+			start_piece_pos = grid_coord
+			GameManager.all_pieces[start_piece_pos.x][start_piece_pos.y].multiply_scale(1.1)
+			is_controlling_piece = true
 		if(Input.is_action_just_released("mouse_click")):
-			GameManager.all_pieces[start_piece_move.x][start_piece_move.y].appear_selected()
-			end_piece_move = Util.pixel_to_grid(self.position, cell_size, get_global_mouse_position())
-			var move_direction = Util.calc_move_direction(start_piece_move, end_piece_move)
+			is_controlling_piece = false
+			GameManager.all_pieces[start_piece_pos.x][start_piece_pos.y].multiply_scale()
+			end_piece_pos = Util.pixel_to_grid(self.position, cell_size, get_global_mouse_position())
+			var move_direction = Util.calc_move_direction(start_piece_pos, end_piece_pos)
 			if move_direction != Vector2.ZERO:
-				swap_pieces(start_piece_move, move_direction)
+				swap_pieces(start_piece_pos, move_direction)
 				if(round_timer.is_stopped()):
 					start_new_turn()
 
@@ -162,6 +164,8 @@ func break_matches():
 func _on_timer_timeout():
 	round_timer.stop()
 	GameManager.grid_state = GameManager.GRID_STATES.wait
+	if is_controlling_piece:
+		GameManager.all_pieces[start_piece_pos.x][start_piece_pos.y].multiply_scale()
 	end_round()
 
 func score_round():
