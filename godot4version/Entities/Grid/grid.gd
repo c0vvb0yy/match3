@@ -34,7 +34,8 @@ var round_timer = $RoundTimer
 
 func _ready():
 	GameManager.score.connect(end_round)
-	GameManager.grid_state = GameManager.GRID_STATES.move
+	GameManager.refill.connect(manual_refill)
+	GameManager.grid_state = GameManager.GRID_STATES.ready
 	@warning_ignore("narrowing_conversion")
 	GameManager.all_pieces = Util.make_2d_array(dimension.x, dimension.y)
 	empty_spaces = Util.wrap_coordinates_around_grid(empty_spaces, dimension)
@@ -58,24 +59,28 @@ func instance_random_piece() -> Node:
 	return possible_pieces[rand].instantiate()
 
 func _process(_delta):
-	if(GameManager.grid_state == GameManager.GRID_STATES.move):
+	if(GameManager.grid_state != GameManager.GRID_STATES.wait):
 		check_for_input()
 	pass
 
 func start_new_turn():
+	GameManager.grid_state = GameManager.GRID_STATES.move
 	round_timer.start()
 
 func check_for_input():
 	var grid_coord = Util.pixel_to_grid(self.position, cell_size, get_global_mouse_position())
 	if Util.is_in_grid(grid_coord, dimension.x, dimension.y):
 		if(Input.is_action_just_pressed("mouse_click")):
+			GameManager.all_pieces[grid_coord.x][grid_coord.y].appear_selected(1.1)
 			start_piece_move = grid_coord
 		if(Input.is_action_just_released("mouse_click")):
-			if(round_timer.is_stopped()):
-				start_new_turn()
+			GameManager.all_pieces[start_piece_move.x][start_piece_move.y].appear_selected()
 			end_piece_move = Util.pixel_to_grid(self.position, cell_size, get_global_mouse_position())
 			var move_direction = Util.calc_move_direction(start_piece_move, end_piece_move)
-			swap_pieces(start_piece_move, move_direction)
+			if move_direction != Vector2.ZERO:
+				swap_pieces(start_piece_move, move_direction)
+				if(round_timer.is_stopped()):
+					start_new_turn()
 
 func swap_pieces(coord:Vector2, dir:Vector2):
 	var target_coord = Vector2(coord.x + dir.x, coord.y + dir.y)
@@ -178,21 +183,21 @@ func score_round():
 				#TODO: combo label creation + position setting
 				direction.vertical: 
 					for i in range(y, y-amount, -1):
-						if GameManager.all_pieces[x][i] == null:
-							continue
-						await GameManager.all_pieces[x][i].clear()
-						GameManager.all_pieces[x][i] = null
+						GameManager.clear_piece(x, i)
 						GameManager.emit_signal("collect_pieces", color, 1)
 				direction.horizontal: 
 					for i in range(x, x-amount, -1):
-						if GameManager.all_pieces[i][y] == null:
-							continue
-						await GameManager.all_pieces[i][y].clear()
-						GameManager.all_pieces[i][y] = null
+						GameManager.clear_piece(i, y)
 						GameManager.emit_signal("collect_pieces", color, 1)
 			current_match = null
 			await get_tree().create_timer(0.5).timeout
 	return true
+
+func manual_refill():
+	await get_tree().create_timer(0.1).timeout
+	make_current_pieces_fall()
+	await get_tree().create_timer(0.5).timeout
+	refill_columns()
 
 func end_round():
 	await get_tree().create_timer(0.3).timeout

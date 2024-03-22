@@ -6,10 +6,13 @@ var color : Util.COLOR
 @export
 var sprites : Array
 
-var matched = false
-
+var matched := false
+var selected := false
 @onready
 var sprite = $TextureRect
+var original_scale
+func _ready():
+	original_scale = sprite.scale
 
 func move(target_cell:Vector2):
 	var tween = create_tween()
@@ -36,3 +39,8 @@ func clear():
 func transform(color):
 	sprite.texture = sprites[color]
 	self.color = color
+
+func appear_selected(multiplier := 1.0):
+	var tween = create_tween()
+	var new_scale = original_scale * multiplier
+	tween.tween_property(sprite, "scale", new_scale, .1).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)

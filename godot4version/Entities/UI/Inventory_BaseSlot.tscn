@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://bhgkb1hkop1w3"]
+[gd_scene load_steps=11 format=3 uid="uid://bhgkb1hkop1w3"]
 
 [ext_resource type="Texture2D" uid="uid://ckfveuxjk2ss1" path="res://Assets/Sprites/UI/Inventory/bottom_slot.png" id="1_uw6i7"]
 [ext_resource type="FontFile" uid="uid://kveprp0xebav" path="res://Assets/Fonts/Kenney Future Narrow.ttf" id="2_qaipe"]
 [ext_resource type="Script" path="res://Entities/UI/InventorySlot.gd" id="2_utu5r"]
 [ext_resource type="Texture2D" uid="uid://dn4f820abqwmp" path="res://Assets/Sprites/UI/Inventory/small_slot_heal.png" id="3_1p3f3"]
+[ext_resource type="Texture2D" uid="uid://2aiboa3lu4er" path="res://Assets/Sprites/UI/TurnProgressBar/timer_bar_under.png" id="4_jjf7e"]
 [ext_resource type="Texture2D" uid="uid://creakieydro0v" path="res://Assets/Sprites/UI/Inventory/small_slot.png" id="4_wep42"]
+[ext_resource type="Texture2D" uid="uid://bk41od2euvw1u" path="res://Assets/Sprites/UI/TurnProgressBar/timer_bar_over.png" id="5_h3ban"]
+[ext_resource type="Texture2D" uid="uid://tmx6hwoulv6p" path="res://Assets/Sprites/UI/TurnProgressBar/timer_bar_progress.png" id="6_bj3rt"]
 
 [sub_resource type="Theme" id="Theme_slbt0"]
 default_font = ExtResource("2_qaipe")
@@ -12,6 +15,8 @@ default_font = ExtResource("2_qaipe")
 [sub_resource type="LabelSettings" id="LabelSettings_aan3x"]
 font = ExtResource("2_qaipe")
 font_size = 40
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Background" type="TextureRect"]
 texture_filter = 1
@@ -40,6 +45,19 @@ offset_right = 68.0
 offset_bottom = 190.0
 texture = ExtResource("4_wep42")
 expand_mode = 1
+
+[node name="Amount" type="TextureProgressBar" parent="Counter"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 53.0
+offset_bottom = 772.0
+scale = Vector2(1.1, 0.073)
+max_value = 15.0
+fill_mode = 3
+texture_under = ExtResource("4_jjf7e")
+texture_over = ExtResource("5_h3ban")
+texture_progress = ExtResource("6_bj3rt")
 
 [node name="Label" type="Label" parent="Counter"]
 layout_mode = 0

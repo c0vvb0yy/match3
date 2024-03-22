@@ -2,10 +2,12 @@ extends Node
 
 signal collect_pieces
 signal score
+signal refill
 
 enum GRID_STATES {
 	wait,
-	move
+	move,
+	ready
 }
 var grid_state
 
@@ -91,3 +93,9 @@ func try_get_piece(column, row):
 
 func update_current_pieces(color: Util.COLOR, new_amount):
 	current_pieces[color] = new_amount
+
+func clear_piece(x, y):
+	if GameManager.all_pieces[x][y] == null:
+		return
+	await GameManager.all_pieces[x][y].clear()
+	GameManager.all_pieces[x][y] = null

@@ -12,9 +12,12 @@ func _process(delta):
 
 
 func _on_pressed():
-	var cost = 10
+	if GameManager.grid_state != GameManager.GRID_STATES.ready:
+		return
+	GameManager.grid_state = GameManager.GRID_STATES.wait
+	var cost = 0
 	var cost_color = Util.COLOR.Flesh
 	if GameManager.current_pieces[cost_color] >= cost:
 		GameManager.emit_signal("collect_pieces", cost_color, -cost)
-		Skills.turn_pieces_into_color(Util.COLOR.Divine, Util.COLOR.Flesh)
+		Skills.collect_all_pieces_of_color(Util.COLOR.Void)
 	pass # Replace with function body.
