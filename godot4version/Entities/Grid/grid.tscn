@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c4mojhf1p7wdp"]
+[gd_scene load_steps=9 format=3 uid="uid://c4mojhf1p7wdp"]
 
 [ext_resource type="Script" path="res://Entities/Grid/grid.gd" id="1_0hbya"]
 [ext_resource type="Script" path="res://Entities/Grid/GridBackground.gd" id="3_arrg1"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bk41od2euvw1u" path="res://Assets/Sprites/UI/TurnProgressBar/timer_bar_over.png" id="5_iv7r3"]
 [ext_resource type="Texture2D" uid="uid://tmx6hwoulv6p" path="res://Assets/Sprites/UI/TurnProgressBar/timer_bar_progress.png" id="6_vkkmx"]
 [ext_resource type="Script" path="res://Entities/Grid/TurnTimer.gd" id="7_hlyqq"]
+[ext_resource type="Script" path="res://Entities/Grid/ComboLabel.gd" id="8_rlena"]
 
 [node name="Grid" type="Node2D"]
 script = ExtResource("1_0hbya")
@@ -43,5 +44,16 @@ texture_under = ExtResource("4_st4ie")
 texture_over = ExtResource("5_iv7r3")
 texture_progress = ExtResource("6_vkkmx")
 script = ExtResource("7_hlyqq")
+
+[node name="ComboLabel" type="RichTextLabel" parent="."]
+z_index = 5
+offset_left = -186.0
+offset_top = 36.0
+offset_right = -14.79
+offset_bottom = 86.0
+theme_override_font_sizes/normal_font_size = 36
+bbcode_enabled = true
+fit_content = true
+script = ExtResource("8_rlena")
 
 [connection signal="timeout" from="RoundTimer" to="." method="_on_timer_timeout"]

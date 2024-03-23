@@ -27,7 +27,7 @@ static func wrap_coordinates_around_grid(coordinates:Array[Vector2], grid_dimens
 		coordinates[i] = coord
 	return coordinates
 
-static func grid_to_pixel(grid_cell_size, coordinate):
+static func grid_to_pixel(grid_cell_size:int, coordinate: Vector2):
 	var new_x = grid_cell_size * coordinate.x
 	var new_y = grid_cell_size * coordinate.y
 	return Vector2(new_x, new_y)
@@ -43,7 +43,7 @@ static func is_in_grid(coord:Vector2, grid_width:float, grid_height:float) -> bo
 			return true
 	return false
 
-static func calc_move_direction(start_pos: Vector2, end_pos: Vector2):
+static func calc_move_direction(start_pos: Vector2, end_pos: Vector2) -> Vector2:
 	var difference := end_pos - start_pos
 	if abs(difference.x) > abs(difference.y):
 		if difference.x > 0:
@@ -56,3 +56,19 @@ static func calc_move_direction(start_pos: Vector2, end_pos: Vector2):
 		elif difference.y < 0:
 			return Vector2.UP
 	return Vector2.ZERO
+
+static func is_direction_in_grid(start_pos: Vector2, direction: Vector2, grid_size) -> bool:
+	if (start_pos.x > 0 and start_pos.x < grid_size.x - 1
+	and (direction == Vector2.LEFT or direction == Vector2.RIGHT)):
+		return true
+	if (start_pos.y > 0 and start_pos.y < grid_size.y - 1
+	and (direction == Vector2.UP or direction == Vector2.DOWN)):
+		return true
+	if ((start_pos.x == 0 and direction == Vector2.LEFT)
+	or (start_pos.x == grid_size.x - 1 and direction == Vector2.RIGHT)):
+		return false
+	if (start_pos.y == 0 and direction == Vector2.UP
+	or (start_pos.y == grid_size.y - 1 and direction == Vector2.DOWN)):
+		return false
+	print(start_pos, direction)
+	return true

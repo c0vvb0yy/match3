@@ -24,13 +24,14 @@ var possible_pieces = [
 ]
 #input control variables
 var start_piece_pos := Vector2.ZERO
-var end_piece_pos := Vector2.ZERO
 var is_controlling_piece := false
 
 var combo : int = 0
 
 @onready
 var round_timer = $RoundTimer
+@onready
+var combo_label = $ComboLabel
 
 func _ready():
 	GameManager.score.connect(end_round)
@@ -70,21 +71,35 @@ func start_new_turn():
 	round_timer.start()
 
 func check_for_input():
-	var grid_coord = Util.pixel_to_grid(self.position, cell_size, get_global_mouse_position())
-	if Util.is_in_grid(grid_coord, dimension.x, dimension.y):
-		if(Input.is_action_just_pressed("mouse_click")):
-			start_piece_pos = grid_coord
+	var mouse_coord = Util.pixel_to_grid(self.position, cell_size, get_global_mouse_position())
+	var move_direction := Vector2.ZERO
+	if Util.is_in_grid(mouse_coord, dimension.x, dimension.y):
+		if Input.is_action_just_pressed("mouse_click"):
+			start_piece_pos = mouse_coord
 			GameManager.all_pieces[start_piece_pos.x][start_piece_pos.y].multiply_scale(1.1)
 			is_controlling_piece = true
-		if(Input.is_action_just_released("mouse_click")):
+		if(!is_controlling_piece):
+			return
+		if Input.is_action_just_released("mouse_click"):
+			is_controlling_piece = false
+			var end_piece_pos = Util.pixel_to_grid(self.position, cell_size, get_global_mouse_position())
+			move_direction = Util.calc_move_direction(start_piece_pos, end_piece_pos)
+			GameManager.all_pieces[start_piece_pos.x][start_piece_pos.y].multiply_scale()
+		if Input.is_action_just_pressed("down"):
+			move_direction = Vector2.DOWN
+		if Input.is_action_just_pressed("left"):
+			move_direction = Vector2.LEFT
+		if Input.is_action_just_pressed("right"):
+			move_direction = Vector2.RIGHT
+		if Input.is_action_just_pressed("up"):
+			move_direction = Vector2.UP
+		if (move_direction != Vector2.ZERO 
+		and Util.is_direction_in_grid(start_piece_pos, move_direction, dimension)):
 			is_controlling_piece = false
 			GameManager.all_pieces[start_piece_pos.x][start_piece_pos.y].multiply_scale()
-			end_piece_pos = Util.pixel_to_grid(self.position, cell_size, get_global_mouse_position())
-			var move_direction = Util.calc_move_direction(start_piece_pos, end_piece_pos)
-			if move_direction != Vector2.ZERO:
-				swap_pieces(start_piece_pos, move_direction)
-				if(round_timer.is_stopped()):
-					start_new_turn()
+			swap_pieces(start_piece_pos, move_direction)
+			if(round_timer.is_stopped()):
+				start_new_turn()
 
 func swap_pieces(coord:Vector2, dir:Vector2):
 	var target_coord = Vector2(coord.x + dir.x, coord.y + dir.y)
@@ -170,19 +185,24 @@ func _on_timer_timeout():
 		GameManager.all_pieces[start_piece_pos.x][start_piece_pos.y].multiply_scale()
 	end_round()
 
+var score = 0 
 func score_round():
 	if(GameManager.matches.size() > 0 and GameManager.matches[GameManager.matches.size()-1] != null):
 		for current_match in GameManager.matches:
 			if current_match == null:
 				continue
-			combo += 1
 			var x = current_match[0]
 			var y = current_match[1]
+			var dir = current_match[2]
 			var amount = current_match[3]
 			var color = current_match[4]
-			var score_amount = amount * 11
-			score_amount += (score_amount/4) * combo
-			match current_match[2]:
+			combo += 1
+			combo_label.text = str("[rainbow freq = 1.0][bgcolor=#00000088]",combo," combo")
+			combo_label.set_label_position(cell_size, x, y, amount-2, dir)
+			score += amount * 11
+			print(score)
+			#score_amount += (score_amount/4) * combo
+			match dir:
 				#TODO: combo label creation + position setting
 				direction.vertical: 
 					for i in range(y, y-amount, -1):
@@ -247,3 +267,5 @@ func after_refill():
 		#TODO: score verarbeitung/Enemy damage
 		GameManager.grid_state = GameManager.GRID_STATES.ready
 		combo = 0
+		combo_label.text = ""
+		score = 0
