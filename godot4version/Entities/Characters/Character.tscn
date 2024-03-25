@@ -1,0 +1,106 @@
+[gd_scene load_steps=10 format=3 uid="uid://cyalaawjb1ltp"]
+
+[ext_resource type="Script" path="res://Entities/Characters/Character.gd" id="1_08kyr"]
+[ext_resource type="Shader" path="res://Entities/Characters/portrait_background_color.gdshader" id="1_y4h5u"]
+[ext_resource type="Texture2D" uid="uid://ct0bmvrt8vrtr" path="res://Assets/Sprites/UI/Character/portrait_background.png" id="2_3auma"]
+[ext_resource type="Texture2D" uid="uid://b20eetf1aewue" path="res://Assets/Sprites/UI/Character/portrait_border.png" id="3_57j1j"]
+[ext_resource type="Texture2D" uid="uid://dnfudfgndstf7" path="res://Assets/Sprites/Characters/zaavan.png" id="4_wytrv"]
+[ext_resource type="Theme" uid="uid://b7386eiexi2fi" path="res://Entities/UI/font.tres" id="6_wp7mw"]
+[ext_resource type="Script" path="res://Entities/Characters/DamageLabel.gd" id="7_l5j5r"]
+[ext_resource type="Texture2D" uid="uid://degkl4xaemo05" path="res://Assets/Sprites/Pieces/piece_flesh.png" id="8_0bluj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gk6yh"]
+shader = ExtResource("1_y4h5u")
+shader_parameter/color_up = Color(0.427451, 0.172549, 0.196078, 1)
+shader_parameter/color_down = Color(0.109804, 0.180392, 0.533333, 1)
+
+[node name="Character" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchor_right = 0.139
+anchor_bottom = 0.36
+offset_right = -0.880035
+offset_bottom = 0.199982
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_08kyr")
+
+[node name="Portrait" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Background" type="TextureRect" parent="Portrait"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_gk6yh")
+layout_mode = 0
+offset_right = 267.0
+offset_bottom = 389.0
+texture = ExtResource("2_3auma")
+
+[node name="Sprite" type="TextureRect" parent="Portrait"]
+layout_mode = 0
+offset_right = 265.0
+offset_bottom = 392.0
+texture = ExtResource("4_wytrv")
+
+[node name="border" type="TextureRect" parent="Portrait"]
+layout_mode = 0
+offset_right = 267.0
+offset_bottom = 390.0
+texture = ExtResource("3_57j1j")
+
+[node name="DamageLabel" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(261, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -130.0
+offset_right = 131.0
+offset_bottom = 70.0
+grow_horizontal = 2
+pivot_offset = Vector2(130, 70)
+theme = ExtResource("6_wp7mw")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/normal_font_size = 61
+bbcode_enabled = true
+text = "[center]3857"
+fit_content = true
+script = ExtResource("7_l5j5r")
+
+[node name="Skill" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SkillButton" type="Button" parent="Skill"]
+layout_mode = 0
+offset_right = 265.0
+offset_bottom = 390.0
+flat = true
+
+[node name="Name" type="RichTextLabel" parent="Skill"]
+layout_mode = 0
+offset_top = 281.0
+offset_right = 196.0
+offset_bottom = 353.0
+theme = ExtResource("6_wp7mw")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/normal_font_size = 31
+bbcode_enabled = true
+text = "[right]skill name cost"
+fit_content = true
+
+[node name="Color" type="TextureRect" parent="Skill"]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 278.0
+offset_right = 320.0
+offset_bottom = 406.0
+scale = Vector2(0.565, 0.565)
+texture = ExtResource("8_0bluj")
+
+[connection signal="pressed" from="Skill/SkillButton" to="." method="_on_skill_button_pressed"]

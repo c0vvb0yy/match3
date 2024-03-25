@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://0nd1u3ltq7ty"]
+[gd_scene load_steps=6 format=3 uid="uid://0nd1u3ltq7ty"]
 
 [ext_resource type="PackedScene" uid="uid://c4mojhf1p7wdp" path="res://Entities/Grid/grid.tscn" id="1_mhfrp"]
 [ext_resource type="Texture2D" uid="uid://cwj82sxjw81t5" path="res://Assets/Sprites/background_03.png" id="1_sr8ds"]
 [ext_resource type="PackedScene" uid="uid://bi0ee7k2g8abh" path="res://Entities/UI/Inventory.tscn" id="2_tu2i6"]
+[ext_resource type="PackedScene" uid="uid://cyalaawjb1ltp" path="res://Entities/Characters/Character.tscn" id="5_7mchh"]
 [ext_resource type="Script" path="res://Entities/Characters/SkillDEBUG.gd" id="5_hi4e6"]
 
 [node name="Game" type="Control"]
@@ -14,6 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
 layout_mode = 0
 offset_left = -1058.0
 offset_top = -80.0
@@ -22,12 +24,12 @@ offset_bottom = 1000.0
 texture = ExtResource("1_sr8ds")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-94, 463)
+position = Vector2(-98, 460)
 
 [node name="Node2D" type="Node2D" parent="."]
 
 [node name="Grid" parent="Node2D" instance=ExtResource("1_mhfrp")]
-empty_spaces = Array[Vector2]([Vector2(0, 0), Vector2(-1, 0), Vector2(-1, -1), Vector2(0, -1)])
+empty_spaces = Array[Vector2]([Vector2(0, 0), Vector2(-1, 0), Vector2(-1, -1), Vector2(0, -1), Vector2(3, -2)])
 
 [node name="Inventory" parent="Node2D" instance=ExtResource("2_tu2i6")]
 offset_left = -2.0
@@ -38,11 +40,43 @@ theme_override_constants/separation = 20
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = -609.0
-offset_top = 320.0
-offset_right = -601.0
-offset_bottom = 328.0
-text = "Skill"
+offset_left = -140.0
+offset_top = 779.0
+offset_right = -100.0
+offset_bottom = 810.0
+text = "skill"
 script = ExtResource("5_hi4e6")
+
+[node name="Character" parent="." instance=ExtResource("5_7mchh")]
+layout_mode = 1
+offset_left = -1002.0
+offset_top = 574.0
+offset_right = -1002.88
+offset_bottom = 574.2
+sec_color = 2
+skill_color = 2
+skill_cost = 2
+skill_name = "shooting star"
+base_hp = 1
+base_atk = 12
+hp_multiplier = 1.1
+atk_multiplier = 1.4
+level = 1
+
+[node name="Character2" parent="." instance=ExtResource("5_7mchh")]
+layout_mode = 1
+offset_left = -694.0
+offset_top = 574.0
+offset_right = -694.88
+offset_bottom = 574.2
+sec_color = 2
+skill_color = 2
+skill_cost = 99
+skill_name = "sdfgcf."
+base_hp = 1
+base_atk = 12
+hp_multiplier = 1.1
+atk_multiplier = 1.4
+level = 2
 
 [connection signal="pressed" from="Button" to="Button" method="_on_pressed"]

@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://cimjf322f4c2s"]
 
 [ext_resource type="PackedScene" uid="uid://w17hwrdgxeyk" path="res://Entities/Pieces/piece.tscn" id="1_qlhxu"]
-[ext_resource type="Texture2D" uid="uid://kfi8ygkp6n5w" path="res://Assets/Sprites/Pieces/piece_order.png" id="2_1hf1b"]
+[ext_resource type="Texture2D" uid="uid://smkq0njfm5bf" path="res://Assets/Sprites/Pieces/piece_life.png" id="2_6d578"]
 
 [node name="Piece" instance=ExtResource("1_qlhxu")]
 color = 4
 
 [node name="TextureRect" parent="." index="0"]
-texture = ExtResource("2_1hf1b")
+texture = ExtResource("2_6d578")

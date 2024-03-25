@@ -1,20 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://db766q44q7kh"]
 
 [ext_resource type="PackedScene" uid="uid://bhgkb1hkop1w3" path="res://Entities/UI/Inventory_BaseSlot.tscn" id="1_evbc8"]
-[ext_resource type="Texture2D" uid="uid://kfi8ygkp6n5w" path="res://Assets/Sprites/Pieces/piece_order.png" id="2_y8n5j"]
+[ext_resource type="Texture2D" uid="uid://smkq0njfm5bf" path="res://Assets/Sprites/Pieces/piece_life.png" id="2_6jimt"]
 
 [node name="Life" instance=ExtResource("1_evbc8")]
 own_color = 4
 
-[node name="TextureRect#Piece" type="TextureRect" parent="." index="0"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = -5.0
-offset_bottom = -5.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_y8n5j")
+[node name="Piece" parent="." index="0"]
+texture = ExtResource("2_6jimt")

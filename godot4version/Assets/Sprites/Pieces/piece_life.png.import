@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clj0rkf2p1jid"
-path="res://.godot/imported/piece_star.png-cb9105c991550b3be1b507376dd09814.ctex"
+uid="uid://smkq0njfm5bf"
+path="res://.godot/imported/piece_life.png-ab7adbe8c36a409b6b876c28fe044fca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Pieces/piece_star.png"
-dest_files=["res://.godot/imported/piece_star.png-cb9105c991550b3be1b507376dd09814.ctex"]
+source_file="res://Assets/Sprites/Pieces/piece_life.png"
+dest_files=["res://.godot/imported/piece_life.png-ab7adbe8c36a409b6b876c28fe044fca.ctex"]
 
 [params]
 

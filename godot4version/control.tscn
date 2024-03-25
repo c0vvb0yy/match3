@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://jm4a542ueau5"]
+
+[ext_resource type="Shader" path="res://Entities/Characters/portrait_background_color.gdshader" id="1_wxokq"]
+[ext_resource type="Texture2D" uid="uid://ct0bmvrt8vrtr" path="res://Assets/Sprites/UI/Character/portrait_background.png" id="2_rh8v3"]
+[ext_resource type="Texture2D" uid="uid://b20eetf1aewue" path="res://Assets/Sprites/UI/Character/portrait_border.png" id="3_niu42"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gk6yh"]
+shader = ExtResource("1_wxokq")
+shader_parameter/color_up = Color(0.709804, 0.141176, 0.101961, 1)
+shader_parameter/color_down = Color(0.466667, 0.811765, 0.384314, 1)
+
+[node name="Control" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchor_right = 0.139
+anchor_bottom = 0.36
+offset_right = -0.880035
+offset_bottom = 0.199982
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_gk6yh")
+layout_mode = 0
+offset_top = 1.0
+offset_right = 267.0
+offset_bottom = 390.0
+texture = ExtResource("2_rh8v3")
+
+[node name="border" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 267.0
+offset_bottom = 390.0
+texture = ExtResource("3_niu42")

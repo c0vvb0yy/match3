@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drqc6kl4620eh"
-path="res://.godot/imported/piece_moon.png-8df5909d96e775d72a21254adf86ee5d.ctex"
+uid="uid://degkl4xaemo05"
+path="res://.godot/imported/piece_flesh.png-58addad84f524a9e13d0577f0262a72a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Pieces/piece_moon.png"
-dest_files=["res://.godot/imported/piece_moon.png-8df5909d96e775d72a21254adf86ee5d.ctex"]
+source_file="res://Assets/Sprites/Pieces/piece_flesh.png"
+dest_files=["res://.godot/imported/piece_flesh.png-58addad84f524a9e13d0577f0262a72a.ctex"]
 
 [params]
 

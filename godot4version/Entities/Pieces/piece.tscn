@@ -1,15 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://w17hwrdgxeyk"]
+[gd_scene load_steps=2 format=3 uid="uid://w17hwrdgxeyk"]
 
 [ext_resource type="Script" path="res://Entities/Pieces/Piece.gd" id="1_aj5dc"]
-[ext_resource type="Texture2D" uid="uid://bi05ul5idsvbh" path="res://Assets/Sprites/Pieces/piece_sun.png" id="2_xcl5c"]
-[ext_resource type="Texture2D" uid="uid://drqc6kl4620eh" path="res://Assets/Sprites/Pieces/piece_moon.png" id="3_22mwl"]
-[ext_resource type="Texture2D" uid="uid://clj0rkf2p1jid" path="res://Assets/Sprites/Pieces/piece_star.png" id="4_4lspc"]
-[ext_resource type="Texture2D" uid="uid://blwfognn2hwa4" path="res://Assets/Sprites/Pieces/piece_chaos.png" id="5_dkkiv"]
-[ext_resource type="Texture2D" uid="uid://kfi8ygkp6n5w" path="res://Assets/Sprites/Pieces/piece_order.png" id="6_qpnun"]
 
 [node name="Piece" type="Node2D"]
+texture_filter = 1
 script = ExtResource("1_aj5dc")
-sprites = [ExtResource("2_xcl5c"), ExtResource("3_22mwl"), ExtResource("4_4lspc"), ExtResource("5_dkkiv"), ExtResource("6_qpnun")]
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchors_preset = 8

@@ -26,6 +26,8 @@ var possible_pieces = [
 var start_piece_pos := Vector2.ZERO
 var is_controlling_piece := false
 
+var quick_time_multiplier := 1.0
+
 var combo : int = 0
 
 @onready
@@ -63,6 +65,8 @@ func _process(_delta):
 	if(GameManager.grid_state != GameManager.GRID_STATES.wait):
 		check_for_input()
 		if Input.is_action_just_pressed("ui_accept"):
+			quick_time_multiplier = 1 + (round_timer.get_time_left() * (100 / round_timer.wait_time)) / 100;
+			print(quick_time_multiplier)
 			_on_timer_timeout()
 	pass
 
@@ -73,7 +77,7 @@ func start_new_turn():
 func check_for_input():
 	var mouse_coord = Util.pixel_to_grid(self.position, cell_size, get_global_mouse_position())
 	var move_direction := Vector2.ZERO
-	if Util.is_in_grid(mouse_coord, dimension.x, dimension.y):
+	if Util.is_in_grid(mouse_coord, dimension.x, dimension.y) and GameManager.is_piece_existing(mouse_coord.x, mouse_coord.y):
 		if Input.is_action_just_pressed("mouse_click"):
 			start_piece_pos = mouse_coord
 			GameManager.all_pieces[start_piece_pos.x][start_piece_pos.y].multiply_scale(1.1)
@@ -191,6 +195,7 @@ func score_round():
 		for current_match in GameManager.matches:
 			if current_match == null:
 				continue
+			print(GameManager.matches)
 			var x = current_match[0]
 			var y = current_match[1]
 			var dir = current_match[2]
@@ -200,7 +205,7 @@ func score_round():
 			combo_label.text = str("[rainbow freq = 1.0][bgcolor=#00000088]",combo," combo")
 			combo_label.set_label_position(cell_size, x, y, amount-2, dir)
 			score += amount * 11
-			print(score)
+			PartyManager.emit_signal("register_match", color, score)
 			#score_amount += (score_amount/4) * combo
 			match dir:
 				#TODO: combo label creation + position setting
@@ -213,7 +218,7 @@ func score_round():
 						GameManager.clear_piece(i, y)
 						GameManager.emit_signal("collect_pieces", color, 1)
 			current_match = null
-			await get_tree().create_timer(0.5).timeout
+			await get_tree().create_timer(0.7).timeout
 	return true
 
 func manual_refill():
@@ -265,7 +270,12 @@ func after_refill():
 		end_round()
 	else:
 		#TODO: score verarbeitung/Enemy damage
+		score *= quick_time_multiplier
+		score *= max(1, combo/3)
+		print("final score: ", score)
 		GameManager.grid_state = GameManager.GRID_STATES.ready
+		GameManager.emit_signal("round_over")
 		combo = 0
 		combo_label.text = ""
 		score = 0
+		quick_time_multiplier = 1

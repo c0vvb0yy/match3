@@ -1,20 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://cv4va7acnnoy5"]
 
 [ext_resource type="PackedScene" uid="uid://bhgkb1hkop1w3" path="res://Entities/UI/Inventory_BaseSlot.tscn" id="1_xibet"]
-[ext_resource type="Texture2D" uid="uid://blwfognn2hwa4" path="res://Assets/Sprites/Pieces/piece_chaos.png" id="2_dmo0s"]
+[ext_resource type="Texture2D" uid="uid://couyfys17s8jc" path="res://Assets/Sprites/Pieces/piece_void.png" id="2_b35nh"]
 
 [node name="Void" instance=ExtResource("1_xibet")]
 own_color = 3
 
-[node name="TextureRect#Piece" type="TextureRect" parent="." index="0"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = -5.0
-offset_bottom = -5.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_dmo0s")
+[node name="Piece" parent="." index="0"]
+texture = ExtResource("2_b35nh")

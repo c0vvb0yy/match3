@@ -1,20 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://dhlbfo82dwrit"]
 
 [ext_resource type="PackedScene" uid="uid://bhgkb1hkop1w3" path="res://Entities/UI/Inventory_BaseSlot.tscn" id="1_3krh2"]
-[ext_resource type="Texture2D" uid="uid://drqc6kl4620eh" path="res://Assets/Sprites/Pieces/piece_moon.png" id="2_f3ma8"]
+[ext_resource type="Texture2D" uid="uid://bhquw2ytli3eg" path="res://Assets/Sprites/Pieces/piece_machine.png" id="2_qrkvi"]
 
 [node name="Machine" instance=ExtResource("1_3krh2")]
 own_color = 1
 
-[node name="TextureRect#Piece" type="TextureRect" parent="." index="0"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = -5.0
-offset_bottom = -5.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_f3ma8")
+[node name="Piece" parent="." index="0"]
+texture = ExtResource("2_qrkvi")

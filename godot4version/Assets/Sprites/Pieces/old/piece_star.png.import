@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bi05ul5idsvbh"
-path="res://.godot/imported/piece_sun.png-70bcae4a8ac3989cf65b098c68cb8172.ctex"
+uid="uid://clj0rkf2p1jid"
+path="res://.godot/imported/piece_star.png-3414cd2ad0f4a7f4f4b75c30c63bfbd3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Pieces/piece_sun.png"
-dest_files=["res://.godot/imported/piece_sun.png-70bcae4a8ac3989cf65b098c68cb8172.ctex"]
+source_file="res://Assets/Sprites/Pieces/old/piece_star.png"
+dest_files=["res://.godot/imported/piece_star.png-3414cd2ad0f4a7f4f4b75c30c63bfbd3.ctex"]
 
 [params]
 

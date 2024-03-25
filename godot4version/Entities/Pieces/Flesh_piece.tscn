@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://4xp6mw4jl46g"]
 
 [ext_resource type="PackedScene" uid="uid://w17hwrdgxeyk" path="res://Entities/Pieces/piece.tscn" id="1_rygkl"]
-[ext_resource type="Texture2D" uid="uid://bi05ul5idsvbh" path="res://Assets/Sprites/Pieces/piece_sun.png" id="2_amsv7"]
+[ext_resource type="Texture2D" uid="uid://degkl4xaemo05" path="res://Assets/Sprites/Pieces/piece_flesh.png" id="2_k14io"]
 
 [node name="Piece" instance=ExtResource("1_rygkl")]
 
 [node name="TextureRect" parent="." index="0"]
-texture = ExtResource("2_amsv7")
+texture = ExtResource("2_k14io")

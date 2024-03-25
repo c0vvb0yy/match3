@@ -2,6 +2,28 @@ class_name Util
 
 enum COLOR {Flesh , Machine , Divine , Void , Life}
 
+static var color_modulates = {
+	COLOR.Flesh : Color(0.3, 0.07, 0.07),
+	COLOR.Machine: Color(0.06, 0.53, 0.18),
+	COLOR.Divine: Color(0.11, 0.02, 0.71),
+	COLOR.Void: Color(0.38, 0.38, 0.38),
+	COLOR.Life: Color(1,1,1) #try and think of how to rainbow freq it?
+} 
+static var color_codes = {
+	COLOR.Flesh : '[color = #4c131]',
+	COLOR.Machine: '[color = #0f872d]',
+	COLOR.Divine: '[color = #1c05b5]',
+	COLOR.Void: '[color = #606060]',
+	COLOR.Life: '[rainbow freq = 1.0]'
+}
+static var piece_textures = [
+	preload("res://Assets/Sprites/Pieces/piece_flesh.png"),
+	preload("res://Assets/Sprites/Pieces/piece_machine.png"),
+	preload("res://Assets/Sprites/Pieces/piece_Divine.png"),
+	preload("res://Assets/Sprites/Pieces/piece_void.png"),
+	preload("res://Assets/Sprites/Pieces/piece_life.png")
+]
+
 static func make_2d_array(width : int, height: int) -> Array:
 	var array = []
 	for x in width:

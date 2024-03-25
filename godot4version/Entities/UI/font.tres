@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://b7386eiexi2fi"]
+
+[ext_resource type="FontFile" uid="uid://kveprp0xebav" path="res://Assets/Fonts/Kenney Future Narrow.ttf" id="1_h74dk"]
+
+[resource]
+default_font = ExtResource("1_h74dk")

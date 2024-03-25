@@ -3,8 +3,6 @@ extends Node2D
 
 @export
 var color : Util.COLOR
-@export
-var sprites : Array
 
 var matched := false
 var selected := false
@@ -37,7 +35,7 @@ func clear():
 	queue_free()
 
 func transform(color):
-	sprite.texture = sprites[color]
+	sprite.texture = Util.piece_textures[color]
 	self.color = color
 
 func multiply_scale(multiplier := 1.0):

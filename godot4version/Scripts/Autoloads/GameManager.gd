@@ -3,6 +3,7 @@ extends Node
 signal collect_pieces
 signal score
 signal refill
+signal round_over
 
 enum GRID_STATES {
 	wait,
@@ -16,7 +17,7 @@ var matches : Array #schema => [x,y, direction(V||H), amount, color]
 
 var current_pieces = [0,0,0,0,0]
 
-func is_piece_existing(column, row):
+func is_piece_existing(column:int, row:int) -> bool:
 	if all_pieces[column][row] == null:
 		return false
 	return true

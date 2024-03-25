@@ -3,7 +3,7 @@ extends Control
 var current_amount = 0
 var target_amount = 0
 
-var max_amount = 15
+var max_amount = 40
 
 @export
 var own_color : Util.COLOR
