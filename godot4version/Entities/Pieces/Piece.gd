@@ -42,3 +42,11 @@ func multiply_scale(multiplier := 1.0):
 	var tween = create_tween()
 	var new_scale = original_scale * multiplier
 	tween.tween_property(sprite, "scale", new_scale, .1).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+
+func set_disabled(state:bool):
+	var tween = create_tween()
+	if(state):
+		tween.tween_property(self, "modulate", Color(0.2, 0.2, 0.2, 1.0), .3).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_LINEAR)
+		
+	else:
+		tween.tween_property(self, "modulate", Color(1.0, 1.0, 1.0, 1.0), .3).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_LINEAR)

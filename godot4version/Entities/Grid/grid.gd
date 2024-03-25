@@ -43,6 +43,7 @@ func _ready():
 	@warning_ignore("narrowing_conversion")
 	GameManager.all_pieces = Util.make_2d_array(dimension.x, dimension.y)
 	empty_spaces = Util.wrap_coordinates_around_grid(empty_spaces, dimension)
+	GameManager.grid_dimension = dimension
 	fill_grid()
 
 func fill_grid():
@@ -270,12 +271,13 @@ func after_refill():
 		await get_tree().create_timer(0.4).timeout
 		end_matching()
 	else:
+		await get_tree().create_timer(0.3).timeout
 		#TODO: Enemy damage
 		score *= quick_time_multiplier
 		score *= max(1, combo/3)
 		PartyManager.emit_signal("apply_combo", combo)
 		print("final score: ", score)
-		
+		GameManager.disable_grid(true)
 
 func end_round():
 	GameManager.grid_state = GameManager.GRID_STATES.ready
@@ -283,3 +285,4 @@ func end_round():
 	combo_label.text = ""
 	score = 0
 	quick_time_multiplier = 1
+	GameManager.disable_grid(false)

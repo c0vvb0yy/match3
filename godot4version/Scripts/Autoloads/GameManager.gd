@@ -17,6 +17,8 @@ var matches : Array #schema => [x,y, direction(V||H), amount, color]
 
 var current_pieces = [0,0,0,0,0]
 
+var grid_dimension : Vector2
+
 func is_piece_existing(column:int, row:int) -> bool:
 	if all_pieces[column][row] == null:
 		return false
@@ -100,3 +102,9 @@ func clear_piece(x, y):
 		return
 	await GameManager.all_pieces[x][y].clear()
 	GameManager.all_pieces[x][y] = null
+
+func disable_grid(state):
+	for x in grid_dimension.x:
+		for y in grid_dimension.y:
+			if is_piece_existing(x,y):
+				all_pieces[x][y].set_disabled(state)
