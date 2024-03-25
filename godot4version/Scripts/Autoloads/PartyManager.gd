@@ -1,7 +1,7 @@
 extends Node
 
 signal register_match
-
+signal apply_combo
 var party_hp : int
 var current_hp : int
 

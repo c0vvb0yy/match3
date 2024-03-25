@@ -36,7 +36,7 @@ var round_timer = $RoundTimer
 var combo_label = $ComboLabel
 
 func _ready():
-	GameManager.score.connect(end_round)
+	GameManager.score.connect(end_matching)
 	GameManager.refill.connect(manual_refill)
 	GameManager.grid_state = GameManager.GRID_STATES.ready
 	@warning_ignore("narrowing_conversion")
@@ -187,7 +187,7 @@ func _on_timer_timeout():
 	GameManager.grid_state = GameManager.GRID_STATES.wait
 	if is_controlling_piece:
 		GameManager.all_pieces[start_piece_pos.x][start_piece_pos.y].multiply_scale()
-	end_round()
+	end_matching()
 
 var score = 0 
 func score_round():
@@ -228,7 +228,7 @@ func manual_refill():
 	refill_columns()
 	GameManager.grid_state = GameManager.GRID_STATES.ready
 
-func end_round():
+func end_matching():
 	await get_tree().create_timer(0.3).timeout
 	await score_round()
 	await get_tree().create_timer(0.1).timeout
@@ -267,15 +267,19 @@ func refill_columns():
 func after_refill():
 	if (match_pieces()):
 		await get_tree().create_timer(0.4).timeout
-		end_round()
+		end_matching()
 	else:
-		#TODO: score verarbeitung/Enemy damage
+		#TODO: Enemy damage
 		score *= quick_time_multiplier
 		score *= max(1, combo/3)
+		PartyManager.emit_signal("apply_combo", combo)
 		print("final score: ", score)
-		GameManager.grid_state = GameManager.GRID_STATES.ready
-		GameManager.emit_signal("round_over")
-		combo = 0
-		combo_label.text = ""
-		score = 0
-		quick_time_multiplier = 1
+		
+
+func end_round():
+	GameManager.grid_state = GameManager.GRID_STATES.ready
+	GameManager.emit_signal("round_over")
+	combo = 0
+	combo_label.text = ""
+	score = 0
+	quick_time_multiplier = 1

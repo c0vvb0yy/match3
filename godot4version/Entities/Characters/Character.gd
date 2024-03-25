@@ -38,6 +38,7 @@ var skill_info = $Skill/Name
 
 func _ready():
 	PartyManager.register_match.connect(register_match)
+	PartyManager.apply_combo.connect(apply_combo)
 	GameManager.round_over.connect(reset)
 	set_bg_color()
 	set_up_skill()
@@ -71,10 +72,14 @@ func register_match(color, amount):
 	print(round_attack_damage)
 	damage_label.target = round_attack_damage
 
+func apply_combo(combo):
+	round_attack_damage *= max(1, combo/3)
+	damage_label.target = round_attack_damage
+	pass
+
 func reset():
 	round_attack_damage = 0
 	damage_label.target = 0
-
 
 func _on_skill_button_pressed():
 	if GameManager.grid_state != GameManager.GRID_STATES.ready:

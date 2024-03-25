@@ -1,7 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://cyalaawjb1ltp"]
 
 [ext_resource type="Script" path="res://Entities/Characters/Character.gd" id="1_08kyr"]
-[ext_resource type="Shader" path="res://Entities/Characters/portrait_background_color.gdshader" id="1_y4h5u"]
 [ext_resource type="Texture2D" uid="uid://ct0bmvrt8vrtr" path="res://Assets/Sprites/UI/Character/portrait_background.png" id="2_3auma"]
 [ext_resource type="Texture2D" uid="uid://b20eetf1aewue" path="res://Assets/Sprites/UI/Character/portrait_border.png" id="3_57j1j"]
 [ext_resource type="Texture2D" uid="uid://dnfudfgndstf7" path="res://Assets/Sprites/Characters/zaavan.png" id="4_wytrv"]
@@ -9,8 +8,41 @@
 [ext_resource type="Script" path="res://Entities/Characters/DamageLabel.gd" id="7_l5j5r"]
 [ext_resource type="Texture2D" uid="uid://degkl4xaemo05" path="res://Assets/Sprites/Pieces/piece_flesh.png" id="8_0bluj"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gk6yh"]
-shader = ExtResource("1_y4h5u")
+[sub_resource type="Shader" id="Shader_dn5ln"]
+code = "shader_type canvas_item;
+
+uniform vec3 color_up : source_color;
+uniform vec3 color_down : source_color;
+//uniform sampler2D bg_texture : source_texture;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+void fragment() {
+	vec2 flipped_uv = vec2(1.0 - UV.x, UV.y);
+	if (flipped_uv.x <= flipped_uv.y){//if (bg_col.x == 1.0){
+		COLOR = vec4(color_down, 1.0);
+	}
+	else {
+		COLOR = vec4(color_up, 1.0);
+	}
+	
+	//COLOR = vec4(UV, 0.0,1.0);
+	
+	/*vec4 bg_col = texture(TEXTURE, UV);
+	if(bg_col.x > 0.0){
+		COLOR = vec4(color_down, 1.0);
+	}
+	else {
+		COLOR = vec4(color_up, 1.0);
+	}*/
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ddbyj"]
+resource_local_to_scene = true
+shader = SubResource("Shader_dn5ln")
 shader_parameter/color_up = Color(0.427451, 0.172549, 0.196078, 1)
 shader_parameter/color_down = Color(0.109804, 0.180392, 0.533333, 1)
 
@@ -32,7 +64,7 @@ offset_bottom = 40.0
 
 [node name="Background" type="TextureRect" parent="Portrait"]
 texture_filter = 1
-material = SubResource("ShaderMaterial_gk6yh")
+material = SubResource("ShaderMaterial_ddbyj")
 layout_mode = 0
 offset_right = 267.0
 offset_bottom = 389.0
@@ -56,8 +88,8 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -130.0
-offset_right = 131.0
+offset_left = -130.5
+offset_right = 130.5
 offset_bottom = 70.0
 grow_horizontal = 2
 pivot_offset = Vector2(130, 70)
