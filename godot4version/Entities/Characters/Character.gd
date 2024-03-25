@@ -75,7 +75,15 @@ func register_match(color, amount):
 func apply_combo(combo):
 	round_attack_damage *= max(1, combo/3)
 	damage_label.target = round_attack_damage
-	pass
+	await get_tree().create_timer(1.5).timeout
+	attack()
+
+func attack():
+	#something something....
+		#emit signal?
+		#EnemyManager.receive_damage(round_attack_damage)
+		#EnemyManager.progress_turn
+	GameManager.emit_signal("round_over")
 
 func reset():
 	round_attack_damage = 0

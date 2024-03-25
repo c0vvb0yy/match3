@@ -38,6 +38,7 @@ var combo_label = $ComboLabel
 func _ready():
 	GameManager.score.connect(end_matching)
 	GameManager.refill.connect(manual_refill)
+	GameManager.round_over.connect(end_round)
 	GameManager.grid_state = GameManager.GRID_STATES.ready
 	@warning_ignore("narrowing_conversion")
 	GameManager.all_pieces = Util.make_2d_array(dimension.x, dimension.y)
@@ -278,7 +279,6 @@ func after_refill():
 
 func end_round():
 	GameManager.grid_state = GameManager.GRID_STATES.ready
-	GameManager.emit_signal("round_over")
 	combo = 0
 	combo_label.text = ""
 	score = 0
