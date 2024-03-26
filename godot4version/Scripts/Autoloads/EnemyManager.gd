@@ -47,7 +47,24 @@ var life_dict = {
 	Util.COLOR.Void: very_effective,
 	Util.COLOR.Life: neutral,
 }
-
-func register_damage(amount, color):
+func register_damage(amount, attack_color):
+	print("Initial damage: ",amount, "of: ", attack_color)
+	var type_dict = get_effectiveness(attack_color)
+	var multiplier = type_dict[color]
+	amount *= multiplier
+	print("type damage: ",amount, "of: ", attack_color)
 	take_damage.emit(amount)
 	pass
+
+func get_effectiveness(attack_color):
+	match attack_color:
+		Util.COLOR.Flesh:
+			return flesh_dict
+		Util.COLOR.Machine:
+			return machine_dict
+		Util.COLOR.Divine:
+			return divine_dict
+		Util.COLOR.Void:
+			return void_dict
+		Util.COLOR.Life:
+			return life_dict

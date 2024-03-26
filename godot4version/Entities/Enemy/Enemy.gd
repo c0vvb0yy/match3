@@ -52,9 +52,10 @@ func attack():
 
 func take_damage(amount):
 	current_hp -= amount
-	update_hp()
 	if current_hp <= 0:
+		current_hp = 0
 		die()
+	update_hp()
 
 func update_hp():
 	var tween = create_tween()
