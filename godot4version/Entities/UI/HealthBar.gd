@@ -10,6 +10,7 @@ func _ready():
 func set_hp():
 	self.max_value = PartyManager.party_hp
 	self.value = PartyManager.party_hp
+	label.text = str(PartyManager.party_hp, "/", PartyManager.party_hp)
 
 func update_hp(new_hp:int):
 	var tween = create_tween()

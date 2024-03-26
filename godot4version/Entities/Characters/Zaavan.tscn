@@ -48,3 +48,7 @@ material = SubResource("ShaderMaterial_j5mj5")
 
 [node name="Sprite" parent="Portrait" index="1"]
 texture = ExtResource("2_162tt")
+
+[node name="Skill" parent="." index="2"]
+offset_right = 265.0
+offset_bottom = 389.0

@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://dno1p164seva8"]
 
-[ext_resource type="Texture2D" uid="uid://884e2ko78gac" path="res://Assets/Sprites/UI/Healthbar/healtbar_under.png" id="1_674pd"]
-[ext_resource type="Texture2D" uid="uid://bfyfxnqka738c" path="res://Assets/Sprites/UI/Healthbar/healtbar_over.png" id="2_4w7wo"]
-[ext_resource type="Texture2D" uid="uid://cfxfjnlor0i5w" path="res://Assets/Sprites/UI/Healthbar/healtbar_fill.png" id="3_gp2w7"]
+[ext_resource type="Texture2D" uid="uid://884e2ko78gac" path="res://Assets/Sprites/UI/Healthbar/Party/healtbar_under.png" id="1_4ji83"]
+[ext_resource type="Texture2D" uid="uid://bfyfxnqka738c" path="res://Assets/Sprites/UI/Healthbar/Party/healtbar_over.png" id="2_qld2j"]
+[ext_resource type="Texture2D" uid="uid://cfxfjnlor0i5w" path="res://Assets/Sprites/UI/Healthbar/Party/healtbar_fill.png" id="3_rbwts"]
 [ext_resource type="Script" path="res://Entities/UI/HealthBar.gd" id="4_1hfns"]
 [ext_resource type="Theme" uid="uid://b7386eiexi2fi" path="res://Entities/UI/font.tres" id="5_y3o4b"]
 
@@ -18,18 +18,19 @@ stretch_margin_left = 2
 stretch_margin_top = 2
 stretch_margin_right = 2
 stretch_margin_bottom = 2
-texture_under = ExtResource("1_674pd")
-texture_over = ExtResource("2_4w7wo")
-texture_progress = ExtResource("3_gp2w7")
+texture_under = ExtResource("1_4ji83")
+texture_over = ExtResource("2_qld2j")
+texture_progress = ExtResource("3_rbwts")
 script = ExtResource("4_1hfns")
 
 [node name="Amount" type="RichTextLabel" parent="."]
+texture_filter = 1
 layout_mode = 0
 offset_left = 12.0
 offset_right = 396.0
 offset_bottom = 40.0
 theme = ExtResource("5_y3o4b")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 3
+theme_override_constants/outline_size = 4
 theme_override_font_sizes/normal_font_size = 35
 text = "124/10295"
