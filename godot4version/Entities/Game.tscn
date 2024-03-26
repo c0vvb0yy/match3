@@ -87,20 +87,6 @@ offset_top = 530.0
 offset_right = -53.0
 offset_bottom = 570.0
 
-[node name="Enemy" parent="." instance=ExtResource("11_uyybm")]
-visible = false
-layout_mode = 1
-offset_left = -780.0
-offset_top = 36.0
-offset_right = -277.0
-offset_bottom = 510.0
-
-[node name="Sprite" parent="Enemy" index="0"]
-offset_left = -251.5
-offset_top = -474.0
-offset_right = 202.5
-offset_bottom = -20.0
-
 [node name="Enemy2" parent="." instance=ExtResource("11_uyybm")]
 layout_mode = 1
 offset_left = -797.0
@@ -109,5 +95,3 @@ offset_right = -796.12
 offset_bottom = 63.4
 
 [connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
-
-[editable path="Enemy"]

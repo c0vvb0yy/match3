@@ -18,6 +18,8 @@ var health_bar = $HealthBar
 var hp_label = $HealthLabel
 @onready
 var color_icon = $ColorIcon
+@onready
+var countdown_label = $RoundCount
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	PartyManager.attack_over.connect(turn)
@@ -33,6 +35,7 @@ func set_up_ui():
 	health_bar.modulate = Util.color_modulates[color]
 	hp_label.text = str(current_hp)
 	color_icon.texture = Util.piece_textures[color]
+	countdown_label.text = str("[right]", round_countdown, " rounds until attack")
 
 func register_at_manager():
 	EnemyManager.hp = hp
@@ -41,7 +44,7 @@ func register_at_manager():
 
 func turn():
 	round_countdown -= 1
-	print("time till attack: ", round_countdown)
+	countdown_label.text = str("[right]", round_countdown, " rounds until attack")
 	if round_countdown == 0:
 		await get_tree().create_timer(0.3).timeout
 		attack()
