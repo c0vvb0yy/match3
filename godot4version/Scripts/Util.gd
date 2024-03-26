@@ -6,7 +6,7 @@ static var color_modulates = {
 	COLOR.Flesh : Color(0.3, 0.07, 0.07),
 	COLOR.Machine: Color(0.06, 0.53, 0.18),
 	COLOR.Divine: Color(0.11, 0.02, 0.71),
-	COLOR.Void: Color(0.38, 0.38, 0.38),
+	COLOR.Void: Color(0.5, 0.5, 0.5),
 	COLOR.Life: Color(1,1,1) #try and think of how to rainbow freq it?
 } 
 static var color_codes = {

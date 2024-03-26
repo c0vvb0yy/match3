@@ -81,12 +81,20 @@ func apply_combo(combo):
 	attack()
 
 func attack():
+	await attack_animation()
 	#something something....
 		#emit signal?
 		#EnemyManager.receive_damage(round_attack_damage)
 		#EnemyManager.progress_turn
 	PartyManager.register_attack(round_attack_damage, main_color, sec_color)
 	#PartyManager.emit_signal("attack_over")
+
+func attack_animation():
+	var tween = create_tween()
+	tween.tween_property(get_child(0), "position", Vector2(0, 80), .4).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	await tween.finished
+	var up_tween = create_tween()
+	up_tween.tween_property(get_child(0), "position", Vector2(0, 0), .1).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BOUNCE)
 
 func reset():
 	round_attack_damage = 0

@@ -56,7 +56,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_08kyr")
 skill_cost = 1
-skill_name = null
 base_hp = 1
 base_atk = 1
 hp_multiplier = 1.0

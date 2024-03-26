@@ -6,7 +6,6 @@
 [node name="Life" instance=ExtResource("1_evbc8")]
 
 [node name="Background" parent="." index="0"]
-layout_mode = 0
 own_color = 4
 
 [node name="Piece" parent="Background" index="0"]

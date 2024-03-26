@@ -12,6 +12,9 @@ var attack_damage : int = 10
 var current_hp : int
 var round_countdown : int
 
+var damage_label = preload("res://Entities/Enemy/damage_label.tscn")
+@onready
+var damage_label_parent = $DamageLabelContainer
 @onready
 var health_bar = $HealthBar
 @onready 
@@ -46,20 +49,26 @@ func turn():
 	round_countdown -= 1
 	countdown_label.text = str("[right]", round_countdown, " rounds until attack")
 	if round_countdown == 0:
-		await get_tree().create_timer(0.3).timeout
+		await get_tree().create_timer(1.5).timeout
 		attack()
 	GridManager.emit_signal("round_over")
 
 func attack():
+	await attack_animation()
+	PartyManager.take_damage(attack_damage)
+	round_countdown = wait_rounds
+
+func attack_animation():
 	var tween = create_tween()
 	tween.tween_property(get_child(0), "position", Vector2(0, 0), .4).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	await tween.finished
 	var down_tween = create_tween()
 	down_tween.tween_property(get_child(0), "position", Vector2(0, 189), .1).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BOUNCE)
-	PartyManager.take_damage(attack_damage)
-	round_countdown = wait_rounds
 
-func take_damage(amount):
+func take_damage(init_amount, amount, attack_color):
+	var label = damage_label.instantiate()
+	damage_label_parent.add_child(label)
+	await label.set_damage(init_amount, amount, attack_color)
 	current_hp -= amount
 	if current_hp <= 0:
 		current_hp = 0
@@ -70,6 +79,7 @@ func update_hp():
 	var tween = create_tween()
 	tween.tween_property(health_bar, "value", current_hp, .4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	hp_label.text = str(current_hp)
+	await tween.finished
 	#tween.finished
 
 func die():

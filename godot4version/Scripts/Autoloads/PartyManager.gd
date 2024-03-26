@@ -26,7 +26,7 @@ func game_over():
 func register_attack(damage, main_color, sec_color):
 	if damage != 0:
 		damages.append([damage, main_color])
-		EnemyManager.register_damage(damage, main_color)
+		#EnemyManager.register_damage(damage, main_color)
 		if sec_color != main_color:
 			damages.append([damage, sec_color])
 	finished_party_member_count += 1
@@ -37,7 +37,8 @@ func register_attack(damage, main_color, sec_color):
 func attack():
 	for attack in damages:
 		EnemyManager.register_damage(attack[0], attack[1])
-	await get_tree().create_timer(0.3).timeout
+	await get_tree().create_timer(0.5).timeout
+	damages.clear()
 	attack_over.emit()
 
 func heal(amount:int):

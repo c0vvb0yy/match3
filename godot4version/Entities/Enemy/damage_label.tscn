@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dptjkqktunblh"]
+
+[ext_resource type="Script" path="res://Entities/Enemy/DamageUI.gd" id="1_7p5is"]
+[ext_resource type="Theme" uid="uid://b7386eiexi2fi" path="res://Entities/UI/font.tres" id="2_5no13"]
+
+[node name="Damage" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 267.0
+offset_bottom = 64.0
+size_flags_horizontal = 3
+script = ExtResource("1_7p5is")
+
+[node name="Label" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_right = 276.0
+offset_bottom = 70.0
+theme = ExtResource("2_5no13")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/normal_font_size = 46
+bbcode_enabled = true

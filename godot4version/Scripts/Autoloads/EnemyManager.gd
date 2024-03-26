@@ -51,9 +51,9 @@ func register_damage(amount, attack_color):
 	#print("Initial damage: ",amount, "of: ", attack_color)
 	var type_dict = get_effectiveness(attack_color)
 	var multiplier = type_dict[color]
-	amount *= multiplier
+	var final_amount = amount * multiplier
 	#print("type damage: ",amount, "of: ", attack_color)
-	take_damage.emit(amount)
+	take_damage.emit(amount, final_amount, attack_color)
 
 static func get_effectiveness(attack_color):
 	match attack_color:

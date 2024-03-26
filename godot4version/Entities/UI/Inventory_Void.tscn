@@ -6,7 +6,6 @@
 [node name="Void" instance=ExtResource("1_xibet")]
 
 [node name="Background" parent="." index="0"]
-layout_mode = 0
 own_color = 3
 
 [node name="Piece" parent="Background" index="0"]
