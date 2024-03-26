@@ -25,6 +25,7 @@ size_flags_horizontal = 2
 
 [node name="Background" type="TextureRect" parent="."]
 texture_filter = 1
+layout_mode = 0
 offset_right = 138.0
 offset_bottom = 138.0
 texture = ExtResource("1_uw6i7")

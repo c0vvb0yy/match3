@@ -45,7 +45,6 @@ shader_parameter/color_down = Color(0.109804, 0.180392, 0.533333, 1)
 main_color = null
 sec_color = null
 skill_color = null
-skill_name = null
 
 [node name="Background" parent="Portrait" index="0"]
 material = SubResource("ShaderMaterial_ktrsy")

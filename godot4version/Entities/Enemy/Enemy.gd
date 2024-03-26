@@ -43,10 +43,16 @@ func turn():
 	round_countdown -= 1
 	print("time till attack: ", round_countdown)
 	if round_countdown == 0:
+		await get_tree().create_timer(0.3).timeout
 		attack()
 	GridManager.emit_signal("round_over")
 
 func attack():
+	var tween = create_tween()
+	tween.tween_property(get_child(0), "position", Vector2(0, 0), .4).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	await tween.finished
+	var down_tween = create_tween()
+	down_tween.tween_property(get_child(0), "position", Vector2(0, 189), .1).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BOUNCE)
 	PartyManager.take_damage(attack_damage)
 	round_countdown = wait_rounds
 
@@ -61,6 +67,7 @@ func update_hp():
 	var tween = create_tween()
 	tween.tween_property(health_bar, "value", current_hp, .4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	hp_label.text = str(current_hp)
+	#tween.finished
 
 func die():
 	print("killed enemy")
