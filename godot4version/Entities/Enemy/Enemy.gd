@@ -79,8 +79,8 @@ func update_hp():
 	var tween = create_tween()
 	tween.tween_property(health_bar, "value", current_hp, .4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	hp_label.text = str(current_hp)
-	await tween.finished
-	#tween.finished
+	tween.finished
+
 
 func die():
 	print("killed enemy")

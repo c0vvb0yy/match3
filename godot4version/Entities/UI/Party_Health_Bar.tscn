@@ -34,3 +34,24 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
 theme_override_font_sizes/normal_font_size = 35
 text = "124/10295"
+
+[node name="Damage" type="RichTextLabel" parent="."]
+modulate = Color(1, 0, 0, 1)
+z_index = 5
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -98.0
+offset_top = -100.05
+offset_right = 98.0
+offset_bottom = -31.05
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("5_y3o4b")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/normal_font_size = 56
+bbcode_enabled = true
