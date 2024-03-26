@@ -13,7 +13,7 @@ var current_amounts = [0,0,0,0,0]
 var target_amounts = [0,0,0,0,0]
 
 func _ready():
-	GameManager.collect_pieces.connect(set_piece_amount)
+	GridManager.collect_pieces.connect(set_piece_amount)
 
 func _process(delta):
 	for i in range(target_amounts.size()):

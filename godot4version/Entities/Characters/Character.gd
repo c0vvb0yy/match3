@@ -25,7 +25,7 @@ var level : int
 var hp : int
 var atk : int
 var round_attack_damage : int
-var exp : int
+var experience : int
 
 @onready
 var bg = $Portrait/Background
@@ -39,7 +39,7 @@ var skill_info = $Skill/Name
 func _ready():
 	PartyManager.register_match.connect(register_match)
 	PartyManager.apply_combo.connect(apply_combo)
-	GameManager.round_over.connect(reset)
+	GridManager.round_over.connect(reset)
 	set_bg_color()
 	set_up_skill()
 	set_stats()
@@ -83,19 +83,20 @@ func attack():
 		#emit signal?
 		#EnemyManager.receive_damage(round_attack_damage)
 		#EnemyManager.progress_turn
-	GameManager.emit_signal("round_over")
+	PartyManager.register_attack()
+	#PartyManager.emit_signal("attack_over")
 
 func reset():
 	round_attack_damage = 0
 	damage_label.target = 0
 
 func _on_skill_button_pressed():
-	if GameManager.grid_state != GameManager.GRID_STATES.ready:
+	if GridManager.grid_state != GridManager.GRID_STATES.ready:
 		return
-	GameManager.grid_state = GameManager.GRID_STATES.wait
-	if GameManager.current_pieces[skill_color] >= skill_cost:
-		GameManager.emit_signal("collect_pieces", skill_color, -skill_cost)
+	GridManager.grid_state = GridManager.GRID_STATES.wait
+	if GridManager.current_pieces[skill_color] >= skill_cost:
+		GridManager.emit_signal("collect_pieces", skill_color, -skill_cost)
 		print("do skill")
 		pass
 	
-	GameManager.grid_state = GameManager.GRID_STATES.ready
+	GridManager.grid_state = GridManager.GRID_STATES.ready

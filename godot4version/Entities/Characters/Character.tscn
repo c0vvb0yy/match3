@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Entities/Characters/Character.gd" id="1_08kyr"]
 [ext_resource type="Texture2D" uid="uid://ct0bmvrt8vrtr" path="res://Assets/Sprites/UI/Character/portrait_background.png" id="2_3auma"]
 [ext_resource type="Texture2D" uid="uid://b20eetf1aewue" path="res://Assets/Sprites/UI/Character/portrait_border.png" id="3_57j1j"]
-[ext_resource type="Texture2D" uid="uid://dnfudfgndstf7" path="res://Assets/Sprites/Characters/zaavan.png" id="4_wytrv"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Characters/zaavan.png" id="4_wytrv"]
 [ext_resource type="Theme" uid="uid://b7386eiexi2fi" path="res://Entities/UI/font.tres" id="6_wp7mw"]
 [ext_resource type="Script" path="res://Entities/Characters/DamageLabel.gd" id="7_l5j5r"]
 [ext_resource type="Texture2D" uid="uid://degkl4xaemo05" path="res://Assets/Sprites/Pieces/piece_flesh.png" id="8_0bluj"]
@@ -89,6 +89,7 @@ offset_bottom = 390.0
 texture = ExtResource("3_57j1j")
 
 [node name="DamageLabel" type="RichTextLabel" parent="."]
+z_index = 5
 custom_minimum_size = Vector2(261, 0)
 layout_mode = 1
 anchors_preset = 5

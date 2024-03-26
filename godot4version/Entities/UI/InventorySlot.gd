@@ -16,7 +16,7 @@ var heal_button = $Heal
 var progress = $Counter/Amount
 
 func _ready():
-	GameManager.collect_pieces.connect(update_piece_count)
+	GridManager.collect_pieces.connect(update_piece_count)
 	progress.max_value = max_amount
 
 func _process(delta):
@@ -38,4 +38,4 @@ func update_piece_count(color, amount):
 		target_amount += amount
 		if target_amount > max_amount:
 			target_amount = max_amount
-		GameManager.update_current_pieces(color, target_amount)
+		GridManager.update_current_pieces(color, target_amount)

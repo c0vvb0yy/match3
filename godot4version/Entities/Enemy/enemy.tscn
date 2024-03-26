@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://oovlm6bd2mb4"]
+
+[ext_resource type="Texture2D" uid="uid://bhy0nn4upx88q" path="res://Assets/Sprites/Characters/Enemies/enemy.png" id="1_2tgbb"]
+[ext_resource type="Script" path="res://Entities/Enemy/Enemy.gd" id="1_dmwyb"]
+
+[node name="Enemy" type="Control"]
+layout_mode = 3
+offset_right = 454.0
+offset_bottom = 454.0
+size_flags_horizontal = 0
+script = ExtResource("1_dmwyb")
+
+[node name="Sprite" type="TextureRect" parent="."]
+clip_contents = true
+layout_mode = 0
+offset_right = 454.0
+offset_bottom = 454.0
+texture = ExtResource("1_2tgbb")
+expand_mode = 1
+stretch_mode = 2
