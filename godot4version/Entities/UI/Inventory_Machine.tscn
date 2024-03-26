@@ -4,7 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://bhquw2ytli3eg" path="res://Assets/Sprites/Pieces/piece_machine.png" id="2_qrkvi"]
 
 [node name="Machine" instance=ExtResource("1_3krh2")]
+
+[node name="Background" parent="." index="0"]
+layout_mode = 0
 own_color = 1
 
-[node name="Piece" parent="." index="0"]
+[node name="Piece" parent="Background" index="0"]
 texture = ExtResource("2_qrkvi")

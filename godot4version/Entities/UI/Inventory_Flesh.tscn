@@ -5,5 +5,8 @@
 
 [node name="Flesh" instance=ExtResource("1_3fdqv")]
 
-[node name="Piece" parent="." index="0"]
+[node name="Background" parent="." index="0"]
+layout_mode = 0
+
+[node name="Piece" parent="Background" index="0"]
 texture = ExtResource("2_qlwry")

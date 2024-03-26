@@ -11,8 +11,8 @@
 
 [node name="Grid" type="Node2D"]
 script = ExtResource("1_0hbya")
-dimension = Vector2(6, 6)
-empty_spaces = Array[Vector2]([Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1), Vector2(3, -2)])
+dimension = Vector2i(6, 6)
+empty_spaces = Array[Vector2]([Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)])
 
 [node name="RoundTimer" type="Timer" parent="."]
 wait_time = 5.0

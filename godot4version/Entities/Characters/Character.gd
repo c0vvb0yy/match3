@@ -62,7 +62,9 @@ func set_stats():
 
 func level_up():
 	level += 1
+	@warning_ignore("narrowing_conversion")
 	hp = base_hp * hp_multiplier * level
+	@warning_ignore("narrowing_conversion")
 	atk = base_atk * atk_multiplier * level
 
 func register_match(color, amount):

@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://cyalaawjb1ltp"]
+[gd_scene load_steps=9 format=3 uid="uid://cyalaawjb1ltp"]
 
 [ext_resource type="Script" path="res://Entities/Characters/Character.gd" id="1_08kyr"]
 [ext_resource type="Texture2D" uid="uid://ct0bmvrt8vrtr" path="res://Assets/Sprites/UI/Character/portrait_background.png" id="2_3auma"]
 [ext_resource type="Texture2D" uid="uid://b20eetf1aewue" path="res://Assets/Sprites/UI/Character/portrait_border.png" id="3_57j1j"]
-[ext_resource type="Texture2D" path="res://Assets/Sprites/Characters/zaavan.png" id="4_wytrv"]
 [ext_resource type="Theme" uid="uid://b7386eiexi2fi" path="res://Entities/UI/font.tres" id="6_wp7mw"]
 [ext_resource type="Script" path="res://Entities/Characters/DamageLabel.gd" id="7_l5j5r"]
 [ext_resource type="Texture2D" uid="uid://degkl4xaemo05" path="res://Assets/Sprites/Pieces/piece_flesh.png" id="8_0bluj"]
@@ -80,7 +79,6 @@ texture = ExtResource("2_3auma")
 layout_mode = 0
 offset_right = 265.0
 offset_bottom = 392.0
-texture = ExtResource("4_wytrv")
 
 [node name="border" type="TextureRect" parent="Portrait"]
 layout_mode = 0

@@ -5,6 +5,7 @@
 
 [node name="Enemy" type="Control"]
 layout_mode = 3
+anchors_preset = 0
 offset_right = 454.0
 offset_bottom = 454.0
 size_flags_horizontal = 0

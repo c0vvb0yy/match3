@@ -61,6 +61,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Character" parent="Party" instance=ExtResource("7_wivcc")]
 layout_mode = 1
@@ -103,7 +104,6 @@ script = ExtResource("10_x037n")
 
 [node name="Enemy" parent="." instance=ExtResource("11_uyybm")]
 layout_mode = 1
-anchors_preset = 0
 offset_left = -780.0
 offset_top = 36.0
 offset_right = -740.0

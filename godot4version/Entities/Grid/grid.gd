@@ -6,7 +6,7 @@ enum direction {
 }
 
 @export
-var dimension : Vector2
+var dimension : Vector2i
 @export
 var empty_spaces : Array[Vector2]
 @export
@@ -274,6 +274,7 @@ func after_refill():
 		await get_tree().create_timer(0.3).timeout
 		#TODO: Enemy damage
 		score *= quick_time_multiplier
+		@warning_ignore("integer_division")
 		score *= max(1, combo/3)
 		PartyManager.emit_signal("apply_combo", combo)
 		print("final score: ", score)

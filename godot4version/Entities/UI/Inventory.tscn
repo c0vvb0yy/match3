@@ -8,15 +8,16 @@
 
 [node name="Inventory" type="HBoxContainer"]
 offset_right = 706.0
-offset_bottom = 138.0
+offset_bottom = 191.0
+mouse_filter = 2
 
 [node name="Flesh" parent="." instance=ExtResource("2_t7ra4")]
 layout_mode = 2
 
-[node name="Divine" parent="." instance=ExtResource("1_afnu5")]
+[node name="Machine" parent="." instance=ExtResource("4_p34lr")]
 layout_mode = 2
 
-[node name="Machine" parent="." instance=ExtResource("4_p34lr")]
+[node name="Divine" parent="." instance=ExtResource("1_afnu5")]
 layout_mode = 2
 
 [node name="Void" parent="." instance=ExtResource("5_5mlp7")]

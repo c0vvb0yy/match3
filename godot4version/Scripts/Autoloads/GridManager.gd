@@ -17,7 +17,7 @@ var matches : Array #schema => [x,y, direction(V||H), amount, color]
 
 var current_pieces = [0,0,0,0,0]
 
-var grid_dimension : Vector2
+var grid_dimension : Vector2i
 
 func is_piece_existing(column:int, row:int) -> bool:
 	if all_pieces[column][row] == null:
@@ -106,5 +106,6 @@ func clear_piece(x, y):
 func disable_grid(state):
 	for x in grid_dimension.x:
 		for y in grid_dimension.y:
+			@warning_ignore("narrowing_conversion", "narrowing_conversion")
 			if is_piece_existing(x,y):
 				all_pieces[x][y].set_disabled(state)

@@ -34,9 +34,9 @@ func clear():
 	#await tween.finished
 	queue_free()
 
-func transform(color):
+func transform(new_color):
 	sprite.texture = Util.piece_textures[color]
-	self.color = color
+	self.color = new_color
 
 func multiply_scale(multiplier := 1.0):
 	var tween = create_tween()
