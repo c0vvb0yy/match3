@@ -1,11 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://0nd1u3ltq7ty"]
+[gd_scene load_steps=11 format=3 uid="uid://0nd1u3ltq7ty"]
 
 [ext_resource type="PackedScene" uid="uid://c4mojhf1p7wdp" path="res://Entities/Grid/grid.tscn" id="1_mhfrp"]
 [ext_resource type="Texture2D" uid="uid://cwj82sxjw81t5" path="res://Assets/Sprites/background_03.png" id="1_sr8ds"]
 [ext_resource type="PackedScene" uid="uid://bi0ee7k2g8abh" path="res://Entities/UI/Inventory.tscn" id="2_tu2i6"]
 [ext_resource type="Script" path="res://Entities/Characters/SkillDEBUG.gd" id="5_hi4e6"]
 [ext_resource type="PackedScene" uid="uid://wdjin6d2t1ve" path="res://Entities/Characters/character_DEBUG.tscn" id="6_jgaqh"]
+[ext_resource type="Texture2D" uid="uid://884e2ko78gac" path="res://Assets/Sprites/UI/Healthbar/healtbar_under.png" id="7_on474"]
 [ext_resource type="PackedScene" uid="uid://c18y4no8c8v7r" path="res://Entities/Characters/Zaavan.tscn" id="7_wivcc"]
+[ext_resource type="Texture2D" uid="uid://bfyfxnqka738c" path="res://Assets/Sprites/UI/Healthbar/healtbar_over.png" id="8_en06v"]
+[ext_resource type="Texture2D" uid="uid://cfxfjnlor0i5w" path="res://Assets/Sprites/UI/Healthbar/healtbar_fill.png" id="9_wfkk3"]
+[ext_resource type="Script" path="res://Entities/UI/HealthBar.gd" id="10_x037n"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -49,6 +53,7 @@ text = "skill"
 script = ExtResource("5_hi4e6")
 
 [node name="Party" type="Control" parent="."]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -64,6 +69,7 @@ offset_right = -1012.88
 offset_bottom = 580.2
 sec_color = 2
 skill_color = 2
+base_hp = 15
 
 [node name="Character2" parent="Party" instance=ExtResource("6_jgaqh")]
 layout_mode = 1
@@ -74,5 +80,24 @@ offset_bottom = 576.2
 main_color = 3
 sec_color = 1
 skill_color = 3
+base_hp = 15
+
+[node name="HealthBar" type="TextureProgressBar" parent="Party"]
+layout_mode = 0
+offset_left = -1008.0
+offset_top = 526.0
+offset_right = -103.0
+offset_bottom = 566.0
+step = 0.2
+value = 60.0
+nine_patch_stretch = true
+stretch_margin_left = 2
+stretch_margin_top = 2
+stretch_margin_right = 2
+stretch_margin_bottom = 2
+texture_under = ExtResource("7_on474")
+texture_over = ExtResource("8_en06v")
+texture_progress = ExtResource("9_wfkk3")
+script = ExtResource("10_x037n")
 
 [connection signal="pressed" from="Button" to="Button" method="_on_pressed"]

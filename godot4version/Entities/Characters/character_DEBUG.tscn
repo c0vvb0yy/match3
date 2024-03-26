@@ -1,5 +1,46 @@
-[gd_scene load_steps=2 format=3 uid="uid://wdjin6d2t1ve"]
+[gd_scene load_steps=4 format=3 uid="uid://wdjin6d2t1ve"]
 
 [ext_resource type="PackedScene" uid="uid://cyalaawjb1ltp" path="res://Entities/Characters/Character.tscn" id="1_yre74"]
 
+[sub_resource type="Shader" id="Shader_dn5ln"]
+code = "shader_type canvas_item;
+
+uniform vec3 color_up : source_color;
+uniform vec3 color_down : source_color;
+//uniform sampler2D bg_texture : source_texture;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+void fragment() {
+	vec2 flipped_uv = vec2(1.0 - UV.x, UV.y);
+	if (flipped_uv.x <= flipped_uv.y){//if (bg_col.x == 1.0){
+		COLOR = vec4(color_down, 1.0);
+	}
+	else {
+		COLOR = vec4(color_up, 1.0);
+	}
+	
+	//COLOR = vec4(UV, 0.0,1.0);
+	
+	/*vec4 bg_col = texture(TEXTURE, UV);
+	if(bg_col.x > 0.0){
+		COLOR = vec4(color_down, 1.0);
+	}
+	else {
+		COLOR = vec4(color_up, 1.0);
+	}*/
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ktrsy"]
+resource_local_to_scene = true
+shader = SubResource("Shader_dn5ln")
+shader_parameter/color_up = Color(0.427451, 0.172549, 0.196078, 1)
+shader_parameter/color_down = Color(0.109804, 0.180392, 0.533333, 1)
+
 [node name="Character" instance=ExtResource("1_yre74")]
+
+[node name="Background" parent="Portrait" index="0"]
+material = SubResource("ShaderMaterial_ktrsy")

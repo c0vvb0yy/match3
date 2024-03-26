@@ -5,6 +5,12 @@ extends Button
 #error occurs at combo counter, it steps up with however many colors are getting cleare
 
 func _on_pressed():
+	take_damage()
+
+func take_damage():
+	PartyManager.take_damage(3)
+
+func do_skill():
 	if GameManager.grid_state != GameManager.GRID_STATES.ready:
 		return
 	GameManager.grid_state = GameManager.GRID_STATES.wait
@@ -18,7 +24,6 @@ func _on_pressed():
 		#Skills.match_all_pieces_of_color(Util.COLOR.Void)
 		#Skills.match_all_pieces_of_color(Util.COLOR.Flesh)
 	GameManager.grid_state = GameManager.GRID_STATES.move
-
 
 #Character and skill ideas
 	#'Enty -> turn all Life into Void
