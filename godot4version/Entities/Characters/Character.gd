@@ -85,7 +85,7 @@ func attack():
 		#emit signal?
 		#EnemyManager.receive_damage(round_attack_damage)
 		#EnemyManager.progress_turn
-	PartyManager.register_attack()
+	PartyManager.register_attack(round_attack_damage, main_color, sec_color)
 	#PartyManager.emit_signal("attack_over")
 
 func reset():

@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 GameManager="*res://Scripts/Autoloads/GameManager.gd"
 PartyManager="*res://Scripts/Autoloads/PartyManager.gd"
 GridManager="*res://Scripts/Autoloads/GridManager.gd"
+EnemyManager="*res://Scripts/Autoloads/EnemyManager.gd"
 
 [display]
 

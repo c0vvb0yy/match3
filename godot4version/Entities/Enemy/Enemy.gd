@@ -21,9 +21,11 @@ var color_icon = $ColorIcon
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	PartyManager.attack_over.connect(turn)
+	EnemyManager.take_damage.connect(take_damage)
 	current_hp = hp
 	round_countdown = wait_rounds
 	set_up_ui()
+	register_at_manager()
 
 func set_up_ui():
 	health_bar.max_value = hp
@@ -32,15 +34,32 @@ func set_up_ui():
 	hp_label.text = str(current_hp)
 	color_icon.texture = Util.piece_textures[color]
 
+func register_at_manager():
+	EnemyManager.hp = hp
+	EnemyManager.color = color
+	EnemyManager.enemy = self
+
 func turn():
 	round_countdown -= 1
 	print("time till attack: ", round_countdown)
 	if round_countdown == 0:
 		attack()
-	else:
-		GridManager.emit_signal("round_over")
+	GridManager.emit_signal("round_over")
 
 func attack():
 	PartyManager.take_damage(attack_damage)
-	GridManager.emit_signal("round_over")
 	round_countdown = wait_rounds
+
+func take_damage(amount):
+	current_hp -= amount
+	update_hp()
+	if current_hp <= 0:
+		die()
+
+func update_hp():
+	var tween = create_tween()
+	tween.tween_property(health_bar, "value", current_hp, .4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	hp_label.text = str(current_hp)
+
+func die():
+	print("killed enemy")
