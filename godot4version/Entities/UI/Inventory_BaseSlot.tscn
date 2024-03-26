@@ -88,4 +88,12 @@ offset_bottom = 190.0
 texture_normal = ExtResource("3_1p3f3")
 texture_disabled = ExtResource("4_wep42")
 
+[node name="Button" type="Button" parent="Background"]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 138.0
+offset_bottom = 192.0
+flat = true
+
 [connection signal="pressed" from="Background/Heal" to="Background" method="_on_heal_pressed"]
+[connection signal="pressed" from="Background/Button" to="Background" method="_on_heal_pressed"]
