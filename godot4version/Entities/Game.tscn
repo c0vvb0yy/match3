@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://0nd1u3ltq7ty"]
+[gd_scene load_steps=13 format=3 uid="uid://0nd1u3ltq7ty"]
 
 [ext_resource type="PackedScene" uid="uid://c4mojhf1p7wdp" path="res://Entities/Grid/grid.tscn" id="1_mhfrp"]
 [ext_resource type="Texture2D" uid="uid://cwj82sxjw81t5" path="res://Assets/Sprites/background_03.png" id="1_sr8ds"]
@@ -7,7 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://wdjin6d2t1ve" path="res://Entities/Characters/character_DEBUG.tscn" id="6_jgaqh"]
 [ext_resource type="PackedScene" uid="uid://dno1p164seva8" path="res://Entities/UI/Party_Health_Bar.tscn" id="7_svdd3"]
 [ext_resource type="PackedScene" uid="uid://c18y4no8c8v7r" path="res://Entities/Characters/Zaavan.tscn" id="7_wivcc"]
-[ext_resource type="PackedScene" uid="uid://oovlm6bd2mb4" path="res://Entities/Enemy/enemy.tscn" id="11_uyybm"]
+[ext_resource type="PackedScene" uid="uid://cdmdt3wdfksoo" path="res://Entities/UI/Inventory_Flesh.tscn" id="8_ffs8h"]
+[ext_resource type="PackedScene" uid="uid://db766q44q7kh" path="res://Entities/UI/Inventory_Life.tscn" id="9_sb8rm"]
+[ext_resource type="PackedScene" uid="uid://dhlbfo82dwrit" path="res://Entities/UI/Inventory_Machine.tscn" id="10_dujr2"]
+[ext_resource type="PackedScene" uid="uid://cv4va7acnnoy5" path="res://Entities/UI/Inventory_Void.tscn" id="11_51yc1"]
+[ext_resource type="PackedScene" uid="uid://ct8hcv5efbh7o" path="res://Entities/UI/Inventory_Divine.tscn" id="12_htwnd"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -32,9 +36,10 @@ position = Vector2(-98, 460)
 [node name="Node2D" type="Node2D" parent="."]
 
 [node name="Grid" parent="Node2D" instance=ExtResource("1_mhfrp")]
-empty_spaces = Array[Vector2]([Vector2(0, 0), Vector2(-1, 0), Vector2(-1, -1), Vector2(0, -1), Vector2(3, -2)])
+empty_spaces = Array[Vector2]([Vector2(0, 0), Vector2(-1, 0), Vector2(-1, -1), Vector2(0, -1)])
 
 [node name="Inventory" parent="Node2D" instance=ExtResource("2_tu2i6")]
+visible = false
 offset_left = -2.0
 offset_top = 789.0
 offset_right = 768.0
@@ -58,8 +63,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -1001.0
 offset_top = 528.0
-offset_right = -1001.0
-offset_bottom = 528.0
+offset_right = -2364.0
+offset_bottom = -107.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -67,21 +72,26 @@ mouse_filter = 2
 [node name="Character" parent="Party" instance=ExtResource("7_wivcc")]
 layout_mode = 1
 offset_top = 50.0
-offset_right = -0.880005
-offset_bottom = 50.2
-skill_color = 2
-base_hp = 15
+offset_right = 186.577
+offset_bottom = 278.8
+mouse_default_cursor_shape = 2
+skill_cost = 15
+skill_name = "Endless Growth"
+base_hp = 100
+base_atk = 5
 
 [node name="Character2" parent="Party" instance=ExtResource("6_jgaqh")]
 layout_mode = 1
 offset_left = 284.0
 offset_top = 50.0
-offset_right = 283.12
-offset_bottom = 50.2
+offset_right = 471.577
+offset_bottom = 279.8
 main_color = 1
 sec_color = 3
-skill_color = 3
-base_hp = 15
+skill_color = 1
+skill_name = "Void Harvest"
+base_hp = 100
+base_atk = 5
 
 [node name="HealthBar" parent="Party" instance=ExtResource("7_svdd3")]
 layout_mode = 0
@@ -90,11 +100,42 @@ offset_top = 0.0
 offset_right = 958.0
 offset_bottom = 40.0
 
-[node name="Enemy2" parent="." instance=ExtResource("11_uyybm")]
-layout_mode = 1
-offset_left = -797.0
-offset_top = 63.0
-offset_right = -796.12
-offset_bottom = 63.4
+[node name="EnemyPlacement" type="Control" parent="."]
+anchors_preset = 0
+offset_left = -828.0
+offset_top = 19.0
+offset_right = 1084.0
+offset_bottom = 1153.0
+mouse_filter = 2
+
+[node name="Flesh" parent="." instance=ExtResource("8_ffs8h")]
+offset_left = -1.0
+offset_top = 790.0
+offset_right = 137.0
+offset_bottom = 981.0
+
+[node name="Life" parent="." instance=ExtResource("9_sb8rm")]
+offset_left = 631.0
+offset_top = 790.0
+offset_right = 769.0
+offset_bottom = 981.0
+
+[node name="Machine" parent="." instance=ExtResource("10_dujr2")]
+offset_left = 156.0
+offset_top = 789.0
+offset_right = 294.0
+offset_bottom = 980.0
+
+[node name="Void" parent="." instance=ExtResource("11_51yc1")]
+offset_left = 472.0
+offset_top = 790.0
+offset_right = 610.0
+offset_bottom = 981.0
+
+[node name="Divine" parent="." instance=ExtResource("12_htwnd")]
+offset_left = 313.0
+offset_top = 790.0
+offset_right = 451.0
+offset_bottom = 981.0
 
 [connection signal="pressed" from="Button" to="Button" method="_on_pressed"]

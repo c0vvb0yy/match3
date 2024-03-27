@@ -107,18 +107,18 @@ text = "[center]3857"
 fit_content = true
 script = ExtResource("7_l5j5r")
 
-[node name="Skill" type="Control" parent="."]
+[node name="SkillUI" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="SkillButton" type="Button" parent="Skill"]
+[node name="SkillButton" type="Button" parent="SkillUI"]
 layout_mode = 0
 offset_right = 265.0
 offset_bottom = 390.0
 flat = true
 
-[node name="Name" type="RichTextLabel" parent="Skill"]
+[node name="Name" type="RichTextLabel" parent="SkillUI"]
 layout_mode = 0
 offset_top = 281.0
 offset_right = 196.0
@@ -131,7 +131,7 @@ bbcode_enabled = true
 text = "[right]skill name cost"
 fit_content = true
 
-[node name="Color" type="TextureRect" parent="Skill"]
+[node name="Color" type="TextureRect" parent="SkillUI"]
 layout_mode = 0
 offset_left = 192.0
 offset_top = 278.0
@@ -140,4 +140,6 @@ offset_bottom = 406.0
 scale = Vector2(0.565, 0.565)
 texture = ExtResource("8_0bluj")
 
-[connection signal="pressed" from="Skill/SkillButton" to="." method="_on_skill_button_pressed"]
+[node name="Skill" type="Node" parent="."]
+
+[connection signal="pressed" from="SkillUI/SkillButton" to="." method="_on_skill_button_pressed"]

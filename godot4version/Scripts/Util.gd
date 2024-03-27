@@ -16,13 +16,13 @@ static var color_codes = {
 	COLOR.Void: '[color = #606060]',
 	COLOR.Life: '[rainbow freq = 1.0]'
 }
-static var piece_textures = [
-	preload("res://Assets/Sprites/Pieces/piece_flesh.png"),
-	preload("res://Assets/Sprites/Pieces/piece_machine.png"),
-	preload("res://Assets/Sprites/Pieces/piece_Divine.png"),
-	preload("res://Assets/Sprites/Pieces/piece_void.png"),
-	preload("res://Assets/Sprites/Pieces/piece_life.png")
-]
+static var piece_textures = {
+	COLOR.Flesh : preload("res://Assets/Sprites/Pieces/piece_flesh.png"),
+	COLOR.Machine: preload("res://Assets/Sprites/Pieces/piece_machine.png"),
+	COLOR.Divine: preload("res://Assets/Sprites/Pieces/piece_Divine.png"),
+	COLOR.Void:preload("res://Assets/Sprites/Pieces/piece_void.png"),
+	COLOR.Life:preload("res://Assets/Sprites/Pieces/piece_life.png")
+}
 
 static func make_2d_array(width : int, height: int) -> Array:
 	var array = []

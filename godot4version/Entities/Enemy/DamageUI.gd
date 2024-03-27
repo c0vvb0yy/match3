@@ -46,13 +46,13 @@ func lerper(value):
 	initial_damage = value
 	label.text = str(round(initial_damage))
 	if is_final_greater:
-		if initial_damage >= final_damage-5:
+		if initial_damage >= final_damage-4.5:
 			initial_damage = final_damage
 			label.text = str(round(initial_damage))
 			await get_tree().create_timer(1.3).timeout
 			queue_free()
 	else:
-		if initial_damage >= final_damage + 5:
+		if initial_damage >= final_damage + 4.5:
 			initial_damage = final_damage
 			label.text = str(round(initial_damage))
 			await get_tree().create_timer(1.3).timeout

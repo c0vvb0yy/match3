@@ -104,6 +104,10 @@ func clear_piece(x, y):
 	GridManager.all_pieces[x][y] = null
 
 func disable_grid(state):
+	if state == true:
+		grid_state = GRID_STATES.wait
+	else:
+		grid_state = GRID_STATES.ready
 	for x in grid_dimension.x:
 		for y in grid_dimension.y:
 			@warning_ignore("narrowing_conversion", "narrowing_conversion")

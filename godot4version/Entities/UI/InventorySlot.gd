@@ -41,32 +41,34 @@ func get_piece_amount(color):
 		return target_amount
 
 func update_piece_count(color, amount):
-	if color == own_color:
-		target_amount += amount
-		if target_amount > max_amount:
-			target_amount = max_amount
-		GridManager.update_current_pieces(color, target_amount)
-		if target_amount > 2:
-			heal_button.disabled = false
-		else:
-			heal_button.disabled = true
+	if color != own_color:
+		return
+	target_amount += amount
+	if target_amount > max_amount:
+		target_amount = max_amount
+	GridManager.update_current_pieces(color, target_amount)
+	if target_amount > 9:
+		heal_button.disabled = false
+	else:
+		heal_button.disabled = true
 
 func _on_heal_pressed():
-	GridManager.emit_signal("collect_pieces", own_color, -3)
-	@warning_ignore("integer_division")
-	var amount = (PartyManager.party_hp * 5)/100
-	PartyManager.heal(amount)
+	if GridManager.current_pieces[own_color] >= 10:
+		GridManager.emit_signal("collect_pieces", own_color, -10)
+		@warning_ignore("integer_division")
+		var amount = (PartyManager.party_hp * 5)/100
+		PartyManager.heal(amount)
 
 
-func _on_heal_button_pressed():
-	GridManager.emit_signal("collect_pieces", own_color, -10)
-	@warning_ignore("integer_division")
-	var amount = (PartyManager.party_hp * 5)/100
-	PartyManager.heal(amount)
-
-
-func _on_heal_button_button_down():
-	GridManager.emit_signal("collect_pieces", own_color, -3)
-	@warning_ignore("integer_division")
-	var amount = (PartyManager.party_hp * 5)/100
-	PartyManager.heal(amount)
+#func _on_heal_button_pressed():
+	#GridManager.emit_signal("collect_pieces", own_color, -10)
+	#@warning_ignore("integer_division")
+	#var amount = (PartyManager.party_hp * 5)/100
+	#PartyManager.heal(amount)
+#
+#
+#func _on_heal_button_button_down():
+	#GridManager.emit_signal("collect_pieces", own_color, -3)
+	#@warning_ignore("integer_division")
+	#var amount = (PartyManager.party_hp * 5)/100
+	#PartyManager.heal(amount)

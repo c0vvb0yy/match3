@@ -5,7 +5,14 @@ signal take_damage
 var hp
 var color : Util.COLOR
 
-var enemy
+var enemys = [
+	preload("res://Entities/Enemy/enemy.tscn"),
+	preload("res://Entities/Enemy/enemy_flesh.tscn"),
+	preload("res://Entities/Enemy/enemy_machine.tscn"),
+	preload("res://Entities/Enemy/enemy_void.tscn"),
+	preload("res://Entities/Enemy/enemy_life.tscn"),
+	
+]
 
 const effective := 1.5
 const not_effective := 0.5
@@ -47,6 +54,10 @@ static var life_dict = {
 	Util.COLOR.Void: very_effective,
 	Util.COLOR.Life: neutral,
 }
+
+func _ready():
+	spawn_enemy()
+
 func register_damage(amount, attack_color):
 	#print("Initial damage: ",amount, "of: ", attack_color)
 	var type_dict = get_effectiveness(attack_color)
@@ -67,3 +78,9 @@ static func get_effectiveness(attack_color):
 			return void_dict
 		Util.COLOR.Life:
 			return life_dict
+
+func spawn_enemy():
+	var parent = $"/root/Game/EnemyPlacement"
+	var index = randi_range(0, enemys.size()-1)
+	var enemy = enemys[index].instantiate()
+	parent.add_child(enemy)

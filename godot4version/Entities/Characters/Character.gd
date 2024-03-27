@@ -32,9 +32,9 @@ var bg = $Portrait/Background
 @onready
 var damage_label = $DamageLabel
 @onready
-var skill_texture = $Skill/Color
+var skill_texture = $SkillUI/Color
 @onready
-var skill_info = $Skill/Name
+var skill_info = $SkillUI/Name
 
 func _ready():
 	PartyManager.register_match.connect(register_match)
@@ -75,7 +75,7 @@ func register_match(color, amount):
 	damage_label.target = round_attack_damage
 
 func apply_combo(combo):
-	round_attack_damage *= max(1, combo/3)
+	round_attack_damage *= max(1, ceil(combo/3))
 	damage_label.target = round_attack_damage
 	await get_tree().create_timer(1.5).timeout
 	attack()
@@ -101,12 +101,13 @@ func reset():
 	damage_label.target = 0
 
 func _on_skill_button_pressed():
+	print("button pressed")
 	if GridManager.grid_state != GridManager.GRID_STATES.ready:
 		return
 	GridManager.grid_state = GridManager.GRID_STATES.wait
 	if GridManager.current_pieces[skill_color] >= skill_cost:
 		GridManager.emit_signal("collect_pieces", skill_color, -skill_cost)
-		print("do skill")
+		$Skill.do_skill()
 		pass
 	
 	GridManager.grid_state = GridManager.GRID_STATES.ready

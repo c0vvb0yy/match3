@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c18y4no8c8v7r"]
+[gd_scene load_steps=6 format=3 uid="uid://c18y4no8c8v7r"]
 
 [ext_resource type="PackedScene" uid="uid://cyalaawjb1ltp" path="res://Entities/Characters/Character.tscn" id="1_jw4pr"]
 [ext_resource type="Texture2D" uid="uid://dnfudfgndstf7" path="res://Assets/Sprites/Characters/Players/zaavan.png" id="2_162tt"]
+[ext_resource type="Script" path="res://Entities/Characters/ZaavSkill.gd" id="3_nkidx"]
 
 [sub_resource type="Shader" id="Shader_dn5ln"]
 code = "shader_type canvas_item;
@@ -42,7 +43,6 @@ shader_parameter/color_up = Color(0.427451, 0.172549, 0.196078, 1)
 shader_parameter/color_down = Color(0.109804, 0.180392, 0.533333, 1)
 
 [node name="Character" instance=ExtResource("1_jw4pr")]
-skill_name = ""
 
 [node name="Background" parent="Portrait" index="0"]
 material = SubResource("ShaderMaterial_j5mj5")
@@ -50,6 +50,5 @@ material = SubResource("ShaderMaterial_j5mj5")
 [node name="Sprite" parent="Portrait" index="1"]
 texture = ExtResource("2_162tt")
 
-[node name="Skill" parent="." index="2"]
-offset_right = 265.0
-offset_bottom = 389.0
+[node name="Skill" parent="." index="3"]
+script = ExtResource("3_nkidx")

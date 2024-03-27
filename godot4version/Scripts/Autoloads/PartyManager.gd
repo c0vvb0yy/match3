@@ -16,12 +16,14 @@ func take_damage(amount:int):
 	if current_hp == 0:
 		current_hp = party_hp
 	current_hp -= amount
-	hp_change.emit(current_hp)
 	if current_hp <= 0:
+		current_hp = 0
 		game_over()
+	hp_change.emit(current_hp)
 
 func game_over():
 	print("rip")
+	GridManager.disable_grid(true)
 
 func register_attack(damage, main_color, sec_color):
 	if damage != 0:

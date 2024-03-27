@@ -35,7 +35,7 @@ func clear():
 	queue_free()
 
 func transform(new_color):
-	sprite.texture = Util.piece_textures[color]
+	sprite.texture = Util.piece_textures[new_color]
 	self.color = new_color
 
 func multiply_scale(multiplier := 1.0):

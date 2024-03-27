@@ -275,7 +275,7 @@ func after_refill():
 		#TODO: Enemy damage
 		score *= quick_time_multiplier
 		@warning_ignore("integer_division")
-		score *= max(1, combo/3)
+		score *= max(1, ceil(combo/3))
 		PartyManager.emit_signal("apply_combo", combo)
 		print("final score: ", score)
 		GridManager.disable_grid(true)
