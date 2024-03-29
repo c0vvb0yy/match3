@@ -75,6 +75,7 @@ offset_top = 50.0
 offset_right = 186.577
 offset_bottom = 278.8
 mouse_default_cursor_shape = 2
+sec_color = 4
 skill_cost = 15
 skill_name = "Endless Growth"
 base_hp = 100

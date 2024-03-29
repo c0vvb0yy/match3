@@ -21,7 +21,7 @@ offset_bottom = 0.399994
 size_flags_horizontal = 0
 script = ExtResource("1_dmwyb")
 color = 2
-hp = 2500
+hp = 200
 
 [node name="Sprite" type="TextureRect" parent="."]
 clip_contents = true
@@ -125,7 +125,7 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = 3.0
 offset_top = 194.5
-offset_right = 3.00003
+offset_right = 149.0
 offset_bottom = 243.5
 grow_horizontal = 2
 grow_vertical = 2

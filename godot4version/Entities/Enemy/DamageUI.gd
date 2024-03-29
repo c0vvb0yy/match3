@@ -1,4 +1,5 @@
 extends Control
+##For the damage enemies receive
 
 @onready
 var label = $Label
@@ -33,14 +34,24 @@ func set_damage(init, final, dmg_color):
 	label.text = str(round(initial_damage))
 	self.modulate = Util.color_modulates[dmg_color]
 	var tween = create_tween()
+	handle_scaling()
 	if is_final_greater:
 		tween.tween_method(lerper, initial_damage, final_damage, .8).set_ease(Tween.EASE_IN).set_delay(.5).set_trans(Tween.TRANS_SINE)
 	else:
 		tween.tween_method(lerper, final_damage, initial_damage, .8).set_ease(Tween.EASE_IN).set_delay(.5).set_trans(Tween.TRANS_SINE)
 	await tween.finished
 
-func resize_text(new_scale):
-	scale = Vector2(new_scale)
+func handle_scaling():
+	if initial_damage == final_damage:
+		return
+	var scale_tween = create_tween()
+	if is_final_greater:
+		scale_tween.tween_method(resize_text, Vector2(1,1), Vector2(2,2), .8).set_ease(Tween.EASE_IN).set_delay(.5).set_trans(Tween.TRANS_SINE)
+	else:
+		scale_tween.tween_method(resize_text, Vector2(1,1), Vector2(0.75,0.75), .8).set_ease(Tween.EASE_IN).set_delay(.5).set_trans(Tween.TRANS_SINE)
+
+func resize_text(new_scale : Vector2):
+	scale = new_scale
 
 func lerper(value):
 	initial_damage = value
@@ -48,18 +59,18 @@ func lerper(value):
 	if is_final_greater:
 		if initial_damage >= final_damage-4.5:
 			initial_damage = final_damage
-			label.text = str(round(initial_damage))
-			await get_tree().create_timer(1.3).timeout
-			queue_free()
+			prepare_deletion()
 	else:
 		if initial_damage >= final_damage + 4.5:
 			initial_damage = final_damage
-			label.text = str(round(initial_damage))
-			await get_tree().create_timer(1.3).timeout
-			queue_free()
+			prepare_deletion()
 	if initial_damage == final_damage:
-		await get_tree().create_timer(1.3).timeout
-		queue_free()
+		prepare_deletion()
+
+func prepare_deletion():
+	label.text = str(round(initial_damage))
+	await get_tree().create_timer(1.3).timeout
+	EnemyManager.register_finished_attack()
 #func show_damage(initial_damage, final_damage):
 	
 	#if target == 0:

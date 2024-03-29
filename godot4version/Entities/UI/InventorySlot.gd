@@ -9,6 +9,8 @@ var max_amount = 40
 var own_color : Util.COLOR
 
 @onready
+var sprite = $Piece
+@onready
 var label = $Counter/Label
 @onready
 var heal_button = $Heal
@@ -25,6 +27,7 @@ var heal_textures = [
 func _ready():
 	GridManager.collect_pieces.connect(update_piece_count)
 	progress.max_value = max_amount
+	sprite.texture = Util.piece_textures[own_color]
 
 func _process(delta):
 	if current_amount != target_amount:

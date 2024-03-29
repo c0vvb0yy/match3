@@ -1,4 +1,5 @@
 extends RichTextLabel
+##Label for Character Damage numbers
 
 var current : int
 var target : int 

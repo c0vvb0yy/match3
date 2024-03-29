@@ -3,25 +3,26 @@ class_name Util
 enum COLOR {Flesh , Machine , Divine , Void , Life}
 
 static var color_modulates = {
-	COLOR.Flesh : Color(0.3, 0.07, 0.07),
-	COLOR.Machine: Color(0.06, 0.53, 0.18),
-	COLOR.Divine: Color(0.11, 0.02, 0.71),
-	COLOR.Void: Color(0.5, 0.5, 0.5),
-	COLOR.Life: Color(1,1,1) #try and think of how to rainbow freq it?
+	COLOR.Flesh : Color(0.99, 0.77, 0.03),#Color(1, 1, 0.47),
+	COLOR.Machine: Color(0.15, 0.35, 0.71),
+	COLOR.Divine: Color(0.72, 0.96, 0.96),
+	COLOR.Void: Color(0.41, 0.38, 0.49),
+	COLOR.Life: Color(0.06, 0.53, 0.47) #try and think of how to rainbow freq it?
 } 
+##to be used in richtTextLabels with BBcode enabled
 static var color_codes = {
-	COLOR.Flesh : '[color = #4c131]',
-	COLOR.Machine: '[color = #0f872d]',
-	COLOR.Divine: '[color = #1c05b5]',
-	COLOR.Void: '[color = #606060]',
-	COLOR.Life: '[rainbow freq = 1.0]'
+	COLOR.Flesh : '[color = #fdc508]',#'[color = #ffff79]',
+	COLOR.Machine: '[color = #2558b6]',
+	COLOR.Divine: '[color = #b8f6f4]',
+	COLOR.Void: '[color = #69627d]',
+	COLOR.Life: '[color = #0f8877]'
 }
 static var piece_textures = {
-	COLOR.Flesh : preload("res://Assets/Sprites/Pieces/piece_flesh.png"),
-	COLOR.Machine: preload("res://Assets/Sprites/Pieces/piece_machine.png"),
-	COLOR.Divine: preload("res://Assets/Sprites/Pieces/piece_Divine.png"),
-	COLOR.Void:preload("res://Assets/Sprites/Pieces/piece_void.png"),
-	COLOR.Life:preload("res://Assets/Sprites/Pieces/piece_life.png")
+	COLOR.Flesh : preload("res://Assets/Sprites/Pieces/piece_sun.png"),
+	COLOR.Machine: preload("res://Assets/Sprites/Pieces/piece_moon.png"),
+	COLOR.Divine: preload("res://Assets/Sprites/Pieces/piece_star.png"),
+	COLOR.Void:preload("res://Assets/Sprites/Pieces/piece_anchor.png"),
+	COLOR.Life:preload("res://Assets/Sprites/Pieces/piece_wave.png")
 }
 
 static func make_2d_array(width : int, height: int) -> Array:

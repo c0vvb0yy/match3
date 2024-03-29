@@ -11,6 +11,7 @@ var sprite = $TextureRect
 var original_scale
 func _ready():
 	original_scale = sprite.scale
+	sprite.texture = Util.piece_textures[color]
 
 func move(target_cell:Vector2):
 	var tween = create_tween()

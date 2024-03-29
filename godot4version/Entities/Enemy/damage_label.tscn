@@ -6,15 +6,19 @@
 [node name="Damage" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 267.0
+offset_right = 202.365
 offset_bottom = 64.0
+pivot_offset = Vector2(101.14, 0)
 size_flags_horizontal = 3
 script = ExtResource("1_7p5is")
 
 [node name="Label" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_right = 309.0
-offset_bottom = 71.0
+offset_left = 56.0
+offset_top = 1.0
+offset_right = 365.0
+offset_bottom = 72.0
+pivot_offset = Vector2(50, 0)
 theme = ExtResource("2_5no13")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4

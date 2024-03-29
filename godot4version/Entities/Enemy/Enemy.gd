@@ -12,6 +12,7 @@ var attack_damage : int = 10
 var current_hp : int
 var round_countdown : int
 var is_dead := false
+var total_damage :=0
 
 var damage_label = preload("res://Entities/Enemy/damage_label.tscn")
 @onready
@@ -29,7 +30,8 @@ var sprite = $Sprite
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	PartyManager.attack_over.connect(turn)
-	EnemyManager.take_damage.connect(take_damage)
+	EnemyManager.take_damage.connect(prepare_damage)
+	EnemyManager.damage_finished.connect(take_damage)
 	current_hp = hp
 	round_countdown = wait_rounds
 	set_up_ui()
@@ -85,15 +87,23 @@ func flash_text(loops:int):
 			countdown_label.modulate = Color(1,1,1)
 		await get_tree().create_timer(.1).timeout
 
-func take_damage(init_amount, amount, attack_color):
-	var label = damage_label.instantiate()
-	damage_label_parent.add_child(label)
-	await label.set_damage(init_amount, amount, attack_color)
-	current_hp -= amount
+func take_damage():
+	current_hp -= total_damage
+	total_damage = 0
 	if current_hp <= 0:
 		current_hp = 0
 		die()
 	update_hp()
+	clean_up_damage()
+
+func prepare_damage(init_amount, amount, attack_color):
+	if is_dead:
+		return
+	var label = damage_label.instantiate()
+	damage_label_parent.add_child(label)
+	total_damage += amount
+	await label.set_damage(init_amount, amount, attack_color)
+
 
 func update_hp():
 	var tween = create_tween()
@@ -108,6 +118,10 @@ func die():
 	var tween = create_tween()
 	tween.tween_property(sprite, "position", Vector2(0, -450), 2.0).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 	await tween.finished
-	queue_free()
 	EnemyManager.spawn_enemy()
 	GridManager.grid_state = GridManager.GRID_STATES.ready
+	queue_free()
+
+func clean_up_damage():
+	for label in damage_label_parent.get_children():
+		label.queue_free()

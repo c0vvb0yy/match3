@@ -1,9 +1,13 @@
 extends Node
 
 signal take_damage
+signal damage_finished
 
 var hp
 var color : Util.COLOR
+
+var recieved_attacks := 0
+var finished_attacks := 0
 
 var enemys = [
 	preload("res://Entities/Enemy/enemy.tscn"),
@@ -64,7 +68,9 @@ func register_damage(amount, attack_color):
 	var multiplier = type_dict[color]
 	var final_amount = amount * multiplier
 	#print("type damage: ",amount, "of: ", attack_color)
+	recieved_attacks += 1
 	take_damage.emit(amount, final_amount, attack_color)
+
 
 static func get_effectiveness(attack_color):
 	match attack_color:
@@ -84,3 +90,10 @@ func spawn_enemy():
 	var index = randi_range(0, enemys.size()-1)
 	var enemy = enemys[index].instantiate()
 	parent.add_child(enemy)
+
+func register_finished_attack():
+	finished_attacks += 1
+	if finished_attacks == recieved_attacks:
+		finished_attacks = 0
+		recieved_attacks = 0
+		damage_finished.emit()
