@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ct8hcv5efbh7o"]
 
-[ext_resource type="PackedScene" uid="uid://bhgkb1hkop1w3" path="res://Entities/UI/Inventory_BaseSlot.tscn" id="1_8j7r7"]
+[ext_resource type="PackedScene" uid="uid://bhgkb1hkop1w3" path="res://Entities/UI/Inventory/Inventory_BaseSlot.tscn" id="1_8j7r7"]
 [ext_resource type="Texture2D" uid="uid://d42rvtbf7i1g" path="res://Assets/Sprites/Pieces/piece_Divine.png" id="2_ugo18"]
 
 [node name="Divine" instance=ExtResource("1_8j7r7")]

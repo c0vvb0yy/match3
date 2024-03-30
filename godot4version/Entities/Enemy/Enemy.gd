@@ -8,6 +8,8 @@ var hp : int = 5
 var wait_rounds : int = 2
 @export
 var attack_damage : int = 10
+@export
+var experience : int = 5
 
 var current_hp : int
 var round_countdown : int
@@ -55,15 +57,19 @@ func register_at_manager():
 func spawn_animation():
 	var tween = create_tween()
 	tween.tween_property(sprite, "position", Vector2(sprite_origin_pos.x, 172), .5). set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	await tween.finished
+	GridManager.emit_signal("round_over")
 
 func turn():
 	if is_dead:
+		GridManager.emit_signal("round_over")
 		return
 	round_countdown -= 1
 	countdown_label.text = str("[right]", round_countdown, " rounds until attack")
 	if round_countdown == 0:
 		await get_tree().create_timer(1.5).timeout
 		attack()
+		await get_tree().create_timer(.5).timeout
 	GridManager.emit_signal("round_over")
 
 func attack():
@@ -120,6 +126,8 @@ func die():
 	GridManager.grid_state = GridManager.GRID_STATES.wait
 	sprite.set_flip_v(true)
 	is_dead = true
+	EnemyManager.gathered_exp += experience
+	print(EnemyManager.gathered_exp)
 	var tween = create_tween()
 	tween.tween_property(sprite, "position", Vector2(sprite_origin_pos.x, -450), 2.0).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 	await tween.finished

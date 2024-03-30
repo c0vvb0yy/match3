@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmq87powxci70"]
+[gd_scene load_steps=7 format=3 uid="uid://byrinn2tswusj"]
 
-[ext_resource type="Shader" path="res://Scripts/Shaders/popcorn.gdshader" id="1_o1hc8"]
-[ext_resource type="Texture2D" uid="uid://i5taobdtkexa" path="res://Assets/Sprites/Backgrounds/popcorn_fractal.png" id="2_xxnnh"]
+[ext_resource type="Script" path="res://Entities/Characters/level_up.gd" id="1_b6812"]
+[ext_resource type="Shader" path="res://Scripts/Shaders/popcorn.gdshader" id="2_000ae"]
+[ext_resource type="Texture2D" uid="uid://d1jify1qwbtis" path="res://Assets/Sprites/Backgrounds/background_02.png" id="3_mlsfp"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ap7bp"]
 seed = 1
@@ -19,13 +20,13 @@ noise = SubResource("FastNoiseLite_ap7bp")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_clsvw"]
 resource_local_to_scene = true
-shader = ExtResource("1_o1hc8")
-shader_parameter/numberOfColors = 5
-shader_parameter/distortionstrength = 0.451
-shader_parameter/flow_direction = Vector2(-0.05, 0.1)
-shader_parameter/main_tint = Color(0.0745098, 0.129412, 0.431373, 1)
-shader_parameter/sec_tint = Color(0.27451, 0.0196078, 0.0745098, 1)
-shader_parameter/C1 = Color(0.298039, 0.313726, 0.352941, 1)
+shader = ExtResource("2_000ae")
+shader_parameter/numberOfColors = 2
+shader_parameter/distortionstrength = 0.361
+shader_parameter/flow_direction = Vector2(-0.05, 0.05)
+shader_parameter/main_tint = Color(0.141176, 0.0705882, 0.611765, 1)
+shader_parameter/sec_tint = Color(0.65098, 0.662745, 0.168627, 1)
+shader_parameter/C1 = Color(0.384314, 0.4, 0.447059, 1)
 shader_parameter/C2 = Color(0.690196, 0.694118, 0.67451, 1)
 shader_parameter/C3 = Color(0.117647, 0.117647, 0.117647, 1)
 shader_parameter/C4 = Color(0.156863, 0.156863, 0.156863, 1)
@@ -56,12 +57,46 @@ shader_parameter/C28 = null
 shader_parameter/C29 = null
 shader_parameter/noise = SubResource("NoiseTexture2D_ff3xu")
 
-[node name="TextureRect" type="TextureRect"]
-texture_filter = 1
+[node name="LevelUp" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b6812")
+
+[node name="bg" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_clsvw")
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("2_xxnnh")
+texture = ExtResource("3_mlsfp")
 stretch_mode = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="PartyContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 666.0
+offset_right = 1482.0
+offset_bottom = 706.0
+theme_override_constants/separation = 484
+
+[node name="EXPContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 614.0
+offset_right = 1707.0
+offset_bottom = 654.0
+theme_override_constants/separation = 339
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 680.0
+offset_top = 100.0
+offset_right = 792.0
+offset_bottom = 131.0
+scale = Vector2(3.715, 3.715)
+text = "NEXT ROUND"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

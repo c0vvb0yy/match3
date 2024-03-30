@@ -1,6 +1,8 @@
-[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://b2qphe4fekj4r"]
+[gd_scene load_steps=7 format=3 uid="uid://c1howdtwmhtkn"]
 
-[ext_resource type="Shader" path="res://Scripts/Shaders/popcorn.gdshader" id="1_374wm"]
+[ext_resource type="Script" path="res://Scripts/MainMenu.gd" id="1_g4nja"]
+[ext_resource type="Shader" path="res://Scripts/Shaders/popcorn.gdshader" id="2_7rxy8"]
+[ext_resource type="Texture2D" uid="uid://cwj82sxjw81t5" path="res://Assets/Sprites/Backgrounds/background_03.png" id="3_7fs5n"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ap7bp"]
 seed = 1
@@ -16,9 +18,9 @@ seamless = true
 seamless_blend_skirt = 0.541
 noise = SubResource("FastNoiseLite_ap7bp")
 
-[resource]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3glef"]
 resource_local_to_scene = true
-shader = ExtResource("1_374wm")
+shader = ExtResource("2_7rxy8")
 shader_parameter/numberOfColors = 2
 shader_parameter/distortionstrength = 1.474
 shader_parameter/flow_direction = Vector2(0, 0.1)
@@ -54,3 +56,33 @@ shader_parameter/C27 = null
 shader_parameter/C28 = null
 shader_parameter/C29 = null
 shader_parameter/noise = SubResource("NoiseTexture2D_ff3xu")
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g4nja")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_3glef")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_7fs5n")
+stretch_mode = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 836.0
+offset_top = 512.0
+offset_right = 1102.0
+offset_bottom = 646.0
+text = "START GAME"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(958, 534)
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://ckfveuxjk2ss1" path="res://Assets/Sprites/UI/Inventory/bottom_slot.png" id="1_uw6i7"]
 [ext_resource type="FontFile" uid="uid://kveprp0xebav" path="res://Assets/Fonts/Kenney Future Narrow.ttf" id="2_qaipe"]
-[ext_resource type="Script" path="res://Entities/UI/InventorySlot.gd" id="2_utu5r"]
+[ext_resource type="Script" path="res://Entities/UI/Inventory/InventorySlot.gd" id="2_utu5r"]
 [ext_resource type="Texture2D" uid="uid://dn4f820abqwmp" path="res://Assets/Sprites/UI/Inventory/small_slot_heal.png" id="3_1p3f3"]
 [ext_resource type="Texture2D" uid="uid://2aiboa3lu4er" path="res://Assets/Sprites/UI/TurnProgressBar/timer_bar_under.png" id="4_jjf7e"]
 [ext_resource type="Texture2D" uid="uid://creakieydro0v" path="res://Assets/Sprites/UI/Inventory/small_slot.png" id="4_wep42"]

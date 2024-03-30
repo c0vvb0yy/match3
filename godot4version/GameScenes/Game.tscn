@@ -1,0 +1,192 @@
+[gd_scene load_steps=16 format=3 uid="uid://0nd1u3ltq7ty"]
+
+[ext_resource type="PackedScene" uid="uid://dmq87powxci70" path="res://bg_test.tscn" id="1_qpcjf"]
+[ext_resource type="Shader" path="res://Scripts/Shaders/popcorn.gdshader" id="2_hpwrv"]
+[ext_resource type="PackedScene" uid="uid://c4mojhf1p7wdp" path="res://Entities/Grid/grid.tscn" id="3_cxldm"]
+[ext_resource type="PackedScene" uid="uid://bi0ee7k2g8abh" path="res://Entities/UI/Inventory/Inventory.tscn" id="4_k58tj"]
+[ext_resource type="Script" path="res://Entities/Characters/Heroes/Skills/SkillDEBUG.gd" id="5_w6dx1"]
+[ext_resource type="PackedScene" uid="uid://cdmdt3wdfksoo" path="res://Entities/UI/Inventory/Inventory_Flesh.tscn" id="6_1vs6i"]
+[ext_resource type="PackedScene" uid="uid://db766q44q7kh" path="res://Entities/UI/Inventory/Inventory_Life.tscn" id="7_qre0u"]
+[ext_resource type="PackedScene" uid="uid://dhlbfo82dwrit" path="res://Entities/UI/Inventory/Inventory_Machine.tscn" id="8_fgtfv"]
+[ext_resource type="PackedScene" uid="uid://cv4va7acnnoy5" path="res://Entities/UI/Inventory/Inventory_Void.tscn" id="9_2ueay"]
+[ext_resource type="PackedScene" uid="uid://ct8hcv5efbh7o" path="res://Entities/UI/Inventory/Inventory_Divine.tscn" id="10_jepls"]
+[ext_resource type="Script" path="res://Entities/Characters/PartySpawner.gd" id="11_dbh1q"]
+[ext_resource type="PackedScene" uid="uid://dno1p164seva8" path="res://Entities/UI/Party_Health_Bar.tscn" id="12_ovpvo"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ap7bp"]
+seed = 1
+frequency = 0.0001
+fractal_type = 3
+fractal_octaves = 10
+fractal_lacunarity = 5.0
+fractal_weighted_strength = 0.44
+fractal_ping_pong_strength = 43.73
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ff3xu"]
+seamless = true
+seamless_blend_skirt = 0.541
+noise = SubResource("FastNoiseLite_ap7bp")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mhi8n"]
+resource_local_to_scene = true
+shader = ExtResource("2_hpwrv")
+shader_parameter/numberOfColors = 28
+shader_parameter/distortionstrength = 0.691
+shader_parameter/flow_direction = Vector2(0.1, -0.05)
+shader_parameter/main_tint = Color(1, 1, 1, 1)
+shader_parameter/sec_tint = Color(1, 1, 1, 1)
+shader_parameter/C1 = Color(0.00392157, 0.027451, 0.184314, 1)
+shader_parameter/C2 = Color(0.0156863, 0.14902, 0.207843, 1)
+shader_parameter/C3 = Color(0.117647, 0.117647, 0.117647, 1)
+shader_parameter/C4 = Color(0.156863, 0.156863, 0.156863, 1)
+shader_parameter/C5 = Color(0.196078, 0.196078, 0.196078, 1)
+shader_parameter/C6 = Color(0.235294, 0.235294, 0.235294, 1)
+shader_parameter/C7 = Color(0.27451, 0.27451, 0.27451, 1)
+shader_parameter/C8 = Color(0.027451, 0.317647, 0.972549, 1)
+shader_parameter/C9 = Color(0.0745098, 0.345098, 0.698039, 1)
+shader_parameter/C10 = Color(0.392157, 0.392157, 0.392157, 1)
+shader_parameter/C11 = Color(0.505882, 0.505882, 0.505882, 1)
+shader_parameter/C12 = Color(0.705882, 0.705882, 0.705882, 1)
+shader_parameter/C13 = Color(0, 0, 0, 1)
+shader_parameter/C14 = null
+shader_parameter/C15 = null
+shader_parameter/C16 = null
+shader_parameter/C17 = null
+shader_parameter/C18 = null
+shader_parameter/C19 = null
+shader_parameter/C20 = null
+shader_parameter/C21 = null
+shader_parameter/C22 = null
+shader_parameter/C23 = null
+shader_parameter/C24 = null
+shader_parameter/C25 = null
+shader_parameter/C26 = null
+shader_parameter/C27 = null
+shader_parameter/C28 = null
+shader_parameter/C29 = null
+shader_parameter/noise = SubResource("NoiseTexture2D_ff3xu")
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BGWatery" parent="." instance=ExtResource("1_qpcjf")]
+material = SubResource("ShaderMaterial_mhi8n")
+layout_mode = 0
+offset_left = -1056.0
+offset_top = -80.0
+offset_right = 864.0
+offset_bottom = 1000.0
+pivot_offset = Vector2(960, 540)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-98, 460)
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Grid" parent="Node2D" instance=ExtResource("3_cxldm")]
+empty_spaces = Array[Vector2]([Vector2(0, 0), Vector2(-1, 0), Vector2(-1, -1), Vector2(0, -1)])
+
+[node name="Inventory" parent="Node2D" instance=ExtResource("4_k58tj")]
+visible = false
+offset_left = -2.0
+offset_top = 789.0
+offset_right = 768.0
+offset_bottom = 927.0
+theme_override_constants/separation = 20
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 155.0
+offset_top = -53.0
+offset_right = 195.0
+offset_bottom = -22.0
+text = "skill"
+script = ExtResource("5_w6dx1")
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 101.0
+offset_top = -57.0
+offset_right = 141.0
+offset_bottom = -26.0
+text = "kill"
+script = ExtResource("5_w6dx1")
+
+[node name="Inventory" type="Node" parent="."]
+
+[node name="Flesh" parent="Inventory" instance=ExtResource("6_1vs6i")]
+offset_left = -1.0
+offset_top = 790.0
+offset_right = 137.0
+offset_bottom = 981.0
+
+[node name="Life" parent="Inventory" instance=ExtResource("7_qre0u")]
+offset_left = 631.0
+offset_top = 790.0
+offset_right = 769.0
+offset_bottom = 981.0
+
+[node name="Machine" parent="Inventory" instance=ExtResource("8_fgtfv")]
+offset_left = 156.0
+offset_top = 789.0
+offset_right = 294.0
+offset_bottom = 980.0
+
+[node name="Void" parent="Inventory" instance=ExtResource("9_2ueay")]
+offset_left = 472.0
+offset_top = 790.0
+offset_right = 610.0
+offset_bottom = 981.0
+
+[node name="Divine" parent="Inventory" instance=ExtResource("10_jepls")]
+offset_left = 313.0
+offset_top = 790.0
+offset_right = 451.0
+offset_bottom = 981.0
+
+[node name="Party" type="Control" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1001.0
+offset_top = 528.0
+offset_right = -2364.0
+offset_bottom = -107.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("11_dbh1q")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Party"]
+layout_mode = 0
+offset_left = -41.0
+offset_top = 70.0
+offset_right = 814.0
+offset_bottom = 110.0
+scale = Vector2(0.845, 0.845)
+theme_override_constants/separation = 307
+
+[node name="HealthBar" parent="Party" instance=ExtResource("12_ovpvo")]
+layout_mode = 2
+offset_left = -42.0
+offset_top = -9.0
+offset_right = 964.0
+offset_bottom = 35.0
+
+[node name="EnemyPlacement" type="Control" parent="."]
+anchors_preset = 0
+offset_left = -828.0
+offset_top = 19.0
+offset_right = 1084.0
+offset_bottom = 1153.0
+mouse_filter = 2
+
+[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
+[connection signal="pressed" from="Button2" to="Button2" method="_on_kill_pressed"]

@@ -1,15 +1,33 @@
 extends Node
 
+signal party_ready
 signal register_match
 signal apply_combo
 signal hp_change
 signal attack_over
 var party_hp : int
 var current_hp : int
-var party_size = 2
 var finished_party_member_count : int
-
 var damages := []
+
+var party_scenes := [
+	preload("res://Entities/Characters/Heroes/Zaavan.tscn"),
+	preload("res://Entities/Characters/Heroes/character_DEBUG.tscn"),
+	preload("res://Entities/Characters/Heroes/Zaavan.tscn"),
+	preload("res://Entities/Characters/Heroes/character_DEBUG.tscn")
+]
+
+var party := []
+
+func init_party():
+	if party.size() != 0:
+		party_ready.emit()
+		return
+	for hero in party_scenes:
+		var chara = hero.instantiate()
+		add_child(chara)
+		party.append(chara)
+	party_ready.emit()
 
 #TODO: /consider, have type advantages also apply to party from enemy attacks
 func take_damage(amount:int):
@@ -31,7 +49,7 @@ func register_attack(damage, main_color, sec_color):
 		if sec_color != main_color:
 			damages.append([damage, sec_color])
 	finished_party_member_count += 1
-	if finished_party_member_count == party_size:
+	if finished_party_member_count == party.size():
 		if damages.size() == 0:
 			attack_over.emit()
 			return

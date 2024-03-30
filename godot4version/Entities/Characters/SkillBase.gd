@@ -42,8 +42,7 @@ static func collect_all_pieces_of_color(color: Util.COLOR):
 		var y = piece[0].y
 		#GridManager.matches.append([x, y, 0, 1, piece[1].color])
 		#GridManager.match_and_dim(piece[1])
-		GridManager.emit_signal("collect_pieces", color, 1)
-		await GridManager.clear_piece(x, y)
+		await GridManager.clear_piece(x, y, color)
 	GridManager.emit_signal("refill")
 	pass
 

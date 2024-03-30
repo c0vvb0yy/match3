@@ -21,6 +21,8 @@ var hp_multiplier : float
 var atk_multiplier : float
 @export
 var level : int
+@export
+var experience_needed : int
 
 var hp : int
 var atk : int
@@ -30,11 +32,13 @@ var experience : int
 @onready
 var bg = $Portrait/Background
 @onready
-var damage_label = $DamageLabel
+var damage_label = $Portrait/DamageLabel
 @onready
-var skill_texture = $SkillUI/Color
+var skill_texture = $Portrait/SkillUI/Color
 @onready
-var skill_info = $SkillUI/Name
+var skill_info = $Portrait/SkillUI/Name
+@onready
+var level_label = $Portrait/LevelBG/LevelLabel
 
 func _ready():
 	PartyManager.register_match.connect(register_match)
@@ -43,9 +47,7 @@ func _ready():
 	set_bg_color()
 	set_up_skill()
 	set_stats()
-
-func _process(_delta):
-	pass
+	#PartyManager.register_party_member(self)
 
 func set_bg_color():
 	bg.material.set_shader_parameter("color_up", Util.color_modulates[main_color])
@@ -56,9 +58,14 @@ func set_up_skill():
 	skill_info.text = str("[right]",skill_name," ", skill_cost)
 
 func set_stats():
-	hp = base_hp
-	atk = base_atk
+	hp = base_hp * level
+	atk = base_atk * level
 	PartyManager.party_hp += hp
+
+func receive_experience(exp):
+	experience += exp
+	if experience >= experience_needed:
+		level_up()
 
 func level_up():
 	level += 1
@@ -66,6 +73,9 @@ func level_up():
 	hp = base_hp * hp_multiplier * level
 	@warning_ignore("narrowing_conversion")
 	atk = base_atk * atk_multiplier * level
+	experience_needed *= 2
+	experience = 0
+	level_label.text = str("[center]", level)
 
 func register_match(color, amount):
 	if color != main_color and color != sec_color:

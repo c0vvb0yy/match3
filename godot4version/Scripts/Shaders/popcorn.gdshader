@@ -87,6 +87,7 @@ void fragment() {
 	referenceColors[28] = C29;
 	
 	vec4 noise_col = texture(noise, UV + flow_direction*TIME);
+	//vec2 uv = UV+(TIME*flow_direction.x+0.2-floor(TIME*flow_direction.y+0.2 +0.5)+0.5);
 	vec2 uv = UV+(TIME*0.25-floor(TIME*0.25 +0.5)+0.5);
 	uv += distortionstrength * noise_col.rr;
 	vec4 textureCol = texture(TEXTURE, uv);

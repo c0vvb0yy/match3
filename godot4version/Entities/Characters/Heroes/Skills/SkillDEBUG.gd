@@ -5,7 +5,10 @@ extends Button
 #error occurs at combo counter, it steps up with however many colors are getting cleare
 
 func _on_pressed():
-	take_damage()
+	win_fight()
+
+func win_fight():
+	GameManager.init_level_up()
 
 func take_damage():
 	PartyManager.take_damage(3)
@@ -33,3 +36,8 @@ func do_skill():
 #enemy skills:
 	#disable random color character(s) for x turns
 	#"Change the past" - scramble players inventory 
+
+
+func _on_kill_pressed():
+	EnemyManager.gathered_exp += 10
+	pass # Replace with function body.

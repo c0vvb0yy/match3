@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cdmdt3wdfksoo"]
 
-[ext_resource type="PackedScene" uid="uid://bhgkb1hkop1w3" path="res://Entities/UI/Inventory_BaseSlot.tscn" id="1_3fdqv"]
+[ext_resource type="PackedScene" uid="uid://bhgkb1hkop1w3" path="res://Entities/UI/Inventory/Inventory_BaseSlot.tscn" id="1_3fdqv"]
 [ext_resource type="Texture2D" uid="uid://degkl4xaemo05" path="res://Assets/Sprites/Pieces/piece_flesh.png" id="2_qlwry"]
 
 [node name="Flesh" instance=ExtResource("1_3fdqv")]

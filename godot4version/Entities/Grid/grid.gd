@@ -211,12 +211,10 @@ func score_round():
 			match dir:
 				direction.vertical: 
 					for i in range(y, y-amount, -1):
-						GridManager.clear_piece(x, i)
-						GridManager.emit_signal("collect_pieces", color, 1)
+						GridManager.clear_piece(x, i, color)
 				direction.horizontal: 
 					for i in range(x, x-amount, -1):
-						GridManager.clear_piece(i, y)
-						GridManager.emit_signal("collect_pieces", color, 1)
+						GridManager.clear_piece(i, y, color)
 			current_match = null
 			await get_tree().create_timer(0.7).timeout
 	return true

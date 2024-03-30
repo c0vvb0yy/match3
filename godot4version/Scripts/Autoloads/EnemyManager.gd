@@ -9,13 +9,14 @@ var color : Util.COLOR
 var recieved_attacks := 0
 var finished_attacks := 0
 
+var gathered_exp : int
+
 var enemys = [
 	preload("res://Entities/Enemy/enemy.tscn"),
 	preload("res://Entities/Enemy/enemy_flesh.tscn"),
 	preload("res://Entities/Enemy/enemy_machine.tscn"),
 	preload("res://Entities/Enemy/enemy_void.tscn"),
 	preload("res://Entities/Enemy/enemy_life.tscn"),
-	
 ]
 
 const effective := 1.5

@@ -97,10 +97,11 @@ func try_get_piece(column, row):
 func update_current_pieces(color: Util.COLOR, new_amount):
 	current_pieces[color] = new_amount
 
-func clear_piece(x, y):
+func clear_piece(x, y, color):
 	if GridManager.all_pieces[x][y] == null:
 		return
 	await GridManager.all_pieces[x][y].clear()
+	GridManager.emit_signal("collect_pieces", color, 1)
 	GridManager.all_pieces[x][y] = null
 
 func get_all_existing_pieces():
