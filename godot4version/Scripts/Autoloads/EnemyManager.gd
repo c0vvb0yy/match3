@@ -61,6 +61,7 @@ static var life_dict = {
 
 func _ready():
 	spawn_enemy()
+	pass
 
 func register_damage(amount, attack_color):
 	#print("Initial damage: ",amount, "of: ", attack_color)
@@ -72,7 +73,7 @@ func register_damage(amount, attack_color):
 	take_damage.emit(amount, final_amount, attack_color)
 
 
-static func get_effectiveness(attack_color):
+func get_effectiveness(attack_color):
 	match attack_color:
 		Util.COLOR.Flesh:
 			return flesh_dict

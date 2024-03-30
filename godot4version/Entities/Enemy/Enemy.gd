@@ -13,6 +13,7 @@ var current_hp : int
 var round_countdown : int
 var is_dead := false
 var total_damage :=0
+var sprite_origin_pos
 
 var damage_label = preload("res://Entities/Enemy/damage_label.tscn")
 @onready
@@ -34,6 +35,8 @@ func _ready():
 	EnemyManager.damage_finished.connect(take_damage)
 	current_hp = hp
 	round_countdown = wait_rounds
+	sprite_origin_pos = sprite.position
+	print(sprite_origin_pos)
 	set_up_ui()
 	register_at_manager()
 	spawn_animation()
@@ -52,7 +55,7 @@ func register_at_manager():
 
 func spawn_animation():
 	var tween = create_tween()
-	tween.tween_property(sprite, "position", Vector2(0, 172), .5). set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(sprite, "position", Vector2(sprite_origin_pos.x, 172), .5). set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 
 func turn():
 	round_countdown -= 1
@@ -74,10 +77,10 @@ func attack_animation():
 	flash_text(3)
 	await get_tree().create_timer(.1).timeout
 	var tween = create_tween()
-	tween.tween_property(get_child(0), "position", Vector2(0, 0), .4).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(get_child(0), "position", Vector2(sprite_origin_pos.x, 0), .4).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	await tween.finished
 	var down_tween = create_tween()
-	down_tween.tween_property(get_child(0), "position", Vector2(0, 189), .1).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BOUNCE)
+	down_tween.tween_property(get_child(0), "position", Vector2(sprite_origin_pos.x, 189), .1).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BOUNCE)
 
 func flash_text(loops:int):
 	for i in range(loops + 1):
@@ -109,14 +112,14 @@ func update_hp():
 	var tween = create_tween()
 	tween.tween_property(health_bar, "value", current_hp, .4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	hp_label.text = str(current_hp)
-	tween.finished
+	await tween.finished
 
 func die():
 	GridManager.grid_state = GridManager.GRID_STATES.wait
 	sprite.set_flip_v(true)
 	is_dead = true
 	var tween = create_tween()
-	tween.tween_property(sprite, "position", Vector2(0, -450), 2.0).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(sprite, "position", Vector2(sprite_origin_pos.x, -450), 2.0).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 	await tween.finished
 	EnemyManager.spawn_enemy()
 	GridManager.grid_state = GridManager.GRID_STATES.ready

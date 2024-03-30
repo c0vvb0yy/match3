@@ -33,6 +33,9 @@ func set_damage(init, final, dmg_color):
 	is_final_greater = final_damage > initial_damage
 	label.text = str(round(initial_damage))
 	self.modulate = Util.color_modulates[dmg_color]
+	if initial_damage == final_damage:
+		prepare_deletion()
+		return
 	var tween = create_tween()
 	handle_scaling()
 	if is_final_greater:

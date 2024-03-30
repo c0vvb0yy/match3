@@ -37,8 +37,8 @@ func register_attack(damage, main_color, sec_color):
 		finished_party_member_count = 0
 
 func attack():
-	for attack in damages:
-		EnemyManager.register_damage(attack[0], attack[1])
+	for att in damages:
+		EnemyManager.register_damage(att[0], att[1])
 	await get_tree().create_timer(0.5).timeout
 	damages.clear()
 	attack_over.emit()

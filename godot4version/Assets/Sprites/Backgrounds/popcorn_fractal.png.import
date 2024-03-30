@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bkyh3jy5v634m"
-path="res://.godot/imported/background_04.png-977776f5e085d973e7a603d079fa4fbd.ctex"
+uid="uid://i5taobdtkexa"
+path="res://.godot/imported/popcorn_fractal.png-1ca414625b98e001b8b835d54c252e90.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/background_04.png"
-dest_files=["res://.godot/imported/background_04.png-977776f5e085d973e7a603d079fa4fbd.ctex"]
+source_file="res://Assets/Sprites/Backgrounds/popcorn_fractal.png"
+dest_files=["res://.godot/imported/popcorn_fractal.png-1ca414625b98e001b8b835d54c252e90.ctex"]
 
 [params]
 
