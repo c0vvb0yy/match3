@@ -93,5 +93,4 @@ static func is_direction_in_grid(start_pos: Vector2, direction: Vector2, grid_si
 	if (start_pos.y == 0 and direction == Vector2.UP
 	or (start_pos.y == grid_size.y - 1 and direction == Vector2.DOWN)):
 		return false
-	print(start_pos, direction)
 	return true

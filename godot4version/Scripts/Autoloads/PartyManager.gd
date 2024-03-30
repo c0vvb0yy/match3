@@ -22,7 +22,6 @@ func take_damage(amount:int):
 	hp_change.emit(current_hp)
 
 func game_over():
-	print("rip")
 	GridManager.disable_grid(true)
 
 func register_attack(damage, main_color, sec_color):
@@ -33,6 +32,9 @@ func register_attack(damage, main_color, sec_color):
 			damages.append([damage, sec_color])
 	finished_party_member_count += 1
 	if finished_party_member_count == party_size:
+		if damages.size() == 0:
+			attack_over.emit()
+			return
 		attack()#attack_over.emit()
 		finished_party_member_count = 0
 
@@ -41,7 +43,6 @@ func attack():
 		EnemyManager.register_damage(att[0], att[1])
 	await get_tree().create_timer(0.5).timeout
 	damages.clear()
-	#attack_over.emit()
 
 func heal(amount:int):
 	current_hp += amount

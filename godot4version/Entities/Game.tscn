@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://0nd1u3ltq7ty"]
+[gd_scene load_steps=18 format=3 uid="uid://0nd1u3ltq7ty"]
 
 [ext_resource type="PackedScene" uid="uid://dmq87powxci70" path="res://bg_test.tscn" id="1_25axm"]
 [ext_resource type="PackedScene" uid="uid://c4mojhf1p7wdp" path="res://Entities/Grid/grid.tscn" id="1_mhfrp"]
@@ -6,7 +6,6 @@
 [ext_resource type="Shader" path="res://Scripts/Shaders/popcorn.gdshader" id="2_qw0ml"]
 [ext_resource type="PackedScene" uid="uid://bi0ee7k2g8abh" path="res://Entities/UI/Inventory.tscn" id="2_tu2i6"]
 [ext_resource type="Script" path="res://Entities/Characters/SkillDEBUG.gd" id="5_hi4e6"]
-[ext_resource type="Texture2D" uid="uid://cm4vmx8jmhxke" path="res://Assets/Sprites/Backgrounds/background_01.png" id="5_twron"]
 [ext_resource type="PackedScene" uid="uid://wdjin6d2t1ve" path="res://Entities/Characters/character_DEBUG.tscn" id="6_jgaqh"]
 [ext_resource type="PackedScene" uid="uid://dno1p164seva8" path="res://Entities/UI/Party_Health_Bar.tscn" id="7_svdd3"]
 [ext_resource type="PackedScene" uid="uid://c18y4no8c8v7r" path="res://Entities/Characters/Zaavan.tscn" id="7_wivcc"]
@@ -69,45 +68,6 @@ shader_parameter/C28 = null
 shader_parameter/C29 = null
 shader_parameter/noise = SubResource("NoiseTexture2D_ff3xu")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_upcet"]
-resource_local_to_scene = true
-shader = ExtResource("2_qw0ml")
-shader_parameter/numberOfColors = 5
-shader_parameter/distortionstrength = 0.3
-shader_parameter/flow_direction = null
-shader_parameter/main_tint = Color(0.137255, 0.788235, 0.898039, 1)
-shader_parameter/sec_tint = Color(0.117647, 0.427451, 0.654902, 1)
-shader_parameter/C1 = Color(0.00784314, 0.0352941, 0.113725, 1)
-shader_parameter/C2 = Color(0.188235, 0, 0.85098, 1)
-shader_parameter/C3 = Color(0.117647, 0.117647, 0.117647, 1)
-shader_parameter/C4 = Color(0.156863, 0.156863, 0.156863, 1)
-shader_parameter/C5 = Color(0.196078, 0.196078, 0.196078, 1)
-shader_parameter/C6 = Color(0.235294, 0.235294, 0.235294, 1)
-shader_parameter/C7 = Color(0.27451, 0.27451, 0.27451, 1)
-shader_parameter/C8 = Color(0.188235, 0, 0.870588, 1)
-shader_parameter/C9 = Color(0.352941, 0.352941, 0.352941, 1)
-shader_parameter/C10 = Color(0.392157, 0.392157, 0.392157, 1)
-shader_parameter/C11 = Color(0.505882, 0.505882, 0.505882, 1)
-shader_parameter/C12 = Color(0.705882, 0.705882, 0.705882, 1)
-shader_parameter/C13 = Color(0, 0, 0, 1)
-shader_parameter/C14 = null
-shader_parameter/C15 = null
-shader_parameter/C16 = null
-shader_parameter/C17 = null
-shader_parameter/C18 = null
-shader_parameter/C19 = null
-shader_parameter/C20 = null
-shader_parameter/C21 = null
-shader_parameter/C22 = null
-shader_parameter/C23 = null
-shader_parameter/C24 = null
-shader_parameter/C25 = null
-shader_parameter/C26 = null
-shader_parameter/C27 = null
-shader_parameter/C28 = null
-shader_parameter/C29 = null
-shader_parameter/noise = SubResource("NoiseTexture2D_ff3xu")
-
 [node name="Game" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -144,10 +104,6 @@ position = Vector2(-98, 460)
 
 [node name="Grid" parent="Node2D" instance=ExtResource("1_mhfrp")]
 empty_spaces = Array[Vector2]([Vector2(0, 0), Vector2(-1, 0), Vector2(-1, -1), Vector2(0, -1)])
-
-[node name="Background" parent="Node2D/Grid/Grid" index="0"]
-material = SubResource("ShaderMaterial_upcet")
-texture = ExtResource("5_twron")
 
 [node name="Inventory" parent="Node2D" instance=ExtResource("2_tu2i6")]
 visible = false
@@ -251,5 +207,3 @@ offset_right = 451.0
 offset_bottom = 981.0
 
 [connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
-
-[editable path="Node2D/Grid"]

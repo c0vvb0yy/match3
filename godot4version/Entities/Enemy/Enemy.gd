@@ -36,7 +36,6 @@ func _ready():
 	current_hp = hp
 	round_countdown = wait_rounds
 	sprite_origin_pos = sprite.position
-	print(sprite_origin_pos)
 	set_up_ui()
 	register_at_manager()
 	spawn_animation()

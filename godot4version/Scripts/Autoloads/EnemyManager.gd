@@ -64,11 +64,9 @@ func _ready():
 	pass
 
 func register_damage(amount, attack_color):
-	#print("Initial damage: ",amount, "of: ", attack_color)
 	var type_dict = get_effectiveness(attack_color)
 	var multiplier = type_dict[color]
 	var final_amount = amount * multiplier
-	#print("type damage: ",amount, "of: ", attack_color)
 	recieved_attacks += 1
 	take_damage.emit(amount, final_amount, attack_color)
 

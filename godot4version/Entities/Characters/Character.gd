@@ -71,10 +71,12 @@ func register_match(color, amount):
 	if color != main_color and color != sec_color:
 		return
 	round_attack_damage += atk * amount/10 * (atk_multiplier * level)
-	print(round_attack_damage)
 	damage_label.target = round_attack_damage
 
 func apply_combo(combo):
+	if round_attack_damage == 0:
+		PartyManager.finished_party_member_count += 1
+		return
 	round_attack_damage *= max(1, ceil(combo/3))
 	damage_label.target = round_attack_damage
 	await get_tree().create_timer(1.5).timeout
@@ -86,8 +88,8 @@ func attack():
 		#emit signal?
 		#EnemyManager.receive_damage(round_attack_damage)
 		#EnemyManager.progress_turn
-	PartyManager.register_attack(round_attack_damage, main_color, sec_color)
 	#PartyManager.emit_signal("attack_over")
+	PartyManager.register_attack(round_attack_damage, main_color, sec_color)
 
 func attack_animation():
 	var tween = create_tween()
@@ -101,7 +103,6 @@ func reset():
 	damage_label.target = 0
 
 func _on_skill_button_pressed():
-	print("button pressed")
 	if GridManager.grid_state != GridManager.GRID_STATES.ready:
 		return
 	GridManager.grid_state = GridManager.GRID_STATES.wait

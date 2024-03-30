@@ -69,7 +69,6 @@ func _process(_delta):
 		check_for_input()
 		if Input.is_action_just_pressed("ui_accept"):
 			quick_time_multiplier = 1 + (round_timer.get_time_left() * (100 / round_timer.wait_time)) / 100;
-			print(quick_time_multiplier)
 			_on_timer_timeout()
 	pass
 
@@ -278,7 +277,6 @@ func after_refill():
 		@warning_ignore("integer_division")
 		score *= max(1, ceil(combo/3))
 		PartyManager.emit_signal("apply_combo", combo)
-		print("final score: ", score)
 		GridManager.disable_grid(true)
 
 func end_round():
