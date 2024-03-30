@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1howdtwmhtkn"]
+
+[ext_resource type="Script" path="res://Scripts/MainMenu.gd" id="1_ekubj"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ekubj")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 836.0
+offset_top = 512.0
+offset_right = 1102.0
+offset_bottom = 646.0
+text = "START GAME"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(958, 534)
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

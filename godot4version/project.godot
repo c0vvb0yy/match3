@@ -18,8 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameManager="*res://Scripts/Autoloads/GameManager.gd"
-PartyManager="*res://Scripts/Autoloads/PartyManager.gd"
 GridManager="*res://Scripts/Autoloads/GridManager.gd"
+PartyManager="*res://Scripts/Autoloads/PartyManager.gd"
 EnemyManager="*res://Scripts/Autoloads/EnemyManager.gd"
 
 [display]

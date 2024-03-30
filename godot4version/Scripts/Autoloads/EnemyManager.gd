@@ -59,9 +59,6 @@ static var wave_dict = {
 	Util.COLOR.Life: neutral,
 }
 
-func _ready():
-	spawn_enemy()
-	pass
 
 func register_damage(amount, attack_color):
 	var type_dict = get_effectiveness(attack_color)
