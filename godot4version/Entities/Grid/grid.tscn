@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://c4mojhf1p7wdp"]
+[gd_scene load_steps=11 format=3 uid="uid://c4mojhf1p7wdp"]
 
 [ext_resource type="Script" path="res://Entities/Grid/grid.gd" id="1_0hbya"]
 [ext_resource type="Script" path="res://Entities/Grid/GridBackground.gd" id="3_arrg1"]
-[ext_resource type="Texture2D" uid="uid://bthfu4k17xqh5" path="res://Assets/Sprites/Grid/grid_bg.png" id="3_jbqxn"]
+[ext_resource type="Material" uid="uid://b2qphe4fekj4r" path="res://watery_bg.tres" id="3_c63p7"]
+[ext_resource type="Texture2D" uid="uid://cwj82sxjw81t5" path="res://Assets/Sprites/Backgrounds/background_03.png" id="4_cjkqo"]
 [ext_resource type="Texture2D" uid="uid://2aiboa3lu4er" path="res://Assets/Sprites/UI/TurnProgressBar/timer_bar_under.png" id="4_st4ie"]
 [ext_resource type="Texture2D" uid="uid://bk41od2euvw1u" path="res://Assets/Sprites/UI/TurnProgressBar/timer_bar_over.png" id="5_iv7r3"]
 [ext_resource type="Texture2D" uid="uid://tmx6hwoulv6p" path="res://Assets/Sprites/UI/TurnProgressBar/timer_bar_progress.png" id="6_vkkmx"]
@@ -27,8 +28,10 @@ script = ExtResource("3_arrg1")
 
 [node name="Background" type="TextureRect" parent="Grid"]
 modulate = Color(0, 0, 0, 1)
+material = ExtResource("3_c63p7")
+clip_contents = true
 layout_mode = 2
-texture = ExtResource("3_jbqxn")
+texture = ExtResource("4_cjkqo")
 expand_mode = 2
 stretch_mode = 1
 

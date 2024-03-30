@@ -186,7 +186,7 @@ func break_matches():
 
 func _on_timer_timeout():
 	round_timer.stop()
-	GridManager.grid_state = GridManager.GRID_STATES.wait
+	GridManager.pause_grid()
 	if is_controlling_piece:
 		GridManager.all_pieces[start_piece_pos.x][start_piece_pos.y].multiply_scale()
 	end_matching()
@@ -197,7 +197,6 @@ func score_round():
 		for current_match in GridManager.matches:
 			if current_match == null:
 				continue
-			print(GridManager.matches)
 			var x = current_match[0]
 			var y = current_match[1]
 			var dir = current_match[2]
@@ -210,7 +209,6 @@ func score_round():
 			PartyManager.emit_signal("register_match", color, score)
 			#score_amount += (score_amount/4) * combo
 			match dir:
-				#TODO: combo label creation + position setting
 				direction.vertical: 
 					for i in range(y, y-amount, -1):
 						GridManager.clear_piece(x, i)
@@ -237,6 +235,7 @@ func end_matching():
 	make_current_pieces_fall()
 	await get_tree().create_timer(0.5).timeout
 	refill_columns()
+	await get_tree().create_timer(0.3).timeout
 	after_refill()
 
 func make_current_pieces_fall():
@@ -258,13 +257,15 @@ func refill_columns():
 		for y in dimension.y:
 			if(GridManager.all_pieces[x][y] == null 
 			and !Util.is_restricted_in_placement(Vector2(x,y), empty_spaces)):
-				var piece = instance_random_piece()
-				add_child(piece)
-				piece.position = Util.grid_to_pixel(cell_size, Vector2(x, y - piece_y_offset))
-				piece.fall(Util.grid_to_pixel(cell_size, Vector2(x, y)))
-				GridManager.all_pieces[x][y] = piece
-	await get_tree().create_timer(0.3).timeout
-	
+				spawn_piece(x,y)
+
+func spawn_piece(x,y):
+	var piece = instance_random_piece()
+	add_child(piece)
+	piece.set_disabled(0.75)
+	piece.position = Util.grid_to_pixel(cell_size, Vector2(x, y - piece_y_offset))
+	piece.fall(Util.grid_to_pixel(cell_size, Vector2(x, y)))
+	GridManager.all_pieces[x][y] = piece
 
 func after_refill():
 	if (match_pieces()):

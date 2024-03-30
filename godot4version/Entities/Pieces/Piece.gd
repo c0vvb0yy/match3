@@ -20,7 +20,9 @@ func move(target_cell:Vector2):
 
 func dim(alpha:= 0.5, duration := 0.1): #shows pieces being matched 
 	var tween = create_tween()
-	tween.tween_property(self, "modulate", Color(1,1,1, alpha), duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	var color = modulate
+	color.a = alpha
+	tween.tween_property(self, "modulate", color, duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	#sprite.modulate = Color(1,1,1, alpha);
 
 func fall(target_cell:Vector2):
@@ -44,10 +46,9 @@ func multiply_scale(multiplier := 1.0):
 	var new_scale = original_scale * multiplier
 	tween.tween_property(sprite, "scale", new_scale, .1).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 
-func set_disabled(state:bool):
+func set_disabled(grey_value : float):
 	var tween = create_tween()
-	if(state):
-		tween.tween_property(self, "modulate", Color(0.2, 0.2, 0.2, 1.0), .3).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_LINEAR)
-		
-	else:
-		tween.tween_property(self, "modulate", Color(1.0, 1.0, 1.0, 1.0), .3).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_LINEAR)
+	var alpha = 1.0
+	if matched:
+		alpha = 0.5
+	tween.tween_property(self, "modulate", Color(grey_value, grey_value, grey_value, alpha), .3).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_LINEAR)

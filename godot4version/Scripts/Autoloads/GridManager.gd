@@ -103,13 +103,25 @@ func clear_piece(x, y):
 	await GridManager.all_pieces[x][y].clear()
 	GridManager.all_pieces[x][y] = null
 
+func get_all_existing_pieces():
+	var pieces = []
+	for x in grid_dimension.x:
+		for y in grid_dimension.y:
+			if is_piece_existing(x,y):
+				pieces.append(all_pieces[x][y])
+	return pieces
+
+func pause_grid():
+	grid_state = GRID_STATES.wait
+	for piece in get_all_existing_pieces():
+		piece.set_disabled(0.75)
+
 func disable_grid(state):
 	if state == true:
 		grid_state = GRID_STATES.wait
+		for piece in get_all_existing_pieces():
+			piece.set_disabled(0.2)
 	else:
 		grid_state = GRID_STATES.ready
-	for x in grid_dimension.x:
-		for y in grid_dimension.y:
-			@warning_ignore("narrowing_conversion", "narrowing_conversion")
-			if is_piece_existing(x,y):
-				all_pieces[x][y].set_disabled(state)
+		for piece in get_all_existing_pieces():
+			piece.set_disabled(1.0)

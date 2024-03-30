@@ -3,6 +3,7 @@ shader_type canvas_item;
 uniform sampler2D noise : repeat_enable;
 uniform int numberOfColors : hint_range(1, 29);
 uniform float distortionstrength : hint_range(-2.0, 2.0);
+uniform vec2 flow_direction;
 uniform vec4 main_tint : source_color;
 uniform vec4 sec_tint : source_color;
 uniform vec4 C1 : source_color;
@@ -85,7 +86,7 @@ void fragment() {
 	referenceColors[27] = C28;
 	referenceColors[28] = C29;
 	
-	vec4 noise_col = texture(noise, UV + vec2(0.05, 0.05)*TIME);
+	vec4 noise_col = texture(noise, UV + flow_direction*TIME);
 	vec2 uv = UV+(TIME*0.25-floor(TIME*0.25 +0.5)+0.5);
 	uv += distortionstrength * noise_col.rr;
 	vec4 textureCol = texture(TEXTURE, uv);
