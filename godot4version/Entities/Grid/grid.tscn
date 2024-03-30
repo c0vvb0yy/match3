@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c4mojhf1p7wdp"]
+[gd_scene load_steps=10 format=3 uid="uid://c4mojhf1p7wdp"]
 
 [ext_resource type="Script" path="res://Entities/Grid/grid.gd" id="1_0hbya"]
 [ext_resource type="Script" path="res://Entities/Grid/GridBackground.gd" id="3_arrg1"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://tmx6hwoulv6p" path="res://Assets/Sprites/UI/TurnProgressBar/timer_bar_progress.png" id="6_vkkmx"]
 [ext_resource type="Script" path="res://Entities/Grid/TurnTimer.gd" id="7_hlyqq"]
 [ext_resource type="Script" path="res://Entities/Grid/ComboLabel.gd" id="8_rlena"]
+[ext_resource type="Texture2D" uid="uid://dqy6skgqtssut" path="res://Assets/Sprites/Grid/chain_border.png" id="9_eg63s"]
 
 [node name="Grid" type="Node2D"]
 script = ExtResource("1_0hbya")
@@ -25,7 +26,7 @@ size_flags_vertical = 3
 script = ExtResource("3_arrg1")
 
 [node name="Background" type="TextureRect" parent="Grid"]
-modulate = Color(0.243137, 0.243137, 0.243137, 1)
+modulate = Color(0, 0, 0, 1)
 layout_mode = 2
 texture = ExtResource("3_jbqxn")
 expand_mode = 2
@@ -44,6 +45,16 @@ texture_under = ExtResource("4_st4ie")
 texture_over = ExtResource("5_iv7r3")
 texture_progress = ExtResource("6_vkkmx")
 script = ExtResource("7_hlyqq")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.5, 0.5, 0.5, 1)
+z_index = 2
+offset_left = -1.0
+offset_top = -5.0
+offset_right = 778.0
+offset_bottom = 776.0
+texture = ExtResource("9_eg63s")
+stretch_mode = 1
 
 [node name="ComboLabel" type="RichTextLabel" parent="."]
 z_index = 5

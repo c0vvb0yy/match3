@@ -1,6 +1,10 @@
 shader_type canvas_item;
 
+uniform sampler2D noise : repeat_enable;
 uniform int numberOfColors : hint_range(1, 29);
+uniform float distortionstrength : hint_range(-2.0, 2.0);
+uniform vec4 main_tint : source_color;
+uniform vec4 sec_tint : source_color;
 uniform vec4 C1 : source_color;
 uniform vec4 C2 : source_color;
 uniform vec4 C3 : source_color;
@@ -45,6 +49,9 @@ vec4 primitive_popcoren(vec2 uv, sampler2D tex){
 	return texture(tex, uv).rgba;
 }*/
 
+void vertex(){
+	//VERTEX += vec2(cos(TIME)*50.0, sin(TIME)*50.0);
+}
 
 void fragment() {
 	vec4 referenceColors[29];
@@ -78,13 +85,19 @@ void fragment() {
 	referenceColors[27] = C28;
 	referenceColors[28] = C29;
 	
-	vec2 uv = UV;
-	vec4 textureCol = texture(TEXTURE, UV);
+	vec4 noise_col = texture(noise, UV + vec2(0.05, 0.05)*TIME);
+	vec2 uv = UV+(TIME*0.25-floor(TIME*0.25 +0.5)+0.5);
+	uv += distortionstrength * noise_col.rr;
+	vec4 textureCol = texture(TEXTURE, uv);
 	int index = int(floor(textureCol.r * (float(numberOfColors))));
 	//int index = int(floor(uv.r * (float(numberOfColors))));
 	//index = int(abs(sin(TIME))*float(numberOfColors));
 	textureCol.rgba = referenceColors[index];
-	uv *= referenceColors[index].rg;
+	if (index % 2 == 0){
+		textureCol.rgba *= main_tint;
+	} else {
+		textureCol.rgba *= sec_tint;
+	}
 	COLOR = textureCol;
 	//COLOR = primitive_popcoren(UV, TEXTURE);
 	//COLOR = vec4(uv, 0.0, 1.0);

@@ -1,12 +1,29 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmq87powxci70"]
+[gd_scene load_steps=6 format=3 uid="uid://dmq87powxci70"]
 
 [ext_resource type="Shader" path="res://Scripts/Shaders/popcorn.gdshader" id="1_o1hc8"]
-[ext_resource type="Texture2D" uid="uid://cm4vmx8jmhxke" path="res://Assets/Sprites/Backgrounds/background_01.png" id="2_872h0"]
-[ext_resource type="Script" path="res://Scripts/Shaders/PaletteSwap.gd" id="3_t1s8o"]
+[ext_resource type="Texture2D" uid="uid://i5taobdtkexa" path="res://Assets/Sprites/Backgrounds/popcorn_fractal.png" id="2_xxnnh"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ap7bp"]
+seed = 1
+frequency = 0.0001
+fractal_type = 3
+fractal_octaves = 10
+fractal_lacunarity = 5.0
+fractal_weighted_strength = 0.44
+fractal_ping_pong_strength = 43.73
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ff3xu"]
+seamless = true
+seamless_blend_skirt = 0.541
+noise = SubResource("FastNoiseLite_ap7bp")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_spcmw"]
+resource_local_to_scene = true
 shader = ExtResource("1_o1hc8")
 shader_parameter/numberOfColors = 28
+shader_parameter/distortionstrength = 0.691
+shader_parameter/main_tint = Color(1, 1, 1, 1)
+shader_parameter/sec_tint = Color(1, 1, 1, 1)
 shader_parameter/C1 = Color(0.0392157, 0.0392157, 0.0392157, 1)
 shader_parameter/C2 = Color(0.0784314, 0.0784314, 0.0784314, 1)
 shader_parameter/C3 = Color(0.117647, 0.117647, 0.117647, 1)
@@ -19,7 +36,7 @@ shader_parameter/C9 = Color(0.352941, 0.352941, 0.352941, 1)
 shader_parameter/C10 = Color(0.392157, 0.392157, 0.392157, 1)
 shader_parameter/C11 = Color(0.505882, 0.505882, 0.505882, 1)
 shader_parameter/C12 = Color(0.705882, 0.705882, 0.705882, 1)
-shader_parameter/C13 = Color(0.129412, 1, 1, 1)
+shader_parameter/C13 = Color(0, 0, 0, 1)
 shader_parameter/C14 = null
 shader_parameter/C15 = null
 shader_parameter/C16 = null
@@ -36,15 +53,14 @@ shader_parameter/C26 = null
 shader_parameter/C27 = null
 shader_parameter/C28 = null
 shader_parameter/C29 = null
+shader_parameter/noise = SubResource("NoiseTexture2D_ff3xu")
 
 [node name="TextureRect" type="TextureRect"]
 texture_filter = 1
 material = SubResource("ShaderMaterial_spcmw")
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("2_872h0")
+texture = ExtResource("2_xxnnh")
 stretch_mode = 1
-script = ExtResource("3_t1s8o")
-gradient = Array[Color]([Color(0.286275, 0.286275, 0.286275, 1), Color(0.360784, 0.360784, 0.360784, 1), Color(0.298039, 0.298039, 0.298039, 1), Color(0.501961, 0.501961, 0.501961, 1), Color(0.596078, 0.596078, 0.596078, 1), Color(0.619608, 0.619608, 0.619608, 1), Color(0.764706, 0.764706, 0.764706, 1), Color(0.901961, 0.901961, 0.901961, 1), Color(0, 0, 0, 1), Color(0.0823529, 0.0823529, 0.0823529, 1), Color(0.152941, 0.152941, 0.152941, 1), Color(0.188235, 0.188235, 0.188235, 1), Color(0.270588, 0.270588, 0.270588, 1), Color(0.286275, 0.286275, 0.286275, 1), Color(0, 0, 0, 1)])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
