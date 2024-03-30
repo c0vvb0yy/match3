@@ -58,6 +58,8 @@ func spawn_animation():
 	tween.tween_property(sprite, "position", Vector2(sprite_origin_pos.x, 172), .5). set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 
 func turn():
+	if is_dead:
+		return
 	round_countdown -= 1
 	countdown_label.text = str("[right]", round_countdown, " rounds until attack")
 	if round_countdown == 0:
@@ -92,6 +94,7 @@ func flash_text(loops:int):
 
 func take_damage():
 	current_hp -= total_damage
+	PartyManager.attack_over.emit()
 	total_damage = 0
 	if current_hp <= 0:
 		current_hp = 0

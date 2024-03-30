@@ -41,7 +41,7 @@ func attack():
 		EnemyManager.register_damage(att[0], att[1])
 	await get_tree().create_timer(0.5).timeout
 	damages.clear()
-	attack_over.emit()
+	#attack_over.emit()
 
 func heal(amount:int):
 	current_hp += amount

@@ -36,6 +36,7 @@ var round_timer = $RoundTimer
 var combo_label = $ComboLabel
 
 func _ready():
+	#Input.set_custom_mouse_cursor(load("res://Assets/Sprites/UI/MouseCursors/selector.png"))
 	GridManager.score.connect(end_matching)
 	GridManager.refill.connect(manual_refill)
 	GridManager.round_over.connect(end_round)
@@ -262,7 +263,6 @@ func refill_columns():
 func spawn_piece(x,y):
 	var piece = instance_random_piece()
 	add_child(piece)
-	piece.set_disabled(0.75)
 	piece.position = Util.grid_to_pixel(cell_size, Vector2(x, y - piece_y_offset))
 	piece.fall(Util.grid_to_pixel(cell_size, Vector2(x, y)))
 	GridManager.all_pieces[x][y] = piece

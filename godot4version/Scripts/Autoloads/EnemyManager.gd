@@ -23,35 +23,35 @@ const not_effective := 0.5
 const neutral := 1.0
 const very_effective := 2.0
 
-static var flesh_dict = {
+static var sun_dict = {
 	Util.COLOR.Flesh: neutral,
 	Util.COLOR.Machine: not_effective,
 	Util.COLOR.Divine: effective,
 	Util.COLOR.Void: neutral,
 	Util.COLOR.Life: neutral
 }
-static var machine_dict = {
+static var moon_dict = {
 	Util.COLOR.Flesh: effective,
 	Util.COLOR.Machine: neutral,
 	Util.COLOR.Divine: not_effective,
 	Util.COLOR.Void: neutral,
 	Util.COLOR.Life: neutral,
 }
-static var divine_dict = {
+static var star_dict = {
 	Util.COLOR.Flesh: not_effective,
 	Util.COLOR.Machine: effective,
 	Util.COLOR.Divine: neutral,
 	Util.COLOR.Void: neutral,
 	Util.COLOR.Life: neutral,
 }
-static var void_dict = {
+static var anchor_dict = {
 	Util.COLOR.Flesh: neutral,
 	Util.COLOR.Machine: neutral,
 	Util.COLOR.Divine: neutral,
 	Util.COLOR.Void: neutral,
 	Util.COLOR.Life: very_effective,
 }
-static var life_dict = {
+static var wave_dict = {
 	Util.COLOR.Flesh: neutral,
 	Util.COLOR.Machine: neutral,
 	Util.COLOR.Divine: neutral,
@@ -76,15 +76,15 @@ func register_damage(amount, attack_color):
 func get_effectiveness(attack_color):
 	match attack_color:
 		Util.COLOR.Flesh:
-			return flesh_dict
+			return sun_dict
 		Util.COLOR.Machine:
-			return machine_dict
+			return moon_dict
 		Util.COLOR.Divine:
-			return divine_dict
+			return star_dict
 		Util.COLOR.Void:
-			return void_dict
+			return anchor_dict
 		Util.COLOR.Life:
-			return life_dict
+			return wave_dict
 
 func spawn_enemy():
 	var parent = $"/root/Game/EnemyPlacement"

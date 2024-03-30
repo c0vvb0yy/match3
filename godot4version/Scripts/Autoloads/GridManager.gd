@@ -111,17 +111,21 @@ func get_all_existing_pieces():
 				pieces.append(all_pieces[x][y])
 	return pieces
 
+var selector = load("res://Assets/Sprites/UI/MouseCursors/selector.png")
+var cross = load("res://Assets/Sprites/UI/MouseCursors/cross.png")
+var hotspot = Vector2(32, 32)
 func pause_grid():
 	grid_state = GRID_STATES.wait
-	for piece in get_all_existing_pieces():
-		piece.set_disabled(0.75)
+	Input.set_custom_mouse_cursor(cross, 0, hotspot)
 
 func disable_grid(state):
 	if state == true:
+		Input.set_custom_mouse_cursor(cross, 0, hotspot)
 		grid_state = GRID_STATES.wait
 		for piece in get_all_existing_pieces():
 			piece.set_disabled(0.2)
 	else:
+		Input.set_custom_mouse_cursor(selector, 0, hotspot)
 		grid_state = GRID_STATES.ready
 		for piece in get_all_existing_pieces():
 			piece.set_disabled(1.0)
