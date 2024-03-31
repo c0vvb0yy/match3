@@ -1,32 +1,8 @@
 extends Control
 
-
-#@export
-#var main_color : Util.COLOR
-#@export
-#var sec_color : Util.COLOR
-#@export
-#var skill_color : Util.COLOR
-#@export
-#var skill_cost : int
-#@export
-#var skill_name : String
-#@export
-#var base_hp : int
-#@export
-#var base_atk : int
-#@export
-#var hp_multiplier : float
-#@export
-#var atk_multiplier : float
-#@export
-#var level : int
-#@export
-#var experience_needed : int
-
 ##must equal the name of a stat dictionary in the Characters.gd autoload
 @export
-var character_name := 'default_data'
+var character_name := 'default'
 
 var hp : int
 var atk : int
@@ -56,6 +32,7 @@ func _ready():
 	PartyManager.register_match.connect(register_match)
 	PartyManager.apply_combo.connect(apply_combo)
 	GridManager.round_over.connect(reset)
+	Characters.level.connect(show_level_up)
 	set_stats()
 	set_bg_color()
 	set_up_skill()
@@ -70,30 +47,26 @@ func set_up_skill():
 	skill_info.text = str("[right]",skill_name, " ", skill_cost)
 
 func set_stats():
-	hp = Characters.try_get_value(character_name,"hp")
-	atk = Characters.try_get_value(character_name, "atk")
-	PartyManager.party_hp += hp
-	main_color = Characters.try_get_value(character_name, "main_color")
-	sec_color = Characters.try_get_value(character_name, "sec_color")
-	skill_color = Characters.try_get_value(character_name, "skill_color")
-	skill_cost = Characters.try_get_value(character_name, "skill_cost")
-	skill_name = Characters.try_get_value(character_name, "skill_name")
-	skill_desc = Characters.try_get_value(character_name, "skill_desc")
+	hp = Characters.try_get_value(character_name, Characters.data.HP)
+	atk = Characters.try_get_value(character_name, Characters.data.ATK)
+	main_color = Characters.try_get_value(character_name, Characters.data.MAINCOLOR)
+	sec_color = Characters.try_get_value(character_name, Characters.data.SECCOLOR)
+	skill_color = Characters.try_get_value(character_name, Characters.data.SKILL_COLOR)
+	skill_cost = Characters.try_get_value(character_name, Characters.data.SKILL_COST)
+	skill_name = Characters.try_get_value(character_name, Characters.data.SKILL_NAME)
+	skill_desc = Characters.try_get_value(character_name, Characters.data.SKILL_DESC)
+	level_label.text = str("[center]",Characters.try_get_value(character_name, Characters.data.LEVEL))
 
 #func receive_experience(exp):
 	#experience += exp
 	#if experience >= experience_needed:
 	#	level_up()
 
-#func level_up():
-	#level += 1
-	#@warning_ignore("narrowing_conversion")
-	#hp = base_hp * hp_multiplier * level
-	#@warning_ignore("narrowing_conversion")
-	#atk = base_atk * atk_multiplier * level
-	#experience_needed *= 2
-	#experience = 0
-	#level_label.text = str("[center]", level)
+func show_level_up(chara):
+	if chara == character_name:
+		var current_level = int(level_label.text)
+		current_level += 1
+		level_label.text = str("[center]",current_level)
 
 func register_match(color, amount):
 	if color != main_color and color != sec_color:

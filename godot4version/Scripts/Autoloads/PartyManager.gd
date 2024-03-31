@@ -14,16 +14,17 @@ var party_scenes := [
 	preload("res://Entities/Characters/Heroes/Zaavan.tscn"),
 	preload("res://Entities/Characters/Heroes/character_DEBUG.tscn"),
 ]
-var party := ['zaav', 'ian', 'default']
+var party := ['zaav', 'ian']
 
 func init_party():
-	if party.size() != 0:
-		party_ready.emit()
-		return
-	for hero in party_scenes:
-		var chara = hero.instantiate()
-		add_child(chara)
-		party.append(chara)
+	if party.size() == 0:
+		for hero in party_scenes:
+			var chara = hero.instantiate()
+			add_child(chara)
+			party.append(chara)
+	party_hp = 0
+	for hero in party:
+		party_hp += Characters.try_get_value(hero, Characters.data.HP)
 	party_ready.emit()
 
 #TODO: /consider, have type advantages also apply to party from enemy attacks
@@ -64,3 +65,8 @@ func heal(amount:int):
 	if current_hp > party_hp:
 		current_hp = party_hp
 	hp_change.emit(current_hp)
+
+func spawn_party(parent:Node):
+	for chara in party:
+		var hero = Characters.char_scenes[chara].instantiate()
+		parent.add_child(hero)

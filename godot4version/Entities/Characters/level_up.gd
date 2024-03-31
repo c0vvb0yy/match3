@@ -11,20 +11,20 @@ var exp_bar = preload("res://Entities/UI/exp_bar.tscn")
 func _ready():
 	GameManager.gain_exp.connect(get_exp)
 
-# Called when the node enters the scene tree for the first time.
 func get_exp(received_exp):
 	set_up()
-	for i in range(PartyManager.party.size()):
-		receive_exp(i, received_exp)
+	for chara in PartyManager.party:
+		Characters.receive_exp(chara, received_exp, Characters.try_get_value(chara, Characters.data.LEVEL))
+	#for i in range(PartyManager.party.size()):
+		#receive_exp(i, received_exp)
 	EnemyManager.gathered_exp = 0
-	pass # Replace with function body.
 
 func set_up():
+	PartyManager.spawn_party(party_container)
 	for hero in PartyManager.party:
-		hero.reparent(party_container)
 		var xp_bar = exp_bar.instantiate()
 		exp_container.add_child(xp_bar)
-	pass
+		xp_bar.init(hero)
 
 func receive_exp(i, exp):
 	var hero = PartyManager.party[i]

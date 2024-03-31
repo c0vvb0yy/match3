@@ -59,7 +59,7 @@ func _on_heal_pressed():
 	if GridManager.current_pieces[own_color] >= 10:
 		GridManager.emit_signal("collect_pieces", own_color, -10)
 		@warning_ignore("integer_division")
-		var amount = (PartyManager.party_hp * 5)/100
+		var amount = max(5, ((PartyManager.party_hp * 5)/100))
 		PartyManager.heal(amount)
 
 
