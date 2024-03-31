@@ -9,8 +9,10 @@ func _ready():
 	PartyManager.party_ready.connect(show_party)
 
 func show_party():
-	for char in PartyManager.party:
-		char.reparent(container)
+	for chara in PartyManager.party:
+		var hero = Characters.char_scenes[chara].instantiate()
+		container.add_child(hero)
+		#char.reparent(container)
 	health_bar.set_hp()
 
 

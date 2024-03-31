@@ -27,7 +27,7 @@ func save_party():
 		char.reparent(PartyManager)
 
 func start_game():
-	save_party()
+	#save_party()
 	state = STATES.fight
 	get_tree().change_scene_to_packed(match_3_scene)
 	await get_tree().create_timer(0.1).timeout
@@ -35,7 +35,7 @@ func start_game():
 	EnemyManager.spawn_enemy()
 
 func init_level_up():
-	save_party()
+	#save_party()
 	state = STATES.level_up
 	get_tree().change_scene_to_packed(level_up_scene)
 	await get_tree().create_timer(0.1).timeout

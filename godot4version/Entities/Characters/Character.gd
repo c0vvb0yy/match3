@@ -1,33 +1,45 @@
 extends Control
 
 
+#@export
+#var main_color : Util.COLOR
+#@export
+#var sec_color : Util.COLOR
+#@export
+#var skill_color : Util.COLOR
+#@export
+#var skill_cost : int
+#@export
+#var skill_name : String
+#@export
+#var base_hp : int
+#@export
+#var base_atk : int
+#@export
+#var hp_multiplier : float
+#@export
+#var atk_multiplier : float
+#@export
+#var level : int
+#@export
+#var experience_needed : int
+
+##must equal the name of a stat dictionary in the Characters.gd autoload
 @export
-var main_color : Util.COLOR
-@export
-var sec_color : Util.COLOR
-@export
-var skill_color : Util.COLOR
-@export
-var skill_cost : int
-@export
-var skill_name : String
-@export
-var base_hp : int
-@export
-var base_atk : int
-@export
-var hp_multiplier : float
-@export
-var atk_multiplier : float
-@export
-var level : int
-@export
-var experience_needed : int
+var character_name := 'default_data'
 
 var hp : int
 var atk : int
 var round_attack_damage : int
 var experience : int
+
+var main_color : Util.COLOR
+var sec_color : Util.COLOR
+
+var skill_color : Util.COLOR
+var skill_cost : int
+var skill_name : String
+var skill_desc : String
 
 @onready
 var bg = $Portrait/Background
@@ -44,9 +56,9 @@ func _ready():
 	PartyManager.register_match.connect(register_match)
 	PartyManager.apply_combo.connect(apply_combo)
 	GridManager.round_over.connect(reset)
+	set_stats()
 	set_bg_color()
 	set_up_skill()
-	set_stats()
 	#PartyManager.register_party_member(self)
 
 func set_bg_color():
@@ -55,32 +67,38 @@ func set_bg_color():
 
 func set_up_skill():
 	skill_texture.texture = Util.piece_textures[skill_color]
-	skill_info.text = str("[right]",skill_name," ", skill_cost)
+	skill_info.text = str("[right]",skill_name, " ", skill_cost)
 
 func set_stats():
-	hp = base_hp * level
-	atk = base_atk * level
+	hp = Characters.try_get_value(character_name,"hp")
+	atk = Characters.try_get_value(character_name, "atk")
 	PartyManager.party_hp += hp
+	main_color = Characters.try_get_value(character_name, "main_color")
+	sec_color = Characters.try_get_value(character_name, "sec_color")
+	skill_color = Characters.try_get_value(character_name, "skill_color")
+	skill_cost = Characters.try_get_value(character_name, "skill_cost")
+	skill_name = Characters.try_get_value(character_name, "skill_name")
+	skill_desc = Characters.try_get_value(character_name, "skill_desc")
 
-func receive_experience(exp):
-	experience += exp
-	if experience >= experience_needed:
-		level_up()
+#func receive_experience(exp):
+	#experience += exp
+	#if experience >= experience_needed:
+	#	level_up()
 
-func level_up():
-	level += 1
-	@warning_ignore("narrowing_conversion")
-	hp = base_hp * hp_multiplier * level
-	@warning_ignore("narrowing_conversion")
-	atk = base_atk * atk_multiplier * level
-	experience_needed *= 2
-	experience = 0
-	level_label.text = str("[center]", level)
+#func level_up():
+	#level += 1
+	#@warning_ignore("narrowing_conversion")
+	#hp = base_hp * hp_multiplier * level
+	#@warning_ignore("narrowing_conversion")
+	#atk = base_atk * atk_multiplier * level
+	#experience_needed *= 2
+	#experience = 0
+	#level_label.text = str("[center]", level)
 
 func register_match(color, amount):
 	if color != main_color and color != sec_color:
 		return
-	round_attack_damage += atk * amount/10 * (atk_multiplier * level)
+	round_attack_damage += atk * amount/10 
 	damage_label.target = round_attack_damage
 
 func apply_combo(combo):

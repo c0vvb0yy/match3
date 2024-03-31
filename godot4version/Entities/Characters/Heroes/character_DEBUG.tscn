@@ -45,8 +45,7 @@ shader_parameter/color_down = Color(0.109804, 0.180392, 0.533333, 1)
 [node name="Character" instance=ExtResource("1_x0sbt")]
 offset_left = -1.0
 offset_right = -1.88004
-main_color = 1
-sec_color = 3
+character_name = "default"
 
 [node name="Background" parent="Portrait" index="0"]
 material = SubResource("ShaderMaterial_ktrsy")

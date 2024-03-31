@@ -13,11 +13,8 @@ var damages := []
 var party_scenes := [
 	preload("res://Entities/Characters/Heroes/Zaavan.tscn"),
 	preload("res://Entities/Characters/Heroes/character_DEBUG.tscn"),
-	preload("res://Entities/Characters/Heroes/Zaavan.tscn"),
-	preload("res://Entities/Characters/Heroes/character_DEBUG.tscn")
 ]
-
-var party := []
+var party := ['zaav', 'ian', 'default']
 
 func init_party():
 	if party.size() != 0:

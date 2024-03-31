@@ -20,9 +20,9 @@ func move(target_cell:Vector2):
 
 func dim(alpha:= 0.5, duration := 0.1): #shows pieces being matched 
 	var tween = create_tween()
-	var color = modulate
-	color.a = alpha
-	tween.tween_property(self, "modulate", color, duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	var col = modulate
+	col.a = alpha
+	tween.tween_property(self, "modulate", col, duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	#sprite.modulate = Color(1,1,1, alpha);
 
 func fall(target_cell:Vector2):

@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GameManager="*res://Scripts/Autoloads/GameManager.gd"
 GridManager="*res://Scripts/Autoloads/GridManager.gd"
+Characters="*res://Scripts/Autoloads/Characters.gd"
 PartyManager="*res://Scripts/Autoloads/PartyManager.gd"
 EnemyManager="*res://Scripts/Autoloads/EnemyManager.gd"
 

@@ -1,8 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://c18y4no8c8v7r"]
+[gd_scene load_steps=4 format=3 uid="uid://b2cl6mpuqdxng"]
 
-[ext_resource type="PackedScene" uid="uid://cyalaawjb1ltp" path="res://Entities/Characters/Character.tscn" id="1_oe7tb"]
-[ext_resource type="Texture2D" uid="uid://dnfudfgndstf7" path="res://Assets/Sprites/Characters/Players/zaavan.png" id="2_wld6r"]
-[ext_resource type="Script" path="res://Entities/Characters/Heroes/Skills/ZaavSkill.gd" id="3_w1wlv"]
+[ext_resource type="PackedScene" uid="uid://cyalaawjb1ltp" path="res://Entities/Characters/Character.tscn" id="1_arm4c"]
 
 [sub_resource type="Shader" id="Shader_dn5ln"]
 code = "shader_type canvas_item;
@@ -36,20 +34,13 @@ void fragment() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_j5mj5"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_53xq1"]
 resource_local_to_scene = true
 shader = SubResource("Shader_dn5ln")
 shader_parameter/color_up = Color(0.427451, 0.172549, 0.196078, 1)
 shader_parameter/color_down = Color(0.109804, 0.180392, 0.533333, 1)
 
-[node name="Character" instance=ExtResource("1_oe7tb")]
-character_name = "zaav"
+[node name="Character" instance=ExtResource("1_arm4c")]
 
 [node name="Background" parent="Portrait" index="0"]
-material = SubResource("ShaderMaterial_j5mj5")
-
-[node name="Sprite" parent="Portrait" index="1"]
-texture = ExtResource("2_wld6r")
-
-[node name="Skill" parent="." index="1"]
-script = ExtResource("3_w1wlv")
+material = SubResource("ShaderMaterial_53xq1")
