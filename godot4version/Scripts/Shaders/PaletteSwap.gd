@@ -3,13 +3,14 @@ extends TextureRect
 @export
 var gradient : Array[Color]
 
-var framerate = .1
+var framerate = .11
 var counter = .1
 
 @onready
 var mat = self.material
 func _ready():
-	mat.set_shader_parameter("numberOfColors", gradient.size()-1)
+	pass
+	#mat.set_shader_parameter("numberOfColors", gradient.size()-1)
 	#apply_grey_scale()
 	#var half = floor(gradient.size()/2) 
 	#for i in range(half):
@@ -51,7 +52,7 @@ func _process(delta):
 
 func set_shader_parameters():
 	for i in gradient.size():
-		var parameter_name = str("C",i)
+		var parameter_name = str("_Color",i)
 		mat.set_shader_parameter(parameter_name, gradient[i])
 
 func cycle_gradient():
