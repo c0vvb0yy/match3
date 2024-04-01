@@ -74,6 +74,9 @@ func calc_next_level_exp(level) -> int:
 	var diff = next_level_exp - prev_level_exp
 	return diff
 
+func calc_next_atk(level) -> int:
+	return 0
+
 func update_combat_stats_of(character):
 	var dict = get(character)
 	var level = try_get_value(character, data.LEVEL)
@@ -85,8 +88,7 @@ func update_combat_stats_of(character):
 	dict[data.ATK] = base_atk * (atk_multiplier * level)
 
 @warning_ignore("shadowed_global_identifier")
-func receive_exp(character, exp:int, starting_level):
-	print("receiving exp: ", exp)
+func receive_exp(character, exp:int, starting_level, starting_hp, starting_atk):
 	if exp == 0:
 		return
 	get_exp.emit(character, exp)
@@ -96,21 +98,21 @@ func receive_exp(character, exp:int, starting_level):
 	print("needed: ", needed_exp)
 	if exp > needed_exp:
 		level_up(character)
-		receive_exp(character, exp-needed_exp, starting_level)
+		receive_exp(character, exp-needed_exp, starting_level, starting_hp, starting_atk)
 	else: 
 		try_get_value(character, data.CURRENT_EXP) 
 		dict[data.CURRENT_EXP] += needed_exp - exp 
 		var new_level = try_get_value(character, data.LEVEL)
 		var level_diff = new_level - starting_level
-		exp_finished.emit(character, level_diff)
+		exp_finished.emit(character, level_diff, starting_hp, starting_atk)
 
-func level_up(chara):
-	var character = get(chara)
-	try_get_value(chara, data.LEVEL)
-	character[data.LEVEL] += 1
-	character[data.EXP_TO_NEXT_LEVEL] = calc_next_level_exp(character[data.LEVEL])
-	character[data.CURRENT_EXP] = 0
-	update_combat_stats_of(chara)
+func level_up(character):
+	var chara = get(character)
+	try_get_value(character, data.LEVEL)
+	chara[data.LEVEL] += 1
+	chara[data.EXP_TO_NEXT_LEVEL] = calc_next_level_exp(chara[data.LEVEL])
+	chara[data.CURRENT_EXP] = 0
+	update_combat_stats_of(character)
 	#print(character[data.LEVEL], "exp needed for next level: ", character[data.EXP_TO_NEXT_LEVEL])
 	#level.emit(chara)
 

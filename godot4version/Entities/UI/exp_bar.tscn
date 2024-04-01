@@ -1,13 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://cvhrsj6v5324u"]
+[gd_scene load_steps=6 format=3 uid="uid://cvhrsj6v5324u"]
 
 [ext_resource type="Texture2D" uid="uid://884e2ko78gac" path="res://Assets/Sprites/UI/Healthbar/Party/healtbar_under.png" id="1_h8hih"]
 [ext_resource type="Texture2D" uid="uid://bfyfxnqka738c" path="res://Assets/Sprites/UI/Healthbar/Party/healtbar_over.png" id="2_sfaw3"]
 [ext_resource type="Texture2D" uid="uid://cfxfjnlor0i5w" path="res://Assets/Sprites/UI/Healthbar/Party/healtbar_fill.png" id="3_jqv6c"]
 [ext_resource type="Script" path="res://Entities/Characters/exp_bar.gd" id="4_mrj5y"]
+[ext_resource type="Theme" uid="uid://b7386eiexi2fi" path="res://Entities/UI/font.tres" id="5_th8yc"]
 
 [node name="EXPBar" type="TextureProgressBar"]
-modulate = Color(0.968627, 1, 0, 1)
-self_modulate = Color(0.94902, 1, 0, 1)
 offset_right = 289.0
 offset_bottom = 64.0
 size_flags_horizontal = 3
@@ -21,3 +20,19 @@ texture_over = ExtResource("2_sfaw3")
 texture_progress = ExtResource("3_jqv6c")
 tint_under = Color(0, 0, 0, 1)
 script = ExtResource("4_mrj5y")
+
+[node name="StatDifferences" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -214.5
+offset_top = -80.0
+offset_right = 220.5
+grow_horizontal = 2
+pivot_offset = Vector2(217, 0)
+theme = ExtResource("5_th8yc")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/normal_font_size = 66
+bbcode_enabled = true
